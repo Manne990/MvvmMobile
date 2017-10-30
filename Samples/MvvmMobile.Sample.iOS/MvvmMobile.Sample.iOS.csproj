@@ -107,10 +107,6 @@
     <Compile Include="ViewController\SecondViewController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MvvmMobile.Core\MvvmMobile.Core.csproj">
-      <Project>{0F60BBF6-DE06-42AD-965E-278DF9376F46}</Project>
-      <Name>MvvmMobile.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">
       <Project>{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}</Project>
       <Name>MvvmMobile.Sample.Core</Name>
@@ -118,6 +114,10 @@
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">
       <Project>{DDF2EC42-58BE-4B77-B780-33A01173D525}</Project>
       <Name>MvvmMobile.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MvvmMobile.Core\MvvmMobile.Core.csproj">
+      <Project>{0F60BBF6-DE06-42AD-965E-278DF9376F46}</Project>
+      <Name>MvvmMobile.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

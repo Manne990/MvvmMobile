@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="XLabs.Ioc">
+      <HintPath>..\..\packages\XLabs.IoC.2.0.5782\lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1\XLabs.Ioc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -53,6 +56,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml" />
@@ -74,6 +78,10 @@
     <ProjectReference Include="..\..\MvvmMobile.Core\MvvmMobile.Core.csproj">
       <Project>{0F60BBF6-DE06-42AD-965E-278DF9376F46}</Project>
       <Name>MvvmMobile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">
+      <Project>{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}</Project>
+      <Name>MvvmMobile.Sample.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
