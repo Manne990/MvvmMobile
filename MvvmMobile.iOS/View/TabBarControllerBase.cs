@@ -1,0 +1,59 @@
+﻿using MvvmMobile.Core.Navigation;
+using MvvmMobile.iOS.Navigation;
+using UIKit;
+using XLabs.Ioc;
+
+namespace MvvmMobile.iOS.View
+{
+    public class TabBarControllerBase : UITabBarController
+    {
+        private AppNavigation _app;
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            // Init
+            _app = Resolver.Resolve<INavigation>() as AppNavigation;
+
+            // Monitor selection of tabs
+            ViewControllerSelected += (sender, e) =>
+            {
+                // Set the current nav controller
+                if (e.ViewController is UINavigationController vc)
+                {
+                    SetCurrentNavigationController(vc);
+                }
+            };
+
+            // Add the tabbar controller to the app
+            _app.TabBarController = this;
+        }
+
+        public void SetCurrentTab(int tabIndex)
+        {
+            if (tabIndex < 0 || tabIndex >= ViewControllers.Length)
+            {
+                return;
+            }
+
+            // Set the current nav controller
+            if (ViewControllers[tabIndex] is UINavigationController vc)
+            {
+                SetCurrentNavigationController(vc);
+            }
+
+            SelectedIndex = tabIndex;
+        }
+
+        private void SetCurrentNavigationController(UINavigationController navController)
+        {
+            if (navController == null)
+            {
+                return;
+            }
+
+            _app.NavigationController = navController;
+        }
+    }
+}
