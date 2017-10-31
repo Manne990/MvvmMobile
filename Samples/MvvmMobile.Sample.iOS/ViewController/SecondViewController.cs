@@ -18,7 +18,7 @@ namespace MvvmMobile.Sample.iOS.ViewController
         // Constructors
         public SecondViewController()
         {
-            AsModal = false;
+            AsModal = true;
         }
 
 

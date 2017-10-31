@@ -14,15 +14,6 @@ namespace MvvmMobile.iOS.View
 
         // -----------------------------------------------------------------------------
 
-        // Constructors
-        public ViewControllerBase()
-        {
-            AsModal = false;
-        }
-
-
-        // -----------------------------------------------------------------------------
-
         // Lifecycle
         public override void ViewDidLoad()
         {
