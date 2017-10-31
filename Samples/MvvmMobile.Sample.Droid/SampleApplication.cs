@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Droid.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Droid.Activities;
 using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Droid
 {
 #if DEBUG
-    [Application(Debuggable = true, ManageSpaceActivity = typeof(MainActivity))]
+    [Application(Debuggable = true, ManageSpaceActivity = typeof(StartActivity))]
 #else
-    [Application(Debuggable = false, ManageSpaceActivity = typeof(MainActivity))]
+    [Application(Debuggable = false, ManageSpaceActivity = typeof(StartActivity))]
 #endif
     public class SampleApplication : Application
     {
@@ -35,8 +35,8 @@ namespace MvvmMobile.Sample.Droid
 
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
-                { typeof(IStartViewModel), typeof(MainActivity) },
-                { typeof(ISecondViewModel), typeof(MainActivity) }
+                { typeof(IStartViewModel), typeof(StartActivity) },
+                { typeof(ISecondViewModel), typeof(SecondActivity) }
             };
 
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();

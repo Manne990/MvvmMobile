@@ -7,8 +7,13 @@ namespace MvvmMobile.iOS.View
 {
     public class TabBarControllerBase : UITabBarController
     {
+        // Private Members
         private AppNavigation _app;
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -30,6 +35,10 @@ namespace MvvmMobile.iOS.View
             _app.TabBarController = this;
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
         public void SetCurrentTab(int tabIndex)
         {
             if (tabIndex < 0 || tabIndex >= ViewControllers.Length)
@@ -46,6 +55,10 @@ namespace MvvmMobile.iOS.View
             SelectedIndex = tabIndex;
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Private Methods
         private void SetCurrentNavigationController(UINavigationController navController)
         {
             if (navController == null)

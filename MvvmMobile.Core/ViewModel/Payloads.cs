@@ -5,13 +5,22 @@ namespace MvvmMobile.Core.ViewModel
 {
     public class Payloads : IPayloads
     {
+        // Private Members
         private readonly Dictionary<Guid, IPayload> _payloads;
 
+
+        // -----------------------------------------------------------------------------
+
+        // Constructors
         public Payloads()
         {
             _payloads = new Dictionary<Guid, IPayload>();
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
         public void Add(Guid id, IPayload payload)
         {
             lock(_payloads)

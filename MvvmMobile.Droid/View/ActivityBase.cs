@@ -13,12 +13,16 @@ namespace MvvmMobile.Droid.View
 {
     public class ActivityBase : Activity
     {
-        private static string CallBackPayloadId = "LindexBaseActivity-CallBackPayloadId";
+        // Private Members
+        private static string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";
 
+
+        // -----------------------------------------------------------------------------
+
+        // Properties
         private IBaseViewModel _viewModel;
         protected IBaseViewModel ViewModel
         {
-            // ReSharper disable once UnusedMember.Global
             get { return _viewModel; }
             set
             {
@@ -47,6 +51,10 @@ namespace MvvmMobile.Droid.View
         protected Guid PayloadId { get; private set; }
         protected Guid CallbackId { get; private set; }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -109,6 +117,10 @@ namespace MvvmMobile.Droid.View
             base.OnDestroy();
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Payload and Callback Handling
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
@@ -137,7 +149,6 @@ namespace MvvmMobile.Droid.View
             // Get the callback payload
             var payloads = Resolver.Resolve<IPayloads>();
             var callbackPayload = payloads.GetAndRemove<ICallbackPayload>(callbackId);
-
             if (callbackPayload == null)
             {
                 return;

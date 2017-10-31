@@ -1,14 +1,24 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using MvvmMobile.Core.Navigation;
 using XLabs.Ioc;
 
 namespace MvvmMobile.Core.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        // Property Changed Notification
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void NotifyPropertyChanged(string propertyName)
+        { 
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public virtual void OnLoaded()
         {}
 
@@ -18,34 +28,50 @@ namespace MvvmMobile.Core.ViewModel
         public virtual void OnPaused()
         {}
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
-        protected void NotifyPropertyChanged(string propertyName)
-        { 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        // -----------------------------------------------------------------------------
 
+        // Callback Handling
         public Action<Guid> CallbackAction { private get; set; }
 
-        protected void RunCallback(IPayload payload)
+        protected void NavigateBack(Action done = null)
         {
-            if (CallbackAction == null)
+            Resolver.Resolve<INavigation>().Pop(() => 
             {
-                return;
-            }
+                done?.Invoke();
+            });
+        }
 
-            // Set payload id
-            var payloadId = Guid.NewGuid();
+        protected void NavigateBack(IPayload payload)
+        {
+            NavigateBack(() => 
+            {
+                if (CallbackAction == null)
+                {
+                    return;
+                }
 
-            // Add payload
+                // Set payload id
+                var payloadId = Guid.NewGuid();
+
+                // Add payload
+                var payloads = Resolver.Resolve<IPayloads>();
+                payloads.Add(payloadId, payload);
+
+                // Execute
+                CallbackAction.Invoke(payloadId);
+            });
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Protected Methods
+        protected T LoadPayload<T>(Guid payloadId) where T : class
+        {
+            // Get Payload
             var payloads = Resolver.Resolve<IPayloads>();
-            payloads.Add(payloadId, payload);
-
-            // Execute
-            CallbackAction.Invoke(payloadId);
+            return payloads.GetAndRemove<T>(payloadId);
         }
     }
 }

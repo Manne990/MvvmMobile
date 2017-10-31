@@ -7,9 +7,9 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.Common
 {
-    public static class IntentExtensions
+    internal static class IntentExtensions
     {
-        public static void SetPayload(this Intent intent, IPayload payload)
+        internal static void SetPayload(this Intent intent, IPayload payload)
         { 
             if (payload == null)
             {
@@ -19,7 +19,7 @@ namespace MvvmMobile.Droid.Common
             AddPayloadToIntent(intent, AppNavigation.PayloadAppParameter, payload);
         }
 
-        public static void SetCallback(this Intent intent, Action<Guid> callbackAction)
+        internal static void SetCallback(this Intent intent, Action<Guid> callbackAction)
         {
             if (callbackAction == null)
             {

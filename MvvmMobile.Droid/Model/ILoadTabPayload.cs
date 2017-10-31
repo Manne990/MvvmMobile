@@ -3,7 +3,7 @@ using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.Droid.Model
 {
-    public interface ILoadTabPayload : IPayload
+    internal interface ILoadTabPayload : IPayload
     {
         int ActivateTab { get; set; }
         Type LoadSubType { get; set; }

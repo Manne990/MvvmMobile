@@ -1,4 +1,6 @@
-﻿using MvvmMobile.Droid.Model;
+﻿using MvvmMobile.Core.Navigation;
+using MvvmMobile.Droid.Model;
+using MvvmMobile.Droid.Navigation;
 using TinyIoC;
 using XLabs.Ioc;
 using XLabs.Ioc.TinyIOC;
@@ -21,6 +23,8 @@ namespace MvvmMobile.Droid
         {
             var core = new Core.Bootstrapper();
             core.Init();
+
+            _tinyContainer.RegisterSingle<INavigation, AppNavigation>();
 
             _tinyContainer.Register<ILoadTabPayload>(r => new LoadTabPayload());
             _tinyContainer.Register<ICallbackPayload>(r => new CallbackPayload());

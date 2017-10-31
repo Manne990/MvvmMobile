@@ -9,7 +9,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
 {
     public class StartViewModel : BaseViewModel, IStartViewModel
     {
-        public StartViewModel(INavigation lindexApp)
+        // Constructors
+        public StartViewModel(INavigation navigation)
         {
             MoveNextCommand = new RelayCommand(o =>
             {
@@ -23,10 +24,14 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
                 payload.Title = title;
 
-                lindexApp.OpenPage(typeof(ISecondViewModel), payload, NameSelected);
+                navigation.NavigateTo(typeof(ISecondViewModel), payload, NameSelected);
             });
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Properties
         private string _name;
         public string Name
         {
@@ -38,8 +43,16 @@ namespace MvvmMobile.Sample.Core.ViewModel
             }
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Commands
         public RelayCommand MoveNextCommand { get; }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Private Methods
         private void NameSelected(Guid payloadId)
         {
             // Get Payload

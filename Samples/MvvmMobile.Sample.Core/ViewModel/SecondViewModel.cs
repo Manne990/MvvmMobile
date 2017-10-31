@@ -8,6 +8,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
 {
     public class SecondViewModel : BaseViewModel, ISecondViewModel
     {
+        // Constructors
         public SecondViewModel()
         {
             NameSelectedCommand = new RelayCommand(o =>
@@ -22,10 +23,14 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
                 namePayload.Name = name;
 
-                RunCallback(namePayload);
+                NavigateBack(namePayload);
             });
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Properties
         private string _title;
         public string Title
         {
@@ -37,13 +42,19 @@ namespace MvvmMobile.Sample.Core.ViewModel
             }
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Commands
         public RelayCommand NameSelectedCommand { get; }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
         public void Load(Guid payloadId)
         {
-            // Get Payload
-            var payloads = Resolver.Resolve<IPayloads>();
-            var payload = payloads.GetAndRemove<ITitlePayload>(payloadId);
+            var payload = LoadPayload<ITitlePayload>(payloadId);
             if (payload == null)
             {
                 return;

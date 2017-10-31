@@ -8,19 +8,30 @@ namespace MvvmMobile.iOS.View
 {
     public class ViewControllerBase : UIViewController
     {
+        // Private Members
+        private bool _isFramesReady;
+
+
+        // -----------------------------------------------------------------------------
+
+        // Constructors
         public ViewControllerBase()
         {
             AsModal = false;
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public override void ViewWillLayoutSubviews()
         {
-            if (IsInitialized == false)
+            if (_isFramesReady == false)
             {
                 ViewFramesReady();
             }
 
-            IsInitialized = true;
+            _isFramesReady = true;
 
             base.ViewWillLayoutSubviews();
         }
@@ -55,11 +66,9 @@ namespace MvvmMobile.iOS.View
         }
 
 
+        // -----------------------------------------------------------------------------
 
-
-
-
-        private bool IsInitialized { get; set; }
+        // Properties
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
         public bool AsModal { get; protected set; }
@@ -94,15 +103,16 @@ namespace MvvmMobile.iOS.View
         }
 
 
+        // -----------------------------------------------------------------------------
 
-
-
+        // Virtual Methods
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 
 
+        // -----------------------------------------------------------------------------
 
-
+        // Payload and Callback Handling
         public void SetPayload(IPayload payload)
         {
             if (payload == null)

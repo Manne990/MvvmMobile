@@ -39,11 +39,14 @@ namespace MvvmMobile.Sample.iOS.ViewController
             _firstButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
             _firstButton.TouchUpInside += (sender, e) => 
             {
-                NavigationController?.DismissViewController(true, () => 
-                {
-                    // Report back
-                    _viewModel.NameSelectedCommand.Execute("Jonas");
-                });
+                // Report back
+                _viewModel.NameSelectedCommand.Execute("Jonas");
+
+                //NavigationController?.DismissViewController(true, () => 
+                //{
+                //    // Report back
+                //    _viewModel.NameSelectedCommand.Execute("Jonas");
+                //});
             };
 
             _secondButton = new UIButton();
@@ -51,11 +54,14 @@ namespace MvvmMobile.Sample.iOS.ViewController
             _secondButton.SetTitleColor(UIColor.Black, UIControlState.Normal);
             _secondButton.TouchUpInside += (sender, e) => 
             {
-                NavigationController?.DismissViewController(true, () => 
-                {
-                    // Report back
-                    _viewModel.NameSelectedCommand.Execute("Kalle");
-                });
+                // Report back
+                _viewModel.NameSelectedCommand.Execute("Kalle");
+
+                //NavigationController?.DismissViewController(true, () => 
+                //{
+                //    // Report back
+                //    _viewModel.NameSelectedCommand.Execute("Kalle");
+                //});
             };
 
             // Add Controls

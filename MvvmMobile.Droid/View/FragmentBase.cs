@@ -8,10 +8,10 @@ namespace MvvmMobile.Droid.View
 {
     public class FragmentBase : Fragment
     {
+        // Properties
         private IBaseViewModel _viewModel;
         protected IBaseViewModel ViewModel
         {
-            // ReSharper disable once UnusedMember.Global
             get { return _viewModel; }
             set
             {
@@ -53,6 +53,10 @@ namespace MvvmMobile.Droid.View
         {
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public override void OnResume()
         {
             base.OnResume();
@@ -89,6 +93,10 @@ namespace MvvmMobile.Droid.View
             base.OnDestroy();
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Payload and Callback Handling
         public void SetPayload(IPayload payload)
         { 
             if (payload == null)

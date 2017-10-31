@@ -15,64 +15,34 @@ namespace MvvmMobile.Droid.Navigation
 {
     public class AppNavigation : INavigation
     {
+        // Constants
         internal static int CallbackActivityRequestCode = 9999;
-        internal static string PayloadAppParameter = "LindexApp-PayloadAppParameter";
-        internal static string CallbackAppParameter = "LindexApp-CallbackAppParameter";
+        internal static string PayloadAppParameter = "MvvmMobile-PayloadAppParameter";
+        internal static string CallbackAppParameter = "MvvmMobile-CallbackAppParameter";
 
+
+        // -----------------------------------------------------------------------------
+
+        // Private Members
         private Dictionary<Type, Type> _viewMapperDictionary;
 
 
+        // -----------------------------------------------------------------------------
 
+        // Public Properties
         public Context Context { get; set; }
         public int FragmentContainerId { private get; set; }
 
 
+        // -----------------------------------------------------------------------------
 
-
+        // Public Methods
         public void Init(Dictionary<Type, Type> viewMapper)
         {
             _viewMapperDictionary = viewMapper;
         }
 
-        public void GoHome(int activateTab, Action done = null)
-        {
-            // Clear all activities
-            ((Activity)Context).FinishAffinity();
-
-            // Prepare the payload
-            var payload = Resolver.Resolve<ILoadTabPayload>();
-
-            payload.ActivateTab = activateTab;
-            payload.LoadSubType = null;
-            payload.Done = done;
-
-            // Open main menu activity
-
-            //TODO: Find abstract solution for this!
-
-            //OpenPage(typeof(IMainMenuViewModel), payload);
-        }
-
-        public void GoHome(int activateTab, Type loadSubType, Action done = null)
-        {
-            // Clear all activities
-            ((Activity)Context).FinishAffinity();
-
-            // Prepare the payload
-            var payload = Resolver.Resolve<ILoadTabPayload>();
-
-            payload.ActivateTab = activateTab;
-            payload.LoadSubType = loadSubType;
-            payload.Done = done;
-
-            // Open main menu activity
-
-            //TODO: Find abstract solution for this!
-
-            //OpenPage(typeof(IMainMenuViewModel), payload);
-        }
-
-        public void OpenPage(Type activityType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type activityType, IPayload parameter = null, Action<Guid> callback = null)
         {
             if (activityType == null)
             {
@@ -119,7 +89,7 @@ namespace MvvmMobile.Droid.Navigation
             Context.StartActivity(intent);
         }
 
-        public void Pop()
+        public void Pop(Action done)
         {
             try
             {
@@ -129,6 +99,44 @@ namespace MvvmMobile.Droid.Navigation
             {
                 // swallow exceptions, there's a bug in FragmentManager.java
             }
+        }
+
+        public void GoHome(int activateTab, Action done = null)
+        {
+            // Clear all activities
+            ((Activity)Context).FinishAffinity();
+
+            // Prepare the payload
+            var payload = Resolver.Resolve<ILoadTabPayload>();
+
+            payload.ActivateTab = activateTab;
+            payload.LoadSubType = null;
+            payload.Done = done;
+
+            // Open main menu activity
+
+            //TODO: Find abstract solution for this!
+
+            //OpenPage(typeof(IMainMenuViewModel), payload);
+        }
+
+        public void GoHome(int activateTab, Type loadSubType, Action done = null)
+        {
+            // Clear all activities
+            ((Activity)Context).FinishAffinity();
+
+            // Prepare the payload
+            var payload = Resolver.Resolve<ILoadTabPayload>();
+
+            payload.ActivateTab = activateTab;
+            payload.LoadSubType = loadSubType;
+            payload.Done = done;
+
+            // Open main menu activity
+
+            //TODO: Find abstract solution for this!
+
+            //OpenPage(typeof(IMainMenuViewModel), payload);
         }
 
         public void PopAndOpenPage(Type popToActivityType, Type activityType)
