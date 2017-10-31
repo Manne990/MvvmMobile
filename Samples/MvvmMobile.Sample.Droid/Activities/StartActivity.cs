@@ -3,16 +3,19 @@ using Android.OS;
 using Android.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.ViewModel;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Droid.Activities
 {
     [Activity(Label = "Start", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
-    public class StartActivity : ActivityBase
+    public class StartActivity : ActivityBase<IStartViewModel>
     {
-        private IStartViewModel _viewModel;
+        // Private Members
         private Button _button;
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -20,23 +23,12 @@ namespace MvvmMobile.Sample.Droid.Activities
             // Init
             SetContentView(Resource.Layout.StartActivityLayout);
 
-            // Load View Model
-            _viewModel = Resolver.Resolve<IStartViewModel>();
-            ViewModel = _viewModel;
-
             // Controls
             _button = FindViewById<Button>(Resource.Id.button);
             _button.Click += (sender, e) => 
             {
-                _viewModel.MoveNextCommand.Execute("Select a name");
+                ViewModel.MoveNextCommand.Execute("Select a name");
             };
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            ViewModel = _viewModel;
         }
 
         protected override void OnDestroy()
@@ -46,11 +38,15 @@ namespace MvvmMobile.Sample.Droid.Activities
             _button = null;
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Overrides
         protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_viewModel.Name))
+            if (e.PropertyName == nameof(ViewModel.Name))
             {
-                System.Diagnostics.Debug.WriteLine($"Name sent back: {_viewModel.Name}");
+                System.Diagnostics.Debug.WriteLine($"Name sent back: {ViewModel.Name}");
                 return;
             }
         }

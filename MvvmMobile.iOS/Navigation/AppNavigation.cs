@@ -28,9 +28,9 @@ namespace MvvmMobile.iOS.Navigation
             _viewMapperDictionary = viewMapper;
         }
 
-        public void NavigateTo(Type activityType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
         {
-            if (activityType == null)
+            if (viewModelType == null)
             {
                 return;
             }
@@ -44,14 +44,14 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             // Get the vc type
-            if (_viewMapperDictionary.TryGetValue(activityType, out Type concreteType) == false)
+            if (_viewMapperDictionary.TryGetValue(viewModelType, out Type viewControllerType) == false)
             {
                 //TODO: Handle Error!
                 return;
             }
 
             // Create the vc
-            var vc = Activator.CreateInstance(concreteType) as UIViewController;
+            var vc = Activator.CreateInstance(viewControllerType) as UIViewController;
             if (vc == null)
             {
                 //TODO: Handle Error!
@@ -87,7 +87,7 @@ namespace MvvmMobile.iOS.Navigation
             result.navController.PushViewController(vc, true);
         }
 
-        public void Pop(Action done)
+        public void NavigateBack(Action done = null)
         {
             var result = GetCurrentNavigationController();
 
@@ -105,85 +105,20 @@ namespace MvvmMobile.iOS.Navigation
             }
         }
 
-        public void GoHome(int activateTab, Action done = null)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
         {
-            var rootVc = UIApplication.SharedApplication.KeyWindow.RootViewController;
-
-            if (rootVc.PresentedViewController != null)
+            NavigateBack(() => 
             {
-                rootVc.DismissViewController(false, () =>
-                {
-                    GoHomeFinish(activateTab, null);
-                    done?.Invoke();
-                    return;
-                });
-                return;
-            }
+                callbackAction.Invoke(payloadId);
 
-            GoHomeFinish(activateTab, null);
-            done?.Invoke();
-        }
-
-        public void GoHome(int activateTab, Type loadSubType, Action done = null)
-        {
-            //REMARK: This does not always work because it could potantially start a chain of API requests that iOS does not handle that well
-            var rootVc = UIApplication.SharedApplication.KeyWindow.RootViewController;
-
-            if (rootVc.PresentedViewController != null)
-            {
-                rootVc.DismissViewController(false, () =>
-                {
-                    GoHomeFinish(activateTab, loadSubType);
-                    done?.Invoke();
-                    return;
-                });
-                return;
-            }
-
-            GoHomeFinish(activateTab, loadSubType);
-            done?.Invoke();
-        }
-
-        public void PopAndOpenPage(Type popToActivityType, Type activityType)
-        {
-            var result = GetCurrentNavigationController();
-            if (result.navController == null)
-            {
-                return;
-            }
-
-            var popConcreteType = _viewMapperDictionary[popToActivityType];
-
-            foreach (var popVc in result.navController.ViewControllers)
-            {
-                if (popVc.GetType() == popConcreteType)
-                {
-                    result.navController?.PopToViewController(popVc, true);
-                }
-            }
-
-            if (activityType == null)
-            {
-                return;
-            }
-
-            NavigateTo(activityType);
+                done?.Invoke();
+            });
         }
 
 
-        private void GoHomeFinish(int activateTab, Type loadSubType)
-        {
-            TabBarController?.SetCurrentTab(activateTab);
-            NavigationController?.PopToRootViewController(false);
+        // -----------------------------------------------------------------------------
 
-            if (loadSubType == null)
-            {
-                return;
-            }
-
-            NavigateTo(loadSubType);
-        }
-
+        // Private Methods
         private (bool isModal, UINavigationController navController) GetCurrentNavigationController()
         {
             var rootVc = UIApplication.SharedApplication.KeyWindow.RootViewController;

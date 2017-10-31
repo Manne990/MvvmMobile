@@ -11,23 +11,21 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
-    public class ActivityBase : Activity
+    public class ActivityBase<T> : Activity where T : class, IBaseViewModel
     {
         // Private Members
-        private static string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";
+        private const string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";
 
 
         // -----------------------------------------------------------------------------
 
         // Properties
-        private IBaseViewModel _viewModel;
-        protected IBaseViewModel ViewModel
+        private T _viewModel;
+        protected T ViewModel
         {
             get { return _viewModel; }
             set
             {
-                var runEvents = _viewModel != value;
-
                 _viewModel = value;
 
                 if (_viewModel == null)
@@ -38,13 +36,8 @@ namespace MvvmMobile.Droid.View
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
-                if (runEvents == false)
-                {
-                    return;
-                }
-
-                ((BaseViewModel)_viewModel).OnLoaded();
-                ((BaseViewModel)_viewModel).CallbackAction = HandleCallback;
+                _viewModel.OnLoaded();
+                _viewModel.CallbackAction = HandleCallback;
             }
         }
 
@@ -58,6 +51,8 @@ namespace MvvmMobile.Droid.View
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            ViewModel = Resolver.Resolve<T>();
 
             ((AppNavigation)Resolver.Resolve<INavigation>()).Context = this;
 
@@ -81,40 +76,34 @@ namespace MvvmMobile.Droid.View
 
             ((AppNavigation)Resolver.Resolve<INavigation>()).Context = this;
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm == null)
+            if (_viewModel != null)
             {
-                return;
+                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
 
-            vm.OnActivated();
+            _viewModel?.OnActivated();
+
+            if (_viewModel is IPayloadViewModel vm)
+            {
+                vm.Load(PayloadId);
+            }
         }
 
         protected override void OnPause()
         {
             base.OnPause();
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm == null)
-            {
-                return;
-            }
+            _viewModel?.OnPaused();
 
-            vm.OnPaused();
-        }
-
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
-
-        protected override void OnDestroy()
-        {
             if (_viewModel != null)
             { 
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
             }
+        }
 
-            base.OnDestroy();
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
         }
 
 

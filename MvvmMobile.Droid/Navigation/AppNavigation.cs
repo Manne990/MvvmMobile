@@ -16,9 +16,9 @@ namespace MvvmMobile.Droid.Navigation
     public class AppNavigation : INavigation
     {
         // Constants
-        internal static int CallbackActivityRequestCode = 9999;
-        internal static string PayloadAppParameter = "MvvmMobile-PayloadAppParameter";
-        internal static string CallbackAppParameter = "MvvmMobile-CallbackAppParameter";
+        internal const int CallbackActivityRequestCode = 9999;
+        internal const string PayloadAppParameter = "MvvmMobile-PayloadAppParameter";
+        internal const string CallbackAppParameter = "MvvmMobile-CallbackAppParameter";
 
 
         // -----------------------------------------------------------------------------
@@ -42,21 +42,20 @@ namespace MvvmMobile.Droid.Navigation
             _viewMapperDictionary = viewMapper;
         }
 
-        public void NavigateTo(Type activityType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
         {
-            if (activityType == null)
+            if (viewModelType == null)
             {
                 return;
             }
 
-            Type concreteType;
-            if (_viewMapperDictionary.TryGetValue(activityType, out concreteType) == false)
+            if (_viewMapperDictionary.TryGetValue(viewModelType, out Type concreteType) == false)
             {
                 //TODO: Handle Error!
                 return;
             }
 
-            if (concreteType.IsSubclassOf(typeof(FragmentBase)))
+            if (concreteType.IsSubclassOf(typeof(IFragmentBase)))
             {
                 LoadFragment(concreteType, parameter, callback);
                 return;
@@ -72,7 +71,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (callback != null)
             {
-                var currentActivity = Context as ActivityBase;
+                var currentActivity = Context as Activity;
                 if (currentActivity == null)
                 {
                     //TODO: Handle Error!
@@ -89,101 +88,57 @@ namespace MvvmMobile.Droid.Navigation
             Context.StartActivity(intent);
         }
 
-        public void Pop(Action done)
+        public void NavigateBack(Action done = null)
         {
-            try
+            if (Context is Activity activity)
             {
-                ((Activity) Context).FragmentManager.PopBackStackImmediate();
-            }
-            catch
-            {
-                // swallow exceptions, there's a bug in FragmentManager.java
+                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                {
+                    activity.Finish();
+                }
+                else
+                {
+                    try
+                    {
+                        activity.FragmentManager?.PopBackStackImmediate();
+                    }
+                    catch
+                    {
+                        // swallow exceptions, there's a bug in FragmentManager.java
+                    }
+                }
+
+                done?.Invoke();
             }
         }
 
-        public void GoHome(int activateTab, Action done = null)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
         {
-            // Clear all activities
-            ((Activity)Context).FinishAffinity();
+            if (Context is Activity activity)
+            {
+                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                {
+                    callbackAction.Invoke(payloadId);
+                }
+                else
+                {
+                    try
+                    {
+                        activity.FragmentManager?.PopBackStackImmediate();
+                    }
+                    catch
+                    {
+                        // swallow exceptions, there's a bug in FragmentManager.java
+                    }
 
-            // Prepare the payload
-            var payload = Resolver.Resolve<ILoadTabPayload>();
+                    callbackAction.Invoke(payloadId);
+                }
 
-            payload.ActivateTab = activateTab;
-            payload.LoadSubType = null;
-            payload.Done = done;
-
-            // Open main menu activity
-
-            //TODO: Find abstract solution for this!
-
-            //OpenPage(typeof(IMainMenuViewModel), payload);
+                done?.Invoke();
+            }
         }
 
-        public void GoHome(int activateTab, Type loadSubType, Action done = null)
-        {
-            // Clear all activities
-            ((Activity)Context).FinishAffinity();
-
-            // Prepare the payload
-            var payload = Resolver.Resolve<ILoadTabPayload>();
-
-            payload.ActivateTab = activateTab;
-            payload.LoadSubType = loadSubType;
-            payload.Done = done;
-
-            // Open main menu activity
-
-            //TODO: Find abstract solution for this!
-
-            //OpenPage(typeof(IMainMenuViewModel), payload);
-        }
-
-        public void PopAndOpenPage(Type popToActivityType, Type activityType)
-        {
-            Type popConcreteType;
-            if (_viewMapperDictionary.TryGetValue(popToActivityType, out popConcreteType) == false)
-            {
-                //TODO: Handle Error!
-                return;
-            }
-
-            if (popConcreteType.IsSubclassOf(typeof(Fragment)))
-            {
-                throw new ArgumentException("PopAndOpenPage: Fragments not allowed!");
-            }
-
-            // Open the pop to activity
-            var popIntent = new Intent(Context, popConcreteType);
-
-            popIntent.AddFlags(ActivityFlags.ClearTop);
-
-            Context.StartActivity(popIntent);
-
-            if (activityType == null)
-            {
-                return;
-            }
-
-            Type concreteType;
-            if (_viewMapperDictionary.TryGetValue(activityType, out concreteType) == false)
-            {
-                //TODO: Handle Error!
-                return;
-            }
-
-            if (concreteType.IsSubclassOf(typeof(Fragment)))
-            {
-                throw new ArgumentException("PopAndOpenPage: Fragments not allowed!");
-            }
-
-            // Open the target activity
-            var intent = new Intent(Context, concreteType);
-
-            Context.StartActivity(intent);
-        }
-
-        public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
+        public IFragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
         {
             try
             {
@@ -210,7 +165,7 @@ namespace MvvmMobile.Droid.Navigation
                 }
 
                 // Create the fragment
-                var fragment = (FragmentBase)Activator.CreateInstance(concreteType);
+                var fragment = (IFragmentBase)Activator.CreateInstance(concreteType);
 
                 // Set the payload
                 if (payload != null)
@@ -227,7 +182,7 @@ namespace MvvmMobile.Droid.Navigation
                 // Push the fragment
                 var ft = activity.FragmentManager.BeginTransaction();
 
-                ft.Replace(FragmentContainerId, fragment, concreteType.Name);
+                ft.Replace(FragmentContainerId, fragment.AsFragment(), concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
 
                 ft.Commit();

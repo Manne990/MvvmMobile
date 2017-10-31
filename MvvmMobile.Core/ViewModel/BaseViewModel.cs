@@ -70,7 +70,7 @@ namespace MvvmMobile.Core.ViewModel
 
         protected void NavigateBack(Action done = null)
         {
-            Resolver.Resolve<INavigation>().Pop(() => 
+            Resolver.Resolve<INavigation>().NavigateBack(() => 
             {
                 done?.Invoke();
             });
@@ -78,23 +78,19 @@ namespace MvvmMobile.Core.ViewModel
 
         protected void NavigateBack(IPayload payload)
         {
-            NavigateBack(() => 
+            if (CallbackAction == null)
             {
-                if (CallbackAction == null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                // Set payload id
-                var payloadId = Guid.NewGuid();
+            // Set payload id
+            var payloadId = Guid.NewGuid();
 
-                // Add payload
-                var payloads = Resolver.Resolve<IPayloads>();
-                payloads.Add(payloadId, payload);
+            // Add payload
+            var payloads = Resolver.Resolve<IPayloads>();
+            payloads.Add(payloadId, payload);
 
-                // Execute
-                CallbackAction.Invoke(payloadId);
-            });
+            Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId);
         }
 
 

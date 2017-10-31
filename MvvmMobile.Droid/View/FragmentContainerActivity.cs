@@ -11,7 +11,7 @@ using XLabs.Ioc;
 namespace MvvmMobile.Droid.View
 {
     [Activity(Label = "", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
-    public class FragmentContainerActivity : ActivityBase
+    public class FragmentContainerActivity : ActivityBase<IBaseViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

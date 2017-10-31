@@ -62,6 +62,7 @@
     <Compile Include="Common\IntentExtensions.cs" />
     <Compile Include="Model\ICallbackPayload.cs" />
     <Compile Include="Model\CallbackPayload.cs" />
+    <Compile Include="View\IFragmentBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

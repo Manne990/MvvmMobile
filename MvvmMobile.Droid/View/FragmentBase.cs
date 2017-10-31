@@ -6,11 +6,11 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
-    public class FragmentBase : Fragment
+    public class FragmentBase<T> : Fragment, IFragmentBase where T : class, IBaseViewModel
     {
         // Properties
-        private IBaseViewModel _viewModel;
-        protected IBaseViewModel ViewModel
+        private T _viewModel;
+        protected T ViewModel
         {
             get { return _viewModel; }
             set
@@ -32,8 +32,8 @@ namespace MvvmMobile.Droid.View
                     return;
                 }
 
-                ((BaseViewModel)_viewModel).OnLoaded();
-                ((BaseViewModel)_viewModel).CallbackAction = CallbackAction;
+                _viewModel.OnLoaded();
+                _viewModel.CallbackAction = CallbackAction;
             }
         }
 
@@ -41,56 +41,57 @@ namespace MvvmMobile.Droid.View
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
 
-        protected ActivityBase ActionBarActivity
-        {
-            get
-            {
-                return Activity as ActivityBase;
-            }
-        }
-
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
+        //protected ActivityBase ActionBarActivity
+        //{
+        //    get
+        //    {
+        //        return Activity as ActivityBase;
+        //    }
+        //}
 
 
         // -----------------------------------------------------------------------------
 
         // Lifecycle
+        public override void OnCreate(Android.OS.Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            ViewModel = Resolver.Resolve<T>();
+        }
+
         public override void OnResume()
         {
             base.OnResume();
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm == null)
+            if (_viewModel != null)
             {
-                return;
+                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
 
-            vm.OnActivated();
+            _viewModel?.OnActivated();
+
+            if (_viewModel is IPayloadViewModel vm)
+            {
+                vm.Load(PayloadId);
+            }
         }
 
         public override void OnPause()
         {
             base.OnPause();
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm == null)
-            {
-                return;
-            }
+            _viewModel?.OnPaused();
 
-            vm.OnPaused();
-        }
-
-        public override void OnDestroy()
-        {
             if (_viewModel != null)
             { 
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
             }
+        }
 
-            base.OnDestroy();
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
         }
 
 
@@ -121,6 +122,11 @@ namespace MvvmMobile.Droid.View
             }
 
             CallbackAction = callbackAction;
+        }
+
+        public Fragment AsFragment()
+        {
+            return this;
         }
     }
 }
