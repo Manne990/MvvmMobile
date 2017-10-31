@@ -1,15 +1,18 @@
 ﻿using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.ViewModel;
 using UIKit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.iOS.ViewController
 {
-    public class StartViewController : ViewControllerBase
+    public class StartViewController : ViewControllerBase<IStartViewModel>
     {
-        private IStartViewModel _viewModel;
+        // Private Members
         private UIButton _button;
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -18,17 +21,13 @@ namespace MvvmMobile.Sample.iOS.ViewController
             Title = "Start";
             View.BackgroundColor = UIColor.White;
 
-            // Load View Model
-            _viewModel = Resolver.Resolve<IStartViewModel>();
-            ViewModel = _viewModel;
-
             // Controls
             _button = new UIButton();
             _button.SetTitle("Press Me!", UIControlState.Normal);
             _button.SetTitleColor(UIColor.Black, UIControlState.Normal);
             _button.TouchUpInside += (sender, e) => 
             {
-                _viewModel.MoveNextCommand.Execute("Select a name");
+                ViewModel.MoveNextCommand.Execute("Select a name");
             };
 
             // Add Controls
@@ -45,17 +44,18 @@ namespace MvvmMobile.Sample.iOS.ViewController
 
         public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
-
-            // Make sure viewmodel is attached
-            ViewModel = _viewModel;
+            base.ViewWillAppear(animated);
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Overrides
         protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_viewModel.Name))
+            if (e.PropertyName == nameof(ViewModel.Name))
             {
-                System.Diagnostics.Debug.WriteLine($"Name sent back: {_viewModel.Name}");
+                System.Diagnostics.Debug.WriteLine($"Name sent back: {ViewModel.Name}");
                 return;
             }
         }

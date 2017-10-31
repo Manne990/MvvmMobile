@@ -6,7 +6,7 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.iOS.View
 {
-    public class ViewControllerBase : UIViewController
+    public class ViewControllerBase<T> : UIViewController, IViewControllerBase where T : class, IBaseViewModel
     {
         // Private Members
         private bool _isFramesReady;
@@ -24,11 +24,23 @@ namespace MvvmMobile.iOS.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            ViewModel = Resolver.Resolve<T>();
+        }
+
         public override void ViewWillLayoutSubviews()
         {
             if (_isFramesReady == false)
             {
                 ViewFramesReady();
+
+                if (_viewModel is IPayloadViewModel vm)
+                {
+                    vm.Load(PayloadId);
+                }
             }
 
             _isFramesReady = true;
@@ -40,24 +52,20 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewWillAppear(animated);
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm == null)
+            if (_viewModel != null)
             {
-                return;
+                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
 
-            vm.OnActivated();
+            _viewModel?.OnActivated();
         }
 
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
 
-            var vm = _viewModel as BaseViewModel;
-            if (vm != null)
-            {
-                vm.OnPaused();
-            }
+            _viewModel?.OnPaused();
 
             if (_viewModel != null)
             {
@@ -73,15 +81,13 @@ namespace MvvmMobile.iOS.View
         protected Action<Guid> CallbackAction { get; set; }
         public bool AsModal { get; protected set; }
 
-        private IBaseViewModel _viewModel;
-        protected IBaseViewModel ViewModel
+        private T _viewModel;
+        protected T ViewModel
         {
             // ReSharper disable once UnusedMember.Global
             get { return _viewModel; }
             set
             {
-                var runEvents = _viewModel != value;
-
                 _viewModel = value;
 
                 if (_viewModel == null)
@@ -92,13 +98,8 @@ namespace MvvmMobile.iOS.View
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
-                if (runEvents == false)
-                {
-                    return;
-                }
-
-                ((BaseViewModel)_viewModel).OnLoaded();
-                ((BaseViewModel)_viewModel).CallbackAction = CallbackAction;
+                _viewModel.OnLoaded();
+                _viewModel.CallbackAction = CallbackAction;
             }
         }
 
@@ -108,6 +109,15 @@ namespace MvvmMobile.iOS.View
         // Virtual Methods
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
+        public UIViewController AsViewController()
+        {
+            return this;
+        }
 
 
         // -----------------------------------------------------------------------------

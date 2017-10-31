@@ -1,24 +1,30 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.ViewModel;
 using UIKit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.iOS.ViewController
 {
-    public class SecondViewController : ViewControllerBase
+    public class SecondViewController : ViewControllerBase<ISecondViewModel>
     {
-        private ISecondViewModel _viewModel;
+        // Private Members
         private UILabel _titleLabel;
         private UIButton _firstButton;
         private UIButton _secondButton;
 
+
+        // -----------------------------------------------------------------------------
+
+        // Constructors
         public SecondViewController()
         {
-            AsModal = true;
+            AsModal = false;
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -26,10 +32,6 @@ namespace MvvmMobile.Sample.iOS.ViewController
             // Init
             Title = "Second";
             View.BackgroundColor = UIColor.White;
-
-            // Load View Model
-            _viewModel = Resolver.Resolve<ISecondViewModel>();
-            ViewModel = _viewModel;
 
             // Controls
             _titleLabel = new UILabel { TextColor = UIColor.Black, TextAlignment = UITextAlignment.Center };
@@ -40,13 +42,7 @@ namespace MvvmMobile.Sample.iOS.ViewController
             _firstButton.TouchUpInside += (sender, e) => 
             {
                 // Report back
-                _viewModel.NameSelectedCommand.Execute("Jonas");
-
-                //NavigationController?.DismissViewController(true, () => 
-                //{
-                //    // Report back
-                //    _viewModel.NameSelectedCommand.Execute("Jonas");
-                //});
+                ViewModel.NameSelectedCommand.Execute("Jonas");
             };
 
             _secondButton = new UIButton();
@@ -55,13 +51,7 @@ namespace MvvmMobile.Sample.iOS.ViewController
             _secondButton.TouchUpInside += (sender, e) => 
             {
                 // Report back
-                _viewModel.NameSelectedCommand.Execute("Kalle");
-
-                //NavigationController?.DismissViewController(true, () => 
-                //{
-                //    // Report back
-                //    _viewModel.NameSelectedCommand.Execute("Kalle");
-                //});
+                ViewModel.NameSelectedCommand.Execute("Kalle");
             };
 
             // Add Controls
@@ -78,16 +68,17 @@ namespace MvvmMobile.Sample.iOS.ViewController
             _titleLabel.Frame = new CGRect(0, 60f, View.Bounds.Width, 40f);
             _firstButton.Frame = new CGRect(0, _titleLabel.Frame.Bottom + 20f, View.Bounds.Width, 40f);
             _secondButton.Frame = new CGRect(0, _firstButton.Frame.Bottom + 20f, View.Bounds.Width, 40f);
-
-            // Load
-            _viewModel.Load(PayloadId);
         }
 
+
+        // -----------------------------------------------------------------------------
+
+        // Overrides
         protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_viewModel.Title))
+            if (e.PropertyName == nameof(ViewModel.Title))
             {
-                _titleLabel.Text = _viewModel.Title;
+                _titleLabel.Text = ViewModel.Title;
                 return;
             }
         }

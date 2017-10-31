@@ -58,7 +58,7 @@ namespace MvvmMobile.iOS.Navigation
                 return;
             }
 
-            if (vc is ViewControllerBase frameworkVc)
+            if (vc is IViewControllerBase frameworkVc)
             {
                 // Handle payload parameter
                 if (parameter != null)
@@ -76,8 +76,8 @@ namespace MvvmMobile.iOS.Navigation
                 // Handle modal
                 if (frameworkVc.AsModal)
                 {
-                    frameworkVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-                    result.navController.PresentViewController(new UINavigationController(frameworkVc), true, null);
+                    frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+                    result.navController.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), true, null);
                     return;
                 }
             }

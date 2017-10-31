@@ -4,7 +4,7 @@ using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
-    public interface ISecondViewModel : IBaseViewModel
+    public interface ISecondViewModel : IPayloadViewModel
     {
         string Title { get; }
 
