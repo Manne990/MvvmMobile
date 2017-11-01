@@ -55,7 +55,7 @@ namespace MvvmMobile.Droid.Navigation
                 return;
             }
 
-            if (concreteType.IsSubclassOf(typeof(IFragmentBase)))
+            if (concreteType.IsSubclassOf(typeof(FragmentBase)))
             {
                 LoadFragment(concreteType, parameter, callback);
                 return;
@@ -116,9 +116,14 @@ namespace MvvmMobile.Droid.Navigation
         {
             if (Context is Activity activity)
             {
-                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                if (activity.FragmentManager?.BackStackEntryCount == 0)
                 {
                     callbackAction.Invoke(payloadId);
+                }
+                else if (activity.FragmentManager?.BackStackEntryCount == 1)
+                {
+                    callbackAction.Invoke(payloadId);
+                    activity.Finish();
                 }
                 else
                 {
@@ -138,7 +143,7 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public IFragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
+        public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
         {
             try
             {
@@ -156,6 +161,7 @@ namespace MvvmMobile.Droid.Navigation
 
                     activityPayload.FragmentType = concreteType;
                     activityPayload.FragmentPayload = payload;
+                    activityPayload.FragmentCallback = callback;
 
                     intent.SetPayload(activityPayload);
 
@@ -165,7 +171,7 @@ namespace MvvmMobile.Droid.Navigation
                 }
 
                 // Create the fragment
-                var fragment = (IFragmentBase)Activator.CreateInstance(concreteType);
+                var fragment = (FragmentBase)Activator.CreateInstance(concreteType);
 
                 // Set the payload
                 if (payload != null)
@@ -182,7 +188,7 @@ namespace MvvmMobile.Droid.Navigation
                 // Push the fragment
                 var ft = activity.FragmentManager.BeginTransaction();
 
-                ft.Replace(FragmentContainerId, fragment.AsFragment(), concreteType.Name);
+                ft.Replace(FragmentContainerId, fragment, concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
 
                 ft.Commit();

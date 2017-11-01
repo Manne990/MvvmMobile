@@ -6,7 +6,53 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
-    public class FragmentBase<T> : Fragment, IFragmentBase where T : class, IBaseViewModel
+    public class FragmentBase : Fragment
+    {
+        // Properties
+        public string Title { get; protected set; }
+        protected Guid PayloadId { get; set; }
+        protected Action<Guid> CallbackAction { get; set; }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Payload and Callback Handling
+        public void SetPayload(IPayload payload)
+        { 
+            if (payload == null)
+            {
+                return;
+            }
+
+            // Set payload id
+            PayloadId = Guid.NewGuid();
+
+            // Add payload
+            var payloads = Resolver.Resolve<IPayloads>();
+
+            payloads.Add(PayloadId, payload);
+        }
+
+        public void SetCallback(Action<Guid> callbackAction)
+        {
+            if (callbackAction == null)
+            {
+                return;
+            }
+
+            CallbackAction = callbackAction;
+        }
+    }
+
+    public class FragmentBase<T> : FragmentBase where T : class, IBaseViewModel //IFragmentBase
     {
         // Properties
         private T _viewModel;
@@ -36,18 +82,6 @@ namespace MvvmMobile.Droid.View
                 _viewModel.CallbackAction = CallbackAction;
             }
         }
-
-        public string Title { get; protected set; }
-        protected Guid PayloadId { get; set; }
-        protected Action<Guid> CallbackAction { get; set; }
-
-        //protected ActivityBase ActionBarActivity
-        //{
-        //    get
-        //    {
-        //        return Activity as ActivityBase;
-        //    }
-        //}
 
 
         // -----------------------------------------------------------------------------
@@ -88,45 +122,6 @@ namespace MvvmMobile.Droid.View
             { 
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
             }
-        }
-
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Payload and Callback Handling
-        public void SetPayload(IPayload payload)
-        { 
-            if (payload == null)
-            {
-                return;
-            }
-
-            // Set payload id
-            PayloadId = Guid.NewGuid();
-
-            // Add payload
-            var payloads = Resolver.Resolve<IPayloads>();
-
-            payloads.Add(PayloadId, payload);
-        }
-
-        public void SetCallback(Action<Guid> callbackAction)
-        {
-            if (callbackAction == null)
-            {
-                return;
-            }
-
-            CallbackAction = callbackAction;
-        }
-
-        public Fragment AsFragment()
-        {
-            return this;
         }
     }
 }

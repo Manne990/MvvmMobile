@@ -65,11 +65,9 @@
     <Compile Include="View\IFragmentBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\layout\FragmentContainerActivityLayout.axml" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +82,7 @@
     <Folder Include="View\" />
     <Folder Include="Resources\layout\" />
     <Folder Include="Common\" />
+    <Folder Include="Resources\values\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

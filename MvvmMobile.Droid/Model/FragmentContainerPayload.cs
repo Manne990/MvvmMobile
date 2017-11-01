@@ -7,5 +7,6 @@ namespace MvvmMobile.Droid.Model
     {
         public Type FragmentType { get; set; }
         public IPayload FragmentPayload { get; set; }
+        public Action<Guid> FragmentCallback { get; set; }
     }
 }

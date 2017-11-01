@@ -53,9 +53,9 @@
     <Compile Include="SampleApplication.cs" />
     <Compile Include="Activities\StartActivity.cs" />
     <Compile Include="Activities\SecondActivity.cs" />
+    <Compile Include="Fragments\SecondFragment.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
@@ -73,6 +73,7 @@
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Activities\" />
+    <Folder Include="Fragments\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

@@ -37,6 +37,7 @@ namespace MvvmMobile.Sample.Droid
             {
                 { typeof(IStartViewModel), typeof(StartActivity) },
                 { typeof(ISecondViewModel), typeof(SecondActivity) }
+                //{ typeof(ISecondViewModel), typeof(SecondFragment) }
             };
 
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();

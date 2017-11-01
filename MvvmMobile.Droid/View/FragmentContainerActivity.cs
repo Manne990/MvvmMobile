@@ -10,7 +10,7 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
-    [Activity(Label = "", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "", ScreenOrientation = ScreenOrientation.Portrait)]
     public class FragmentContainerActivity : ActivityBase<IBaseViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -40,7 +40,9 @@ namespace MvvmMobile.Droid.View
 
             // Load Fragment
             var app = (AppNavigation)Resolver.Resolve<INavigation>();
-            app.LoadFragment(payload.FragmentType, payload.FragmentPayload);
+
+            app.FragmentContainerId = Resource.Id.fragmentContainer;
+            app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);
 
             return base.OnCreateOptionsMenu(menu);
         }
