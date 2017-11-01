@@ -93,6 +93,7 @@
     <Folder Include="ViewController\" />
     <Folder Include="View\" />
     <Folder Include="ViewController\Start\" />
+    <Folder Include="ViewController\Edit\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -111,6 +112,10 @@
       <DependentUpon>StartViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewController\Start\StartTableViewSource.cs" />
+    <Compile Include="ViewController\Edit\EditMotorcycleViewController.cs" />
+    <Compile Include="ViewController\Edit\EditMotorcycleViewController.designer.cs">
+      <DependentUpon>EditMotorcycleViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">

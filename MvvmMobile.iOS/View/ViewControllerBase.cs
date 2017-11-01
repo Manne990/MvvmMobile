@@ -28,6 +28,11 @@ namespace MvvmMobile.iOS.View
             base.ViewDidLoad();
 
             ViewModel = Resolver.Resolve<T>();
+
+            if (NavigationItem != null)
+            {
+                NavigationItem.Title = Title;
+            }
         }
 
         public override void ViewWillLayoutSubviews()

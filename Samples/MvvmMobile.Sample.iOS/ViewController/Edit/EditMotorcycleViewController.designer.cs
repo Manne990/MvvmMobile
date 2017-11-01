@@ -9,11 +9,9 @@ using System.CodeDom.Compiler;
 
 namespace MvvmMobile.Sample.iOS.View
 {
-	[Register ("StartViewController")]
-	partial class StartViewController
+	[Register ("EditMotorcycleViewController")]
+	partial class EditMotorcycleViewController
 	{
-		[Action ("AddMotorcycle:")]
-		partial void AddMotorcycle (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

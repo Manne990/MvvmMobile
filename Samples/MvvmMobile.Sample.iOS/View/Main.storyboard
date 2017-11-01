@@ -12,7 +12,7 @@
         <!--Motorcycles-->
         <scene sceneID="202">
             <objects>
-                <tableViewController title="Motorcycles" id="203" customClass="StartViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="StartViewController" title="Motorcycles" id="203" customClass="StartViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="205">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -41,11 +41,36 @@
                             <outlet property="delegate" destination="203" id="207"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Motorcycles" id="204"/>
+                    <navigationItem key="navigationItem" title="Motorcycles" id="204">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1YA-fJ-nat">
+                            <connections>
+                                <action selector="AddMotorcycle:" destination="203" id="6gQ-sN-Cws"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="210" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1020" y="-125"/>
+        </scene>
+        <!--Motorcycle-->
+        <scene sceneID="sDy-pd-frC">
+            <objects>
+                <viewController storyboardIdentifier="EditMotorcycleViewController" title="Motorcycle" id="q4a-SS-gbX" customClass="EditMotorcycleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="btZ-24-ahG"/>
+                        <viewControllerLayoutGuide type="bottom" id="nmR-Ft-Mmh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QXW-WF-qs1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="yzg-38-UFD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lx8-Ms-Fui" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2188" y="-125.4872563718141"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RTg-Ly-MAG">

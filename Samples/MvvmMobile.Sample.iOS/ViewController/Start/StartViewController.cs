@@ -1,10 +1,13 @@
 using System;
+using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
+using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.iOS.ViewController.Start;
 
-namespace MvvmMobile.Sample.iOS
+namespace MvvmMobile.Sample.iOS.View
 {
+    [Storyboard(storyboardName:"Main", storyboardId:"StartViewController")]
     public partial class StartViewController : TableViewControllerBase<IStartViewModel>
     {
         // Private Members
@@ -26,8 +29,8 @@ namespace MvvmMobile.Sample.iOS
         {
             base.ViewDidLoad();
 
-            _source = new StartTableViewSource();
-            TableView.DataSource = _source;
+            _source = new StartTableViewSource(MotorcycleSelected);
+            TableView.Source = _source;
         }
 
 
@@ -42,6 +45,20 @@ namespace MvvmMobile.Sample.iOS
                 TableView.ReloadData();
                 return;
             }
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Private Methods
+        private void MotorcycleSelected(IMotorcycle motorcycle)
+        {
+            ViewModel?.EditMotorcycleCommand.Execute(motorcycle);
+        }
+
+        partial void AddMotorcycle(Foundation.NSObject sender)
+        {
+            ViewModel?.AddMotorcycleCommand.Execute();
         }
     }
 }

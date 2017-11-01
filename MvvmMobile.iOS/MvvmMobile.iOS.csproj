@@ -55,6 +55,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Navigation\" />
     <Folder Include="View\" />
+    <Folder Include="Common\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="View\ViewControllerBase.cs" />
     <Compile Include="View\IViewControllerBase.cs" />
     <Compile Include="View\TableViewControllerBase.cs" />
+    <Compile Include="Common\StoryboardAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Core\MvvmMobile.Core.csproj">

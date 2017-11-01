@@ -4,6 +4,7 @@ using Foundation;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.iOS.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.iOS.View;
 using UIKit;
 using XLabs.Ioc;
 
@@ -33,7 +34,8 @@ namespace MvvmMobile.Sample.iOS
 
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
-                //{ typeof(IStartViewModel), typeof(ViewController.StartViewController) }
+                { typeof(IStartViewModel), typeof(StartViewController) },
+                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
             };
 
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();

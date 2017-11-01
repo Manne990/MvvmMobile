@@ -41,5 +41,13 @@ namespace MvvmMobile.Core.Common
                 _execute?.Invoke(parameter);
             }
         }
+
+        public void Execute()
+        {
+            if (CanExecute(null))
+            {
+                _execute?.Invoke(null);
+            }
+        }
     }
 }
