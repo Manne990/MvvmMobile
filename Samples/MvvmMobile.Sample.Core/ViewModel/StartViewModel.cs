@@ -13,6 +13,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // Constructors
         public StartViewModel(INavigation navigation)
         {
+            Motorcycles = new ObservableCollection<IMotorcycle>();
+
             AddMotorcycleCommand = new RelayCommand(o =>
             {
                 navigation.NavigateTo(typeof(IEditMotorcycleViewModel), null, MotorcycleAdded);
@@ -37,6 +39,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
             {
 
             });
+
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });
         }
 
 

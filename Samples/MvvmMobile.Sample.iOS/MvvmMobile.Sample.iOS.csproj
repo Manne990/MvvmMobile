@@ -91,9 +91,12 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="ViewController\" />
+    <Folder Include="View\" />
+    <Folder Include="ViewController\Start\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="View\Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -103,6 +106,11 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="ViewController\Start\StartViewController.cs" />
+    <Compile Include="ViewController\Start\StartViewController.designer.cs">
+      <DependentUpon>StartViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Start\StartTableViewSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">

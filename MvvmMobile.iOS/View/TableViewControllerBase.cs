@@ -6,7 +6,7 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.iOS.View
 {
-    public class ViewControllerBase<T> : UIViewController, IViewControllerBase where T : class, IBaseViewModel
+    public class TableViewControllerBase<T> : UITableViewController, IViewControllerBase where T : class, IBaseViewModel
     {
         // Private Members
         private bool _isFramesReady;
@@ -15,7 +15,7 @@ namespace MvvmMobile.iOS.View
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public ViewControllerBase (IntPtr handle) : base (handle)
+        public TableViewControllerBase (IntPtr handle) : base (handle)
         {
         }
 

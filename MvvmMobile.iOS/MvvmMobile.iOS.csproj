@@ -63,6 +63,7 @@
     <Compile Include="View\TabBarControllerBase.cs" />
     <Compile Include="View\ViewControllerBase.cs" />
     <Compile Include="View\IViewControllerBase.cs" />
+    <Compile Include="View\TableViewControllerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Core\MvvmMobile.Core.csproj">

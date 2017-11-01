@@ -7,5 +7,10 @@ namespace MvvmMobile.Sample.Core.Model
         public string Brand { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Brand} {Model} ({Year})";
+        }
     }
 }
