@@ -103,8 +103,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="ViewController\StartViewController.cs" />
-    <Compile Include="ViewController\SecondViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">

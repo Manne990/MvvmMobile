@@ -11,11 +11,10 @@ namespace MvvmMobile.Sample.Core
         {
             var container = Resolver.Resolve<IDependencyContainer>();
 
-            container.Register<ITitlePayload>(r => new TitlePayload());
-            container.Register<IStartViewModel>(r => new StartViewModel(r.Resolve<INavigation>()));
+            container.Register<IMotorcyclePayload>(r => new MotorcyclePayload());
 
-            container.Register<INamePayload>(r => new NamePayload());
-            container.Register<ISecondViewModel>(r => new SecondViewModel());
+            container.Register<IStartViewModel>(r => new StartViewModel(r.Resolve<INavigation>()));
+            container.Register<IEditMotorcycleViewModel>(r => new EditMotorcycleViewModel());
         }
     }
 }

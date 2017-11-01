@@ -31,13 +31,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\IStartViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
-    <Compile Include="ViewModel\ISecondViewModel.cs" />
-    <Compile Include="ViewModel\SecondViewModel.cs" />
-    <Compile Include="Model\ITitlePayload.cs" />
-    <Compile Include="Model\TitlePayload.cs" />
-    <Compile Include="Model\INamePayload.cs" />
-    <Compile Include="Model\NamePayload.cs" />
+    <Compile Include="ViewModel\IEditMotorcycleViewModel.cs" />
+    <Compile Include="ViewModel\EditMotorcycleViewModel.cs" />
+    <Compile Include="Model\IMotorcyclePayload.cs" />
+    <Compile Include="Model\MotorcyclePayload.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Model\Motorcycle.cs" />
+    <Compile Include="Model\IMotorcycle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />

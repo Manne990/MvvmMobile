@@ -36,7 +36,7 @@ namespace MvvmMobile.Sample.Droid
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
                 { typeof(IStartViewModel), typeof(StartActivity) },
-                { typeof(ISecondViewModel), typeof(SecondActivity) }
+                { typeof(IEditMotorcycleViewModel), typeof(SecondActivity) }
                 //{ typeof(ISecondViewModel), typeof(SecondFragment) }
             };
 

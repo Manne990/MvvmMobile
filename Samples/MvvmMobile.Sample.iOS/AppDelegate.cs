@@ -33,8 +33,7 @@ namespace MvvmMobile.Sample.iOS
 
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
-                { typeof(IStartViewModel), typeof(ViewController.StartViewController) },
-                { typeof(ISecondViewModel), typeof(ViewController.SecondViewController) }
+                //{ typeof(IStartViewModel), typeof(ViewController.StartViewController) }
             };
 
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();
@@ -42,14 +41,14 @@ namespace MvvmMobile.Sample.iOS
             nav.Init(viewMapperDictionary);
 
             // Startup
-            Window = new UIWindow(UIScreen.MainScreen.Bounds);
+            //Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
-            var navController = new UINavigationController(new ViewController.StartViewController());
+            //var navController = new UINavigationController(new ViewController.StartViewController());
 
-            nav.NavigationController = navController;
+            //nav.NavigationController = navController;
             
-            Window.RootViewController = navController;
-            Window.MakeKeyAndVisible();
+            //Window.RootViewController = navController;
+            //Window.MakeKeyAndVisible();
 
             return true;
         }

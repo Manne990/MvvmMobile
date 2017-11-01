@@ -6,24 +6,18 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
-    public class SecondViewModel : BaseViewModel, ISecondViewModel
+    public class EditMotorcycleViewModel : BaseViewModel, IEditMotorcycleViewModel
     {
         // Constructors
-        public SecondViewModel()
+        public EditMotorcycleViewModel()
         {
-            NameSelectedCommand = new RelayCommand(o =>
+            SaveMotorcycleCommand = new RelayCommand(o =>
             {
-                var name = o as string;
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    return;
-                }
+                var mcPayload = Resolver.Resolve<IMotorcyclePayload>();
 
-                var namePayload = Resolver.Resolve<INamePayload>();
+                mcPayload.Motorcycle = _motorcycle;
 
-                namePayload.Name = name;
-
-                NavigateBack(namePayload);
+                NavigateBack(mcPayload);
             });
         }
 
@@ -31,14 +25,14 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Properties
-        private string _title;
-        public string Title
+        private IMotorcycle _motorcycle;
+        public IMotorcycle Motorcycle
         {
-            get { return _title; }
+            get { return _motorcycle; }
             set
             {
-                _title = value;
-                NotifyPropertyChanged(nameof(Title));
+                _motorcycle = value;
+                NotifyPropertyChanged(nameof(Motorcycle));
             }
         }
 
@@ -46,7 +40,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Commands
-        public RelayCommand NameSelectedCommand { get; }
+        public RelayCommand SaveMotorcycleCommand { get; }
 
 
         // -----------------------------------------------------------------------------
@@ -54,13 +48,14 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // Public Methods
         public void Load(Guid payloadId)
         {
-            var payload = LoadPayload<ITitlePayload>(payloadId);
+            var payload = LoadPayload<IMotorcyclePayload>(payloadId);
             if (payload == null)
             {
+                Motorcycle = new Motorcycle { Id = Guid.NewGuid() };
                 return;
             }
 
-            Title = payload.Title;
+            Motorcycle = payload.Motorcycle;
         }
     }
 }

@@ -1,12 +1,16 @@
-﻿using MvvmMobile.Core.Common;
+﻿using System.Collections.ObjectModel;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
+using MvvmMobile.Sample.Core.Model;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
     public interface IStartViewModel : IBaseViewModel
     {
-        string Name { get; }
+        ObservableCollection<IMotorcycle> Motorcycles { get; }
 
-        RelayCommand MoveNextCommand { get; }
+        RelayCommand AddMotorcycleCommand { get; }
+        RelayCommand EditMotorcycleCommand { get; }
+        RelayCommand DeleteMotorcycleCommand { get; }
     }
 }

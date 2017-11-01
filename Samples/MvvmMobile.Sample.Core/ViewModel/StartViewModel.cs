@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
@@ -12,19 +13,29 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // Constructors
         public StartViewModel(INavigation navigation)
         {
-            MoveNextCommand = new RelayCommand(o =>
+            AddMotorcycleCommand = new RelayCommand(o =>
             {
-                var title = o as string;
-                if (string.IsNullOrWhiteSpace(title))
+                navigation.NavigateTo(typeof(IEditMotorcycleViewModel), null, MotorcycleAdded);
+            });
+
+            EditMotorcycleCommand = new RelayCommand(o =>
+            {
+                var mc = o as IMotorcycle;
+                if (mc == null)
                 {
                     return;
                 }
 
-                var payload = Resolver.Resolve<ITitlePayload>();
+                var payload = Resolver.Resolve<IMotorcyclePayload>();
 
-                payload.Title = title;
+                payload.Motorcycle = mc;
 
-                navigation.NavigateTo(typeof(ISecondViewModel), payload, NameSelected);
+                navigation.NavigateTo(typeof(IEditMotorcycleViewModel), payload, MotorcycleChanged);
+            });
+
+            DeleteMotorcycleCommand = new RelayCommand(o =>
+            {
+
             });
         }
 
@@ -32,14 +43,14 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Properties
-        private string _name;
-        public string Name
+        private ObservableCollection<IMotorcycle> _motorcycles;
+        public ObservableCollection<IMotorcycle> Motorcycles
         {
-            get { return _name; }
+            get { return _motorcycles; }
             set
             {
-                _name = value;
-                NotifyPropertyChanged(nameof(Name));
+                _motorcycles = value;
+                NotifyPropertyChanged(nameof(Motorcycles));
             }
         }
 
@@ -47,23 +58,30 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Commands
-        public RelayCommand MoveNextCommand { get; }
+        public RelayCommand AddMotorcycleCommand { get; }
+        public RelayCommand EditMotorcycleCommand { get; }
+        public RelayCommand DeleteMotorcycleCommand { get; }
 
 
         // -----------------------------------------------------------------------------
 
         // Private Methods
-        private void NameSelected(Guid payloadId)
+        private void MotorcycleAdded(Guid payloadId)
         {
             // Get Payload
             var payloads = Resolver.Resolve<IPayloads>();
-            var payload = payloads.GetAndRemove<INamePayload>(payloadId);
-            if (payload == null)
+            var payload = payloads.GetAndRemove<IMotorcyclePayload>(payloadId);
+            if (payload?.Motorcycle == null)
             {
                 return;
             }
 
-            Name = payload.Name;
+            Motorcycles?.Add(payload.Motorcycle);
+        }
+
+        private void MotorcycleChanged(Guid payloadId)
+        {
+            NotifyPropertyChanged(nameof(Motorcycles));
         }
     }
 }
