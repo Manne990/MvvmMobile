@@ -12,9 +12,31 @@ namespace MvvmMobile.Sample.iOS.View
 	[Register ("EditMotorcycleViewController")]
 	partial class EditMotorcycleViewController
 	{
+		[Outlet]
+		UIKit.UITextField BrandTextField { get; set; }
+
+		[Outlet]
+		UIKit.UITextField ModelTextField { get; set; }
+
+		[Outlet]
+		UIKit.UITextField YearTextField { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (BrandTextField != null) {
+				BrandTextField.Dispose ();
+				BrandTextField = null;
+			}
+
+			if (ModelTextField != null) {
+				ModelTextField.Dispose ();
+				ModelTextField = null;
+			}
+
+			if (YearTextField != null) {
+				YearTextField.Dispose ();
+				YearTextField = null;
+			}
 		}
 	}
 }

@@ -33,6 +33,13 @@ namespace MvvmMobile.Sample.iOS.View
             TableView.Source = _source;
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            TableView?.ReloadData();
+        }
+
 
         // -----------------------------------------------------------------------------
 
@@ -42,7 +49,7 @@ namespace MvvmMobile.Sample.iOS.View
             if (e.PropertyName == nameof(ViewModel.Motorcycles))
             {
                 _source?.LoadData(ViewModel.Motorcycles);
-                TableView.ReloadData();
+                TableView?.ReloadData();
                 return;
             }
         }

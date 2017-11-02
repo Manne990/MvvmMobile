@@ -81,6 +81,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
             }
 
             Motorcycles?.Add(payload.Motorcycle);
+
+            NotifyPropertyChanged(nameof(Motorcycles));
         }
 
         private void MotorcycleChanged(Guid payloadId)

@@ -27,11 +27,16 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewDidLoad();
 
-            ViewModel = Resolver.Resolve<T>();
-
             if (NavigationItem != null)
             {
                 NavigationItem.Title = Title;
+            }
+
+            ViewModel = Resolver.Resolve<T>();
+
+            if (_viewModel is IPayloadViewModel vm)
+            {
+                vm.Load(PayloadId);
             }
         }
 
@@ -40,11 +45,6 @@ namespace MvvmMobile.iOS.View
             if (_isFramesReady == false)
             {
                 ViewFramesReady();
-
-                if (_viewModel is IPayloadViewModel vm)
-                {
-                    vm.Load(PayloadId);
-                }
             }
 
             _isFramesReady = true;

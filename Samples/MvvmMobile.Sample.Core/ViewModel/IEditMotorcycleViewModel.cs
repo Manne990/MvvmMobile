@@ -9,6 +9,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
     {
         IMotorcycle Motorcycle { get; set; }
 
+        RelayCommand CancelCommand { get; }
         RelayCommand SaveMotorcycleCommand { get; }
     }
 }

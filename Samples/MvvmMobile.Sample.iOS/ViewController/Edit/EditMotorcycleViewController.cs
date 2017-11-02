@@ -1,19 +1,14 @@
 using System;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
-using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
+using UIKit;
 
 namespace MvvmMobile.Sample.iOS.View
 {
     [Storyboard(storyboardName:"Main", storyboardId:"EditMotorcycleViewController")]
     public partial class EditMotorcycleViewController : ViewControllerBase<IEditMotorcycleViewModel>
     {
-        // Private Members
-
-
-        // -----------------------------------------------------------------------------
-
         // Constructors
         public EditMotorcycleViewController(IntPtr handle) : base(handle)
         {
@@ -24,11 +19,27 @@ namespace MvvmMobile.Sample.iOS.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        public override void ViewDidLoad()
+        public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidLoad();
+            base.ViewWillAppear(animated);
 
+            NavigationItem?.SetLeftBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Cancel, (sender, e) => 
+            {
+                ViewModel?.CancelCommand.Execute();
+            }), false);
 
+            NavigationItem?.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Done, (sender, e) => 
+            {
+                ViewModel.Motorcycle.Brand = BrandTextField.Text;
+                ViewModel.Motorcycle.Model = ModelTextField.Text;
+
+                if (int.TryParse(YearTextField.Text, out int year))
+                {
+                    ViewModel.Motorcycle.Year = year;
+                }
+
+                ViewModel?.SaveMotorcycleCommand.Execute();
+            }), false);
         }
 
 
@@ -39,13 +50,11 @@ namespace MvvmMobile.Sample.iOS.View
         {
             if (e.PropertyName == nameof(ViewModel.Motorcycle))
             {
+                BrandTextField.Text = ViewModel.Motorcycle.Brand;
+                ModelTextField.Text = ViewModel.Motorcycle.Model;
+                YearTextField.Text = ViewModel.Motorcycle.Year.ToString();
                 return;
             }
         }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Private Methods
     }
 }
