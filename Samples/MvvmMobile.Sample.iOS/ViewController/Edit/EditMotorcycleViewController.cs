@@ -2,6 +2,7 @@ using System;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.iOS.Binding;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS.View
@@ -19,6 +20,13 @@ namespace MvvmMobile.Sample.iOS.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            //ViewModel.SetBinding(BrandTextField, "Motorcycle.Brand", true);
+        }
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);

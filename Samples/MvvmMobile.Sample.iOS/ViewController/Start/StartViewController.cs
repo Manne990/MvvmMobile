@@ -4,6 +4,7 @@ using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.iOS.ViewController.Start;
+using MvvmMobile.Sample.iOS.Binding;
 
 namespace MvvmMobile.Sample.iOS.View
 {
@@ -31,6 +32,8 @@ namespace MvvmMobile.Sample.iOS.View
 
             _source = new StartTableViewSource(MotorcycleSelected, DeleteMotorcycle);
             TableView.Source = _source;
+
+            //ViewModel.SetBinding(TableView, () => _source?.LoadData(ViewModel.Motorcycles));
         }
 
         public override void ViewWillAppear(bool animated)
