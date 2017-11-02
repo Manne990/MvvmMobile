@@ -17,7 +17,11 @@ namespace MvvmMobile.iOS.View
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public ViewControllerBase (IntPtr handle) : base (handle)
+        public ViewControllerBase()
+        {
+        }
+
+        public ViewControllerBase(IntPtr handle) : base (handle)
         {
         }
 

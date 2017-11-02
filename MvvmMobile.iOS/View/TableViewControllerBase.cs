@@ -17,6 +17,10 @@ namespace MvvmMobile.iOS.View
         // -----------------------------------------------------------------------------
 
         // Constructors
+        public TableViewControllerBase()
+        {
+        }
+
         public TableViewControllerBase (IntPtr handle) : base (handle)
         {
         }

@@ -37,7 +37,15 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             DeleteMotorcycleCommand = new RelayCommand(o =>
             {
+                var mc = o as IMotorcycle;
+                if (mc == null)
+                {
+                    return;
+                }
 
+                Motorcycles.Remove(mc);
+
+                NotifyPropertyChanged(nameof(Motorcycles));
             });
 
             Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });

@@ -29,7 +29,7 @@ namespace MvvmMobile.Sample.iOS.View
         {
             base.ViewDidLoad();
 
-            _source = new StartTableViewSource(MotorcycleSelected);
+            _source = new StartTableViewSource(MotorcycleSelected, DeleteMotorcycle);
             TableView.Source = _source;
         }
 
@@ -66,6 +66,11 @@ namespace MvvmMobile.Sample.iOS.View
         partial void AddMotorcycle(Foundation.NSObject sender)
         {
             ViewModel?.AddMotorcycleCommand.Execute();
+        }
+
+        private void DeleteMotorcycle(IMotorcycle motorcycle)
+        {
+            ViewModel?.DeleteMotorcycleCommand.Execute(motorcycle);
         }
     }
 }
