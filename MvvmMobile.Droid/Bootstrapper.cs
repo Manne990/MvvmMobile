@@ -7,11 +7,11 @@ using XLabs.Ioc.TinyIOC;
 
 namespace MvvmMobile.Droid
 {
-    public class Bootstrapper
+    public static class Bootstrapper
     {
-        private readonly TinyContainer _tinyContainer;
+        static readonly TinyContainer _tinyContainer;
 
-        public Bootstrapper()
+        static Bootstrapper()
         {
             var container = TinyIoCContainer.Current;
             _tinyContainer = new TinyContainer(container);
@@ -19,10 +19,9 @@ namespace MvvmMobile.Droid
             Resolver.SetResolver(new TinyResolver(container));
         }
 
-        public void Init()
+        public static void Init()
         {
-            var core = new Core.Bootstrapper();
-            core.Init();
+            Core.Bootstrapper.Init();
 
             _tinyContainer.RegisterSingle<INavigation, AppNavigation>();
 

@@ -26,12 +26,10 @@ namespace MvvmMobile.Sample.iOS
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
             // Init
-            var mvvmMobile = new MvvmMobile.iOS.Bootstrapper();
-            mvvmMobile.Init();
+            MvvmMobile.iOS.Bootstrapper.Init();
+            Core.Bootstrapper.Init();
 
-            var bootstrapper = new Core.Bootstrapper();
-            bootstrapper.Init();
-
+            // Setup ViewModel -> View Mapper
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
                 { typeof(IStartViewModel), typeof(StartViewController) },
@@ -41,16 +39,6 @@ namespace MvvmMobile.Sample.iOS
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();
 
             nav.Init(viewMapperDictionary);
-
-            // Startup
-            //Window = new UIWindow(UIScreen.MainScreen.Bounds);
-
-            //var navController = new UINavigationController(new ViewController.StartViewController());
-
-            //nav.NavigationController = navController;
-            
-            //Window.RootViewController = navController;
-            //Window.MakeKeyAndVisible();
 
             return true;
         }

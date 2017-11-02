@@ -34,22 +34,21 @@ namespace MvvmMobile.iOS.Navigation
         {
             if (viewModelType == null)
             {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: viewModelType was null!");
                 return;
             }
 
-            // Get the navigation controller
-            var result = GetCurrentNavigationController();
-            if (result.navController == null)
+            // Check the navigation controller
+            if (NavigationController == null)
             {
-                //TODO: Handle Error!
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Could not find a navigation controller!");
                 return;
             }
 
             // Get the vc type
             if (_viewMapperDictionary.TryGetValue(viewModelType, out Type viewControllerType) == false)
             {
-                //TODO: Handle Error!
-                return;
+                throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
             // Create the vc
@@ -66,18 +65,13 @@ namespace MvvmMobile.iOS.Navigation
                 var storyBoardName = attributes.ConstructorArguments[0].Value.ToString();
                 var storyBoardId = attributes.ConstructorArguments[1].Value.ToString();
                 var storyboard = UIStoryboard.FromName(storyBoardName, null);
-                if (storyboard == null) 
-                {
-                    //TODO: Handle Error!
-                    return;
-                }
 
                 vc = storyboard.InstantiateViewController(storyBoardId);
             }
 
             if (vc == null)
             {
-                //TODO: Handle Error!
+                System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateTo: The ViewController for VM '{viewModelType.ToString()}' could not be loaded!");
                 return;
             }
 
@@ -100,30 +94,42 @@ namespace MvvmMobile.iOS.Navigation
                 if (frameworkVc.AsModal)
                 {
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-                    result.navController.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), true, null);
+                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), true, null);
                     return;
                 }
             }
 
             // Push the vc
-            vc.NavigationItem.BackBarButtonItem = new UIBarButtonItem(string.Empty, UIBarButtonItemStyle.Plain, null);
-            result.navController.PushViewController(vc, true);
+            NavigationController?.PushViewController(vc, true);
         }
 
         public void NavigateBack(Action done = null)
         {
-            var result = GetCurrentNavigationController();
-
-            if (result.isModal)
+            // Check the navigation controller
+            if (NavigationController?.VisibleViewController == null)
             {
-                result.navController?.DismissViewController(true, () => 
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Could not find a navigation controller or a visible VC!");
+                return;
+            }
+
+            // Get the current VC
+            var currentVC = NavigationController.VisibleViewController as IViewControllerBase;
+            if (currentVC == null)
+            {
+                throw new Exception("The current VC does not implement IViewControllerBase!");
+            }
+
+            // Dismiss the VC
+            if (currentVC.AsModal)
+            {
+                NavigationController?.DismissViewController(true, () => 
                 {
                     done?.Invoke();
                 });
             }
             else
             {
-                result.navController?.PopViewController(true);
+                NavigationController?.PopViewController(true);
                 done?.Invoke();
             }
         }
@@ -136,39 +142,6 @@ namespace MvvmMobile.iOS.Navigation
 
                 done?.Invoke();
             });
-        }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Private Methods
-        private (bool isModal, UINavigationController navController) GetCurrentNavigationController()
-        {
-            var rootVc = UIApplication.SharedApplication.KeyWindow.RootViewController;
-            var isModal = rootVc.PresentedViewController != null;
-
-            if (rootVc is UINavigationController)
-            {
-                return (isModal, rootVc as UINavigationController);
-            }
-
-            var navController = (rootVc.PresentedViewController ?? NavigationController) as UINavigationController;
-
-            return (isModal, navController);
-        }
-
-        private bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
-        {
-            while (toCheck != null && toCheck != typeof(object))
-            {
-                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
-                if (generic == cur)
-                {
-                    return true;
-                }
-                toCheck = toCheck.BaseType;
-            }
-            return false;
         }
     }
 }

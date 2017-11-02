@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
+using MvvmMobile.iOS.Navigation;
 using UIKit;
 using XLabs.Ioc;
 
@@ -27,11 +29,6 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewDidLoad();
 
-            if (NavigationItem != null)
-            {
-                NavigationItem.Title = Title;
-            }
-
             ViewModel = Resolver.Resolve<T>();
 
             if (_viewModel is IPayloadViewModel vm)
@@ -55,6 +52,16 @@ namespace MvvmMobile.iOS.View
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+
+            if (NavigationController != null)
+            {
+                ((AppNavigation)Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
+            }
+
+            if (NavigationItem != null)
+            {
+                NavigationItem.Title = Title;
+            }
 
             if (_viewModel != null)
             {

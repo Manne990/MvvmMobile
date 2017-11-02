@@ -27,12 +27,10 @@ namespace MvvmMobile.Sample.Droid
             base.OnCreate();
 
             // Init
-            var mvvmMobile = new MvvmMobile.Droid.Bootstrapper();
-            mvvmMobile.Init();
+            MvvmMobile.Droid.Bootstrapper.Init();
+            Core.Bootstrapper.Init();
 
-            var bootstrapper = new Core.Bootstrapper();
-            bootstrapper.Init();
-
+            // Setup ViewModel -> View Mapper
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
                 { typeof(IStartViewModel), typeof(StartActivity) },
@@ -48,7 +46,6 @@ namespace MvvmMobile.Sample.Droid
         public override void OnTerminate()
         {
             base.OnTerminate();
-
         }
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)

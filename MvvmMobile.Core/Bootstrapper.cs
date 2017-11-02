@@ -3,9 +3,9 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Core
 {
-    public class Bootstrapper
+    public static class Bootstrapper
     {
-        public void Init()
+        public static void Init()
         {
             var container = Resolver.Resolve<IDependencyContainer>();
 
