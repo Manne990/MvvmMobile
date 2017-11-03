@@ -51,9 +51,10 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleApplication.cs" />
-    <Compile Include="Activities\StartActivity.cs" />
-    <Compile Include="Activities\SecondActivity.cs" />
-    <Compile Include="Fragments\SecondFragment.cs" />
+    <Compile Include="Activities\Start\StartActivity.cs" />
+    <Compile Include="Activities\Edit\EditMotorcycleActivity.cs" />
+    <Compile Include="Activities\Start\StartAdapter.cs" />
+    <Compile Include="Fragments\Edit\EditMotorcycleFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -68,12 +69,18 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\layout\StartActivityLayout.axml" />
-    <AndroidResource Include="Resources\layout\SecondActivityLayout.axml" />
+    <AndroidResource Include="Resources\layout\EditMotorcycleLayout.axml" />
+    <AndroidResource Include="Resources\menu\StartActivityMenu.xml" />
+    <AndroidResource Include="Resources\menu\EditMotorcycleActivityMenu.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Activities\" />
     <Folder Include="Fragments\" />
+    <Folder Include="Activities\Start\" />
+    <Folder Include="Activities\Edit\" />
+    <Folder Include="Resources\menu\" />
+    <Folder Include="Fragments\Edit\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

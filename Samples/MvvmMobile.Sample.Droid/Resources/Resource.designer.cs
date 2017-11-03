@@ -46,20 +46,26 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050004
-			public const int button = 2131034116;
+			// aapt resource value: 0x7f060000
+			public const int brandEditText = 2131099648;
 			
-			// aapt resource value: 0x7f050002
-			public const int firstButton = 2131034114;
+			// aapt resource value: 0x7f060003
+			public const int fragmentContainer = 2131099651;
 			
-			// aapt resource value: 0x7f050000
-			public const int fragmentContainer = 2131034112;
+			// aapt resource value: 0x7f060004
+			public const int listView = 2131099652;
 			
-			// aapt resource value: 0x7f050003
-			public const int secondButton = 2131034115;
+			// aapt resource value: 0x7f060006
+			public const int menuAdd = 2131099654;
 			
-			// aapt resource value: 0x7f050001
-			public const int titleTextView = 2131034113;
+			// aapt resource value: 0x7f060005
+			public const int menuDone = 2131099653;
+			
+			// aapt resource value: 0x7f060001
+			public const int modelEditText = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int yearEditText = 2131099650;
 			
 			static Id()
 			{
@@ -75,10 +81,10 @@ namespace MvvmMobile.Sample.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int FragmentContainerActivityLayout = 2130903040;
+			public const int EditMotorcycleLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int SecondActivityLayout = 2130903041;
+			public const int FragmentContainerActivityLayout = 2130903041;
 			
 			// aapt resource value: 0x7f030002
 			public const int StartActivityLayout = 2130903042;
@@ -89,6 +95,25 @@ namespace MvvmMobile.Sample.Droid
 			}
 			
 			private Layout()
+			{
+			}
+		}
+		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int EditMotorcycleActivityMenu = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int StartActivityMenu = 2131034113;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
 			{
 			}
 		}
@@ -113,10 +138,13 @@ namespace MvvmMobile.Sample.Droid
 		{
 			
 			// aapt resource value: 0x7f040001
-			public const int app_name = 2130968577;
+			public const int add = 2130968577;
 			
 			// aapt resource value: 0x7f040000
-			public const int hello = 2130968576;
+			public const int app_name = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int done = 2130968578;
 			
 			static String()
 			{

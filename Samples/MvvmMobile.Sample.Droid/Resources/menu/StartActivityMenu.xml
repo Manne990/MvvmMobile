@@ -1,0 +1,6 @@
+﻿<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuAdd"
+		android:title="@string/add"
+        android:showAsAction="always" />
+</menu>

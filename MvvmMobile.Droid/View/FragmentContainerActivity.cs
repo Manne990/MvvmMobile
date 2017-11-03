@@ -37,6 +37,10 @@ namespace MvvmMobile.Droid.View
         {
             // Get Payload
             var payload = Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
+            if (payload == null)
+            {
+                return base.OnCreateOptionsMenu(menu);
+            }
 
             // Load Fragment
             var app = (AppNavigation)Resolver.Resolve<INavigation>();

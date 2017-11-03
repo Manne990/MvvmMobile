@@ -4,7 +4,6 @@ using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.iOS.ViewController.Start;
-using MvvmMobile.Sample.iOS.Binding;
 
 namespace MvvmMobile.Sample.iOS.View
 {

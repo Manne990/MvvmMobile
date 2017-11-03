@@ -6,7 +6,9 @@ using Android.Runtime;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Droid.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
-using MvvmMobile.Sample.Droid.Activities;
+using MvvmMobile.Sample.Droid.Activities.Edit;
+using MvvmMobile.Sample.Droid.Activities.Start;
+using MvvmMobile.Sample.Droid.Fragments.Edit;
 using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Droid
@@ -34,8 +36,8 @@ namespace MvvmMobile.Sample.Droid
             var viewMapperDictionary = new Dictionary<Type, Type>
             {
                 { typeof(IStartViewModel), typeof(StartActivity) },
-                { typeof(IEditMotorcycleViewModel), typeof(SecondActivity) }
-                //{ typeof(ISecondViewModel), typeof(SecondFragment) }
+                //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) }
+                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
             };
 
             var nav = (AppNavigation)Resolver.Resolve<INavigation>();
