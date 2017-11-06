@@ -26,8 +26,6 @@ namespace MvvmMobile.Sample.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::MvvmMobile.Droid.Resource.Id.fragmentContainer = global::MvvmMobile.Sample.Droid.Resource.Id.fragmentContainer;
-			global::MvvmMobile.Droid.Resource.Layout.FragmentContainerActivityLayout = global::MvvmMobile.Sample.Droid.Resource.Layout.FragmentContainerActivityLayout;
 		}
 		
 		public partial class Attribute
@@ -50,16 +48,13 @@ namespace MvvmMobile.Sample.Droid
 			public const int brandEditText = 2131099648;
 			
 			// aapt resource value: 0x7f060003
-			public const int fragmentContainer = 2131099651;
-			
-			// aapt resource value: 0x7f060004
-			public const int listView = 2131099652;
-			
-			// aapt resource value: 0x7f060006
-			public const int menuAdd = 2131099654;
+			public const int listView = 2131099651;
 			
 			// aapt resource value: 0x7f060005
-			public const int menuDone = 2131099653;
+			public const int menuAdd = 2131099653;
+			
+			// aapt resource value: 0x7f060004
+			public const int menuDone = 2131099652;
 			
 			// aapt resource value: 0x7f060001
 			public const int modelEditText = 2131099649;
@@ -84,10 +79,7 @@ namespace MvvmMobile.Sample.Droid
 			public const int EditMotorcycleLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int FragmentContainerActivityLayout = 2130903041;
-			
-			// aapt resource value: 0x7f030002
-			public const int StartActivityLayout = 2130903042;
+			public const int StartActivityLayout = 2130903041;
 			
 			static Layout()
 			{

@@ -66,6 +66,7 @@
     <Compile Include="View\IViewControllerBase.cs" />
     <Compile Include="View\TableViewControllerBase.cs" />
     <Compile Include="Common\StoryboardAttribute.cs" />
+    <Compile Include="View\CollectionViewControllerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Core\MvvmMobile.Core.csproj">
