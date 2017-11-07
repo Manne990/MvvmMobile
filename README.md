@@ -67,7 +67,7 @@ var viewMapperDictionary = new Dictionary<Type, Type>
     { typeof(IMySecondViewModel), typeof(MySecondViewController) }
 };
 
-var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+var nav = Resolver.Resolve<INavigation>();
 
 nav.Init(viewMapperDictionary);
 ```
@@ -104,7 +104,7 @@ var viewMapperDictionary = new Dictionary<Type, Type>
     { typeof(IMySecondViewModel), typeof(SomeFragment) }
 };
 
-var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+var nav = Resolver.Resolve<INavigation>();
 
 nav.Init(viewMapperDictionary);
 ```
