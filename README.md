@@ -9,14 +9,14 @@ MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android wi
 
 ## Create the shared project ##
 - Create a PCL project for your shared code and add a reference to MvvmMobile.Core
-- MvvmMobiles uses XLabs.IoC so go ahead and add that NuGet package
+- MvvmMobile uses XLabs.IoC so go ahead and add that NuGet package
 - Make sure that all viewmodel interfaces inherit from IBaseViewModel or IPayloadViewModel (if the viewmodel should accept payloads)
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
 When navigating from one viewmodel to another, resolve INavigation and call the method NavigateTo.
 ```
 var payload = Resolver.Resolve<INavigation>();
-navigation.NavigateTo(typeof(IEditMotorcycleViewModel), payload, ReturnAction);
+navigation.NavigateTo(typeof(IMySecondViewModel), payload, ReturnAction);
 ```
 The 'payload' is an instance of a class that implements IPayload and this is a way to pass a payload of data to the receiving viewmodel.
 
@@ -67,7 +67,7 @@ var viewMapperDictionary = new Dictionary<Type, Type>
     { typeof(IMySecondViewModel), typeof(MySecondViewController) }
 };
 
-var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+var nav = Resolver.Resolve<INavigation>();
 
 nav.Init(viewMapperDictionary);
 ```
@@ -104,7 +104,7 @@ var viewMapperDictionary = new Dictionary<Type, Type>
     { typeof(IMySecondViewModel), typeof(SomeFragment) }
 };
 
-var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+var nav = Resolver.Resolve<INavigation>();
 
 nav.Init(viewMapperDictionary);
 ```
