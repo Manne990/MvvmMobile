@@ -5,7 +5,7 @@ MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android wi
 ## Getting Started ##
 - Create a PCL project for your shared code and add a reference to MvvmMobile.Core
 - MvvmMobiles uses XLabs.IoC so go ahead and add that NuGet package
-- Make sure that all viewmodel interfaces inherit from IPayloadViewModel
+- Make sure that all viewmodel interfaces inherit from IBaseViewModel or IPayloadViewModel (if the viewmodel should accept payloads)
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
 When navigating from one viewmodel to another, resolve INavigation and call the method NavigateTo.
