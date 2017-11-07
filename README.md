@@ -29,14 +29,14 @@ payload.SomeData = someData;
 NavigateBack(payload);
 ```
 
-## Create te Xamarin iOS project ##
+## Create the Xamarin iOS project ##
 - Create a Xamarin iOS project
 - Add a reference to your shared project
 - Add references to MvvmMobile.Core and MvvmMobile.iOS
 - Add the XLabs.IoC NuGet package
 - Create your view controllers
 
-All view controllers must inherit from ViewControllerBase<T> (where T is one of your view model interfaces) or one of the other view controller base classes provided by MvvmMobile.
+All view controllers must inherit from ViewControllerBase or one of the other view controller base classes provided by MvvmMobile.
 
 If you use storyboards then you need to add the Storyboard attribute to your view controller class.
 ```
@@ -73,4 +73,38 @@ nav.Init(viewMapperDictionary);
 ```
 
 ## Create the Xamarin Android project ##
-...
+- Create a Xamarin Android project
+- Add a reference to your shared project
+- Add references to MvvmMobile.Core and MvvmMobile.Droid
+- Add the XLabs.IoC NuGet package
+- Create your activities and fragments
+
+All activities must inherit from ActivityBase and all fragments must inherit from FragmentBase.
+
+Your activities/fragments can override ViewModel_PropertyChanged to be notified of property changes in the connected view model.
+```
+  protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+  {
+      if (e.PropertyName == nameof(ViewModel.SomeProperty))
+      {
+          SomeEditText.Text = ViewModel.SomeProperty;
+      }
+  }
+```
+
+In your application class. Initialize MvvmMobile
+```
+MvvmMobile.Droid.Bootstrapper.Init();
+```
+and also initialize the navigation component with the mapping between your viewmodels and your activities/fragments
+```
+var viewMapperDictionary = new Dictionary<Type, Type>
+{
+    { typeof(IMyFirstViewModel), typeof(MyFirstActivity) },
+    { typeof(IMySecondViewModel), typeof(SomeFragment) }
+};
+
+var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+
+nav.Init(viewMapperDictionary);
+```
