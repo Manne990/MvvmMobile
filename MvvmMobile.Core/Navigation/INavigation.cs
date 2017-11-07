@@ -9,6 +9,7 @@ namespace MvvmMobile.Core.Navigation
         void Init(Dictionary<Type, Type> viewMapper);
 
         void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null);
+        void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel;
         void NavigateBack(Action done = null);
         void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null);
     }

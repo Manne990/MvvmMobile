@@ -17,7 +17,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             AddMotorcycleCommand = new RelayCommand(o =>
             {
-                navigation.NavigateTo(typeof(IEditMotorcycleViewModel), null, MotorcycleAdded);
+                navigation.NavigateTo<IEditMotorcycleViewModel>(null, MotorcycleAdded);
             });
 
             EditMotorcycleCommand = new RelayCommand(o =>
@@ -32,7 +32,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
                 payload.Motorcycle = mc;
 
-                navigation.NavigateTo(typeof(IEditMotorcycleViewModel), payload, MotorcycleChanged);
+                navigation.NavigateTo<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
             });
 
             DeleteMotorcycleCommand = new RelayCommand(o =>

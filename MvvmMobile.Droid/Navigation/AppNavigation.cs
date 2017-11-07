@@ -42,6 +42,11 @@ namespace MvvmMobile.Droid.Navigation
             _viewMapperDictionary = viewMapper;
         }
 
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
+        {
+            NavigateTo(typeof(T), parameter, callback);
+        }
+
         public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
         {
             if (viewModelType == null)
