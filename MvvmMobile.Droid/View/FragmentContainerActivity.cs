@@ -11,7 +11,7 @@ using XLabs.Ioc;
 namespace MvvmMobile.Droid.View
 {
     [Activity(Label = "", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class FragmentContainerActivity : ActivityBase<IBaseViewModel>
+    internal sealed class FragmentContainerActivity : ActivityBase<IBaseViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -25,6 +25,11 @@ namespace MvvmMobile.Droid.View
 
         public override void OnBackPressed()
         {
+            if (BackButtonEnabled == false)
+            {
+                return;
+            }
+
             if (FragmentManager != null && FragmentManager.BackStackEntryCount <= 1)
             {
                 Finish();

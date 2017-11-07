@@ -60,6 +60,7 @@
     <Compile Include="Common\ScreenHelper.cs" />
     <Compile Include="Common\LeftMarginAnimation.cs" />
     <Compile Include="Common\AnimationListener.cs" />
+    <Compile Include="Common\PreDrawListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

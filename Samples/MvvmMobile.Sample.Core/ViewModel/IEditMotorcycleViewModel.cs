@@ -1,7 +1,6 @@
-﻿using System;
-using MvvmMobile.Sample.Core.Model;
-using MvvmMobile.Core.Common;
+﻿using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
+using MvvmMobile.Sample.Core.Model;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {

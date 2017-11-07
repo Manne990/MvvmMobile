@@ -57,6 +57,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Edit
             return base.OnOptionsItemSelected(item);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            EnableBackButton(true);
+        }
+
         public override void OnBackPressed()
         {
             ViewModel?.CancelCommand.Execute();

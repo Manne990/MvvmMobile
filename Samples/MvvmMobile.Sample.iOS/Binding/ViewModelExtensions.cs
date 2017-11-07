@@ -1,4 +1,6 @@
-﻿using System;
+﻿// REMARK: This class is experimental
+
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using MvvmMobile.Core.ViewModel;

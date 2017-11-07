@@ -2,7 +2,7 @@
 
 namespace MvvmMobile.Droid.Model
 {
-    internal class LoadTabPayload : ILoadTabPayload
+    internal sealed class LoadTabPayload : ILoadTabPayload
     {
         public int ActivateTab { get; set; }
         public Type LoadSubType { get; set; }

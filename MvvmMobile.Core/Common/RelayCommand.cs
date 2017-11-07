@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace MvvmMobile.Core.Common
 {
-    public class RelayCommand : ICommand
+    public sealed class RelayCommand : ICommand
     {
         // Private Members
         private readonly Action<object> _execute;

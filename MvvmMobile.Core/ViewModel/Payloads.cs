@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MvvmMobile.Core.ViewModel
 {
-    public class Payloads : IPayloads
+    internal sealed class Payloads : IPayloads
     {
         // Private Members
         private readonly Dictionary<Guid, IPayload> _payloads;

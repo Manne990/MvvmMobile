@@ -13,7 +13,6 @@ namespace MvvmMobile.Droid.View
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
 
-
         // -----------------------------------------------------------------------------
 
         // Lifecycle
@@ -52,9 +51,17 @@ namespace MvvmMobile.Droid.View
         }
     }
 
-    public class FragmentBase<T> : FragmentBase where T : class, IBaseViewModel //IFragmentBase
+    public class FragmentBase<T> : FragmentBase where T : class, IBaseViewModel
     {
         // Properties
+        protected ActivityBase<IBaseViewModel> ParentActivity
+        {
+            get
+            {
+                return Activity as ActivityBase<IBaseViewModel>;
+            }
+        }
+
         private T _viewModel;
         protected T ViewModel
         {

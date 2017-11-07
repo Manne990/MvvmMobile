@@ -80,29 +80,26 @@ namespace MvvmMobile.Sample.Droid
 			// aapt resource value: 0x7f070004
 			public const int deleteButton = 2131165188;
 			
-			// aapt resource value: 0x7f070005
-			public const int deleteButtonTextView = 2131165189;
-			
 			// aapt resource value: 0x7f070003
 			public const int fragmentContainer = 2131165187;
 			
-			// aapt resource value: 0x7f070008
-			public const int listView = 2131165192;
+			// aapt resource value: 0x7f070007
+			public const int listView = 2131165191;
 			
-			// aapt resource value: 0x7f070006
-			public const int mainLayout = 2131165190;
-			
-			// aapt resource value: 0x7f07000a
-			public const int menuAdd = 2131165194;
+			// aapt resource value: 0x7f070005
+			public const int mainLayout = 2131165189;
 			
 			// aapt resource value: 0x7f070009
-			public const int menuDone = 2131165193;
+			public const int menuAdd = 2131165193;
+			
+			// aapt resource value: 0x7f070008
+			public const int menuDone = 2131165192;
 			
 			// aapt resource value: 0x7f070001
 			public const int modelEditText = 2131165185;
 			
-			// aapt resource value: 0x7f070007
-			public const int titleTextView = 2131165191;
+			// aapt resource value: 0x7f070006
+			public const int titleTextView = 2131165190;
 			
 			// aapt resource value: 0x7f070002
 			public const int yearEditText = 2131165186;

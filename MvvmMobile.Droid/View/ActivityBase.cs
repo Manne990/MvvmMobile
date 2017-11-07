@@ -41,6 +41,8 @@ namespace MvvmMobile.Droid.View
             }
         }
 
+        protected bool BackButtonEnabled { get; private set; }
+
         protected Guid PayloadId { get; private set; }
         protected Guid CallbackId { get; private set; }
 
@@ -68,6 +70,13 @@ namespace MvvmMobile.Droid.View
             {
                 CallbackId = new Guid(extras.GetString(AppNavigation.CallbackAppParameter));
             }
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            ActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 
         protected override void OnResume()
@@ -102,8 +111,34 @@ namespace MvvmMobile.Droid.View
             }
         }
 
+        public override void OnBackPressed()
+        {
+            if (BackButtonEnabled)
+            {
+                base.OnBackPressed();
+            }
+        }
+
+        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        {
+            OnBackPressed();
+
+            return base.OnOptionsItemSelected(item);
+        }
+
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
+        public void EnableBackButton(bool enable)
+        {
+            BackButtonEnabled = enable;
+
+            ActionBar?.SetDisplayHomeAsUpEnabled(enable);
         }
 
 

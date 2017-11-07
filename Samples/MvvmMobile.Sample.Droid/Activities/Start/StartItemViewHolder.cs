@@ -9,14 +9,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
     public class StartItemViewHolder : Java.Lang.Object
     {
         // Private Members
-        private const int ButtonWidth = 70;
-
         private readonly LinearLayout _mainLayout;
         private readonly RelativeLayout _deleteButton;
         private readonly TextView _titleTextView;
 
         private readonly Action<int> _selectListener;
 
+        private int _deleteButtonWidth;
         private int _position;
         private bool _editMode;
         private float _lastDeltaX;
@@ -35,6 +34,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             _mainLayout = itemView.FindViewById<LinearLayout>(Resource.Id.mainLayout);
             _deleteButton = itemView.FindViewById<RelativeLayout>(Resource.Id.deleteButton);
             _titleTextView = itemView.FindViewById<TextView>(Resource.Id.titleTextView);
+
+            // Measure
+            _deleteButton.ViewTreeObserver.AddOnPreDrawListener(new PreDrawListener(() => 
+            {
+                _deleteButtonWidth = _deleteButton.Width;
+                return _deleteButton;
+            }));
 
             // Click Events
             _deleteButton.Click += (sender, e) => deleteListener?.Invoke(_position);
@@ -137,7 +143,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         {
             if(animate)
             {
-                _lastDeltaX = 2 * ButtonWidth * ScreenHelper.GetScreenDensity() * -1;
+                _lastDeltaX = _deleteButtonWidth * -1;
 
                 var anim = new LeftMarginAnimation(_mainLayout, Convert.ToInt32(_lastDeltaX))
                 {
@@ -154,6 +160,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine(_lastDeltaX);
                 var layoutParams = (RelativeLayout.LayoutParams)_mainLayout.LayoutParameters;
 
                 layoutParams.LeftMargin = Convert.ToInt32(_lastDeltaX);

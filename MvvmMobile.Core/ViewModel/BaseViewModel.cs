@@ -65,7 +65,14 @@ namespace MvvmMobile.Core.ViewModel
 
         // -----------------------------------------------------------------------------
 
-        // Callback Handling
+        // Payload and Callback Handling
+        protected T LoadPayload<T>(Guid payloadId) where T : class
+        {
+            // Get Payload
+            var payloads = Resolver.Resolve<IPayloads>();
+            return payloads.GetAndRemove<T>(payloadId);
+        }
+
         public Action<Guid> CallbackAction { private get; set; }
 
         protected void NavigateBack(Action done = null)
@@ -76,7 +83,7 @@ namespace MvvmMobile.Core.ViewModel
             });
         }
 
-        protected void NavigateBack(IPayload payload)
+        protected void NavigateBack(IPayload payload, Action done = null)
         {
             if (CallbackAction == null)
             {
@@ -90,18 +97,10 @@ namespace MvvmMobile.Core.ViewModel
             var payloads = Resolver.Resolve<IPayloads>();
             payloads.Add(payloadId, payload);
 
-            Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId);
-        }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Protected Methods
-        protected T LoadPayload<T>(Guid payloadId) where T : class
-        {
-            // Get Payload
-            var payloads = Resolver.Resolve<IPayloads>();
-            return payloads.GetAndRemove<T>(payloadId);
+            Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
+            {
+                done?.Invoke();
+            });
         }
     }
 }

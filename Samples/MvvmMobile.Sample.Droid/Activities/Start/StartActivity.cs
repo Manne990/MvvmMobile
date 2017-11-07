@@ -50,6 +50,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             return base.OnOptionsItemSelected(item);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            EnableBackButton(false);
+        }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();

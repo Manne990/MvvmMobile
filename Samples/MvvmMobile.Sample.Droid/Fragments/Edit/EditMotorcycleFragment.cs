@@ -34,7 +34,6 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // Controls
             _brandEditText = view.FindViewById<TextView>(Resource.Id.brandEditText);
             _modelEditText = view.FindViewById<TextView>(Resource.Id.modelEditText);
             _yearEditText = view.FindViewById<TextView>(Resource.Id.yearEditText);
@@ -44,7 +43,8 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
         {
             base.OnResume();
 
-            Activity.Title = Title;
+            ParentActivity.Title = Title;
+            ParentActivity.EnableBackButton(true);
         }
 
         public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
@@ -75,7 +75,7 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
 
         public override void OnDestroyView()
         {
-            base.OnDestroy();
+            base.OnDestroyView();
 
             _brandEditText = null;
             _modelEditText = null;

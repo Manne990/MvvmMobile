@@ -13,7 +13,7 @@ using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.Navigation
 {
-    public class AppNavigation : INavigation
+    public sealed class AppNavigation : INavigation
     {
         // Constants
         internal const int CallbackActivityRequestCode = 9999;
@@ -31,7 +31,7 @@ namespace MvvmMobile.Droid.Navigation
 
         // Public Properties
         public Context Context { get; set; }
-        public int FragmentContainerId { private get; set; }
+        public int FragmentContainerId { get; set; }
 
 
         // -----------------------------------------------------------------------------
@@ -51,8 +51,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (_viewMapperDictionary.TryGetValue(viewModelType, out Type concreteType) == false)
             {
-                //TODO: Handle Error!
-                return;
+                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
@@ -74,7 +73,7 @@ namespace MvvmMobile.Droid.Navigation
                 var currentActivity = Context as Activity;
                 if (currentActivity == null)
                 {
-                    //TODO: Handle Error!
+                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Context is null or not an activity!");
                     return;
                 }
 
@@ -110,6 +109,10 @@ namespace MvvmMobile.Droid.Navigation
 
                 done?.Invoke();
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Context is null or not an activity!");
+            }
         }
 
         public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
@@ -141,6 +144,10 @@ namespace MvvmMobile.Droid.Navigation
 
                 done?.Invoke();
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Context is null or not an activity!");
+            }
         }
 
         public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
@@ -148,7 +155,12 @@ namespace MvvmMobile.Droid.Navigation
             try
             {
                 // Get the current activity
-                var activity = (Activity)Context;
+                var activity = Context as Activity;
+                if (activity == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("AppNavigation.LoadFragment: Context is null or not an activity!");
+                    return null;
+                }
 
                 // Check if the activity has a fragment container
                 var fragmentContainer = activity.FindViewById<FrameLayout>(FragmentContainerId);
