@@ -108,3 +108,7 @@ var nav = (AppNavigation)Resolver.Resolve<INavigation>();
 
 nav.Init(viewMapperDictionary);
 ```
+
+## Samples ##
+For a more detailed view of MvvmMobile, have a look at the sample project included in this repo!
+Happy coding!
