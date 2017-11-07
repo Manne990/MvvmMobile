@@ -9,7 +9,7 @@ MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android wi
 
 ## Create the shared project ##
 - Create a PCL project for your shared code and add a reference to MvvmMobile.Core
-- MvvmMobiles uses XLabs.IoC so go ahead and add that NuGet package
+- MvvmMobile uses XLabs.IoC so go ahead and add that NuGet package
 - Make sure that all viewmodel interfaces inherit from IBaseViewModel or IPayloadViewModel (if the viewmodel should accept payloads)
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
