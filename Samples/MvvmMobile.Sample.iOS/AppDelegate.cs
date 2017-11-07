@@ -36,7 +36,7 @@ namespace MvvmMobile.Sample.iOS
                 { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
             };
 
-            var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+            var nav = Resolver.Resolve<INavigation>();
 
             nav.Init(viewMapperDictionary);
 

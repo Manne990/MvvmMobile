@@ -40,7 +40,7 @@ namespace MvvmMobile.Sample.Droid
                 { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
             };
 
-            var nav = (AppNavigation)Resolver.Resolve<INavigation>();
+            var nav = Resolver.Resolve<INavigation>();
 
             nav.Init(viewMapperDictionary);
         }
