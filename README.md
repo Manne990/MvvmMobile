@@ -15,7 +15,7 @@ MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android wi
 
 When navigating from one viewmodel to another, resolve INavigation and call the method NavigateTo.
 ```
-var payload = Resolver.Resolve<INavigation>();
+var navigation = Resolver.Resolve<INavigation>();
 navigation.NavigateTo(typeof(IMySecondViewModel), payload, ReturnAction);
 ```
 The 'payload' is an instance of a class that implements IPayload and this is a way to pass a payload of data to the receiving viewmodel.
