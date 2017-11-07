@@ -7,7 +7,7 @@ using MvvmMobile.Sample.Core.ViewModel;
 
 namespace MvvmMobile.Sample.Droid.Activities.Start
 {
-    [Activity(Label = "Motorcycles", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/motorcycles", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class StartActivity : ActivityBase<IStartViewModel>
     {
         // Private Members
@@ -27,8 +27,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
             // Controls
             _listView = FindViewById<ListView>(Resource.Id.listView);
-
-            _adapter = new StartAdapter(DeleteMotorcycle, LayoutInflater);
+            _adapter = new StartAdapter(EditMotorcycle, DeleteMotorcycle, LayoutInflater);
 
             _listView.Adapter = _adapter;
         }
@@ -49,20 +48,6 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             }
 
             return base.OnOptionsItemSelected(item);
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-
-            _listView.ItemClick += ListViewItemClick;
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();
-
-            _listView.ItemClick -= ListViewItemClick;
         }
 
         protected override void OnDestroy()
@@ -96,9 +81,9 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // -----------------------------------------------------------------------------
 
         // Private Methods
-        private void ListViewItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        private void EditMotorcycle(IMotorcycle motorcycle)
         {
-            ViewModel?.EditMotorcycleCommand.Execute(ViewModel.Motorcycles[e.Position]);
+            ViewModel?.EditMotorcycleCommand.Execute(motorcycle);
         }
 
         private void AddMotorcycle()

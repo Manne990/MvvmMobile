@@ -55,6 +55,11 @@
     <Compile Include="Activities\Edit\EditMotorcycleActivity.cs" />
     <Compile Include="Activities\Start\StartAdapter.cs" />
     <Compile Include="Fragments\Edit\EditMotorcycleFragment.cs" />
+    <Compile Include="Common\SampleOnTouchListener.cs" />
+    <Compile Include="Activities\Start\StartItemViewHolder.cs" />
+    <Compile Include="Common\ScreenHelper.cs" />
+    <Compile Include="Common\LeftMarginAnimation.cs" />
+    <Compile Include="Common\AnimationListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -72,6 +77,8 @@
     <AndroidResource Include="Resources\layout\EditMotorcycleLayout.axml" />
     <AndroidResource Include="Resources\menu\StartActivityMenu.xml" />
     <AndroidResource Include="Resources\menu\EditMotorcycleActivityMenu.xml" />
+    <AndroidResource Include="Resources\layout\StartActivityItemLayout.axml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -81,6 +88,7 @@
     <Folder Include="Activities\Edit\" />
     <Folder Include="Resources\menu\" />
     <Folder Include="Fragments\Edit\" />
+    <Folder Include="Common\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

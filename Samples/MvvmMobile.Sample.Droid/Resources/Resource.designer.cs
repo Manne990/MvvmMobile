@@ -26,6 +26,8 @@ namespace MvvmMobile.Sample.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::MvvmMobile.Droid.Resource.Id.fragmentContainer = global::MvvmMobile.Sample.Droid.Resource.Id.fragmentContainer;
+			global::MvvmMobile.Droid.Resource.Layout.FragmentContainerActivityLayout = global::MvvmMobile.Sample.Droid.Resource.Layout.FragmentContainerActivityLayout;
 		}
 		
 		public partial class Attribute
@@ -41,26 +43,69 @@ namespace MvvmMobile.Sample.Droid
 			}
 		}
 		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f040000
+			public const int black = 2130968576;
+			
+			// aapt resource value: 0x7f040003
+			public const int darkGray = 2130968579;
+			
+			// aapt resource value: 0x7f040002
+			public const int gray = 2130968578;
+			
+			// aapt resource value: 0x7f040004
+			public const int red = 2130968580;
+			
+			// aapt resource value: 0x7f040001
+			public const int white = 2130968577;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int brandEditText = 2131099648;
+			// aapt resource value: 0x7f070000
+			public const int brandEditText = 2131165184;
 			
-			// aapt resource value: 0x7f060003
-			public const int listView = 2131099651;
+			// aapt resource value: 0x7f070004
+			public const int deleteButton = 2131165188;
 			
-			// aapt resource value: 0x7f060005
-			public const int menuAdd = 2131099653;
+			// aapt resource value: 0x7f070005
+			public const int deleteButtonTextView = 2131165189;
 			
-			// aapt resource value: 0x7f060004
-			public const int menuDone = 2131099652;
+			// aapt resource value: 0x7f070003
+			public const int fragmentContainer = 2131165187;
 			
-			// aapt resource value: 0x7f060001
-			public const int modelEditText = 2131099649;
+			// aapt resource value: 0x7f070008
+			public const int listView = 2131165192;
 			
-			// aapt resource value: 0x7f060002
-			public const int yearEditText = 2131099650;
+			// aapt resource value: 0x7f070006
+			public const int mainLayout = 2131165190;
+			
+			// aapt resource value: 0x7f07000a
+			public const int menuAdd = 2131165194;
+			
+			// aapt resource value: 0x7f070009
+			public const int menuDone = 2131165193;
+			
+			// aapt resource value: 0x7f070001
+			public const int modelEditText = 2131165185;
+			
+			// aapt resource value: 0x7f070007
+			public const int titleTextView = 2131165191;
+			
+			// aapt resource value: 0x7f070002
+			public const int yearEditText = 2131165186;
 			
 			static Id()
 			{
@@ -79,7 +124,13 @@ namespace MvvmMobile.Sample.Droid
 			public const int EditMotorcycleLayout = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int StartActivityLayout = 2130903041;
+			public const int FragmentContainerActivityLayout = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int StartActivityItemLayout = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int StartActivityLayout = 2130903043;
 			
 			static Layout()
 			{
@@ -94,11 +145,11 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int EditMotorcycleActivityMenu = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int EditMotorcycleActivityMenu = 2131099648;
 			
-			// aapt resource value: 0x7f050001
-			public const int StartActivityMenu = 2131034113;
+			// aapt resource value: 0x7f060001
+			public const int StartActivityMenu = 2131099649;
 			
 			static Menu()
 			{
@@ -129,14 +180,23 @@ namespace MvvmMobile.Sample.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int add = 2130968577;
+			// aapt resource value: 0x7f050003
+			public const int add = 2131034115;
 			
-			// aapt resource value: 0x7f040000
-			public const int app_name = 2130968576;
+			// aapt resource value: 0x7f050000
+			public const int app_name = 2131034112;
 			
-			// aapt resource value: 0x7f040002
-			public const int done = 2130968578;
+			// aapt resource value: 0x7f050005
+			public const int delete = 2131034117;
+			
+			// aapt resource value: 0x7f050004
+			public const int done = 2131034116;
+			
+			// aapt resource value: 0x7f050002
+			public const int motorcycle = 2131034114;
+			
+			// aapt resource value: 0x7f050001
+			public const int motorcycles = 2131034113;
 			
 			static String()
 			{

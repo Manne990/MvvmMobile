@@ -6,7 +6,7 @@ using MvvmMobile.Sample.Core.ViewModel;
 
 namespace MvvmMobile.Sample.Droid.Activities.Edit
 {
-    [Activity(Label = "Motorcycle", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/motorcycle", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class EditMotorcycleActivity : ActivityBase<IEditMotorcycleViewModel>
     {
         // Private Members
