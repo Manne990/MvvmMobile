@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
-using MvvmMobile.Core.Navigation;
-using MvvmMobile.Droid.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
-using MvvmMobile.Sample.Droid.Activities.Edit;
 using MvvmMobile.Sample.Droid.Activities.Start;
 using MvvmMobile.Sample.Droid.Fragments.Edit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Droid
 {
@@ -28,21 +24,17 @@ namespace MvvmMobile.Sample.Droid
         {
             base.OnCreate();
 
-            // Init
-            MvvmMobile.Droid.Bootstrapper.Init();
+            // Init MvvmMobile
+            MvvmMobile.Droid.Bootstrapper.Init(
+                new Dictionary<Type, Type>
+                {
+                    { typeof(IStartViewModel), typeof(StartActivity) },
+                    //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) }
+                    { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
+                });
+
+            // Init Sample Core
             Core.Bootstrapper.Init();
-
-            // Setup ViewModel -> View Mapper
-            var viewMapperDictionary = new Dictionary<Type, Type>
-            {
-                { typeof(IStartViewModel), typeof(StartActivity) },
-                //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) }
-                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
-            };
-
-            var nav = Resolver.Resolve<INavigation>();
-
-            nav.Init(viewMapperDictionary);
         }
 
         public override void OnTerminate()
@@ -52,7 +44,7 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
+            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivityDestroyed(Activity activity)
@@ -65,7 +57,7 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityResumed(Activity activity)
         {
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
+            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
@@ -74,7 +66,7 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityStarted(Activity activity)
         {
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
+            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivityStopped(Activity activity)

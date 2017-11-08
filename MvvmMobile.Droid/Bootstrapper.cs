@@ -1,4 +1,6 @@
-﻿using MvvmMobile.Core.Navigation;
+﻿using System;
+using System.Collections.Generic;
+using MvvmMobile.Core.Navigation;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.Navigation;
 using TinyIoC;
@@ -19,15 +21,22 @@ namespace MvvmMobile.Droid
             Resolver.SetResolver(new TinyResolver(container));
         }
 
-        public static void Init()
+        public static void Init(Dictionary<Type, Type> viewMapper)
         {
+            // Init Core
             Core.Bootstrapper.Init();
 
-            _tinyContainer.RegisterSingle<INavigation, AppNavigation>();
+            // Init Self
+            var container = Resolver.Resolve<IDependencyContainer>();
 
-            _tinyContainer.Register<ILoadTabPayload>(r => new LoadTabPayload());
-            _tinyContainer.Register<ICallbackPayload>(r => new CallbackPayload());
-            _tinyContainer.Register<IFragmentContainerPayload>(r => new FragmentContainerPayload());
+            container.RegisterSingle<INavigation, AppNavigation>();
+
+            container.Register<ILoadTabPayload>(r => new LoadTabPayload());
+            container.Register<ICallbackPayload>(r => new CallbackPayload());
+            container.Register<IFragmentContainerPayload>(r => new FragmentContainerPayload());
+
+            // Init Navigation
+            Resolver.Resolve<INavigation>().Init(viewMapper);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MvvmMobile.Core.Navigation;
+﻿using System;
+using System.Collections.Generic;
+using MvvmMobile.Core.Navigation;
 using MvvmMobile.iOS.Navigation;
 using TinyIoC;
 using XLabs.Ioc;
@@ -18,13 +20,18 @@ namespace MvvmMobile.iOS
             Resolver.SetResolver(new TinyResolver(container));
         }
 
-        public static void Init()
+        public static void Init(Dictionary<Type, Type> viewMapper)
         {
+            // Init Core
             Core.Bootstrapper.Init();
 
+            // Init Self
             var container = Resolver.Resolve<IDependencyContainer>();
 
             container.RegisterSingle<INavigation, AppNavigation>();
+
+            // Init Navigation
+            Resolver.Resolve<INavigation>().Init(viewMapper);
         }
     }
 }

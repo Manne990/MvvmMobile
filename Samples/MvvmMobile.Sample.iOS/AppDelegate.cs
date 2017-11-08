@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Foundation;
-using MvvmMobile.Core.Navigation;
-using MvvmMobile.iOS.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.iOS.View;
 using UIKit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.iOS
 {
@@ -15,8 +12,6 @@ namespace MvvmMobile.Sample.iOS
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
-        // class-level declarations
-
         public override UIWindow Window
         {
             get;
@@ -25,20 +20,16 @@ namespace MvvmMobile.Sample.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // Init
-            MvvmMobile.iOS.Bootstrapper.Init();
+            // Init MvvmMobile
+            MvvmMobile.iOS.Bootstrapper.Init(
+                new Dictionary<Type, Type>
+                {
+                    { typeof(IStartViewModel), typeof(StartViewController) },
+                    { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
+                });
+
+            // Init Sample Core
             Core.Bootstrapper.Init();
-
-            // Setup ViewModel -> View Mapper
-            var viewMapperDictionary = new Dictionary<Type, Type>
-            {
-                { typeof(IStartViewModel), typeof(StartViewController) },
-                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
-            };
-
-            var nav = Resolver.Resolve<INavigation>();
-
-            nav.Init(viewMapperDictionary);
 
             return true;
         }

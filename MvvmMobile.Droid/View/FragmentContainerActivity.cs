@@ -55,5 +55,10 @@ namespace MvvmMobile.Droid.View
 
             return base.OnCreateOptionsMenu(menu);
         }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            return false;
+        }
     }
 }
