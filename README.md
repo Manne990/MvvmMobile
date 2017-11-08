@@ -3,7 +3,7 @@
 MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android with a focus on abstracted navigation. This ensures high testability of the viewmodel classes.
 
 ## Contributors ##
-Mikael Stalvik
+Mikael Stalvik  
 Jonas Frid
 
 ## Getting Started ##
