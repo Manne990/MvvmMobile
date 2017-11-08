@@ -59,21 +59,13 @@ Your view controllers can override ViewModel_PropertyChanged to be notified of p
   }
 ```
 
-In AppDelegate.cs and the FinishedLaunching method. Initialize MvvmMobile
+In AppDelegate.cs and the FinishedLaunching method. Initialize MvvmMobile with the mapping between your viewmodels and your view controllers.
 ```
-MvvmMobile.iOS.Bootstrapper.Init();
-```
-and also initialize the navigation component with the mapping between your viewmodels and your view controllers
-```
-var viewMapperDictionary = new Dictionary<Type, Type>
+MvvmMobile.iOS.Bootstrapper.Init(new Dictionary<Type, Type>
 {
     { typeof(IMyFirstViewModel), typeof(MyFirstController) },
     { typeof(IMySecondViewModel), typeof(MySecondViewController) }
-};
-
-var nav = Resolver.Resolve<INavigation>();
-
-nav.Init(viewMapperDictionary);
+});
 ```
 
 ## Create the Xamarin Android project ##
@@ -96,21 +88,13 @@ Your activities/fragments can override ViewModel_PropertyChanged to be notified 
   }
 ```
 
-In your application class. Initialize MvvmMobile
+In your application class. Initialize MvvmMobile with the mapping between your viewmodels and your activities/fragments.
 ```
-MvvmMobile.Droid.Bootstrapper.Init();
-```
-and also initialize the navigation component with the mapping between your viewmodels and your activities/fragments
-```
-var viewMapperDictionary = new Dictionary<Type, Type>
+MvvmMobile.Droid.Bootstrapper.Init(new Dictionary<Type, Type>
 {
     { typeof(IMyFirstViewModel), typeof(MyFirstActivity) },
     { typeof(IMySecondViewModel), typeof(SomeFragment) }
-};
-
-var nav = Resolver.Resolve<INavigation>();
-
-nav.Init(viewMapperDictionary);
+});
 ```
 
 ## Samples ##
