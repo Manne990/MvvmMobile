@@ -44,7 +44,6 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
-            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivityDestroyed(Activity activity)
@@ -57,7 +56,6 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityResumed(Activity activity)
         {
-            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
@@ -66,7 +64,6 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityStarted(Activity activity)
         {
-            //((AppNavigation)Resolver.Resolve<INavigation>()).Context = activity;
         }
 
         public void OnActivityStopped(Activity activity)
