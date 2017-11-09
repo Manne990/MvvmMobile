@@ -35,10 +35,7 @@ namespace MvvmMobile.iOS.View
 
             ViewModel = Resolver.Resolve<T>();
 
-            if (_viewModel is IPayloadViewModel vm)
-            {
-                vm.Load(PayloadId);
-            }
+            _viewModel?.InitWithPayload(PayloadId);
         }
 
         public override void ViewWillLayoutSubviews()

@@ -92,11 +92,7 @@ namespace MvvmMobile.Droid.View
             }
 
             _viewModel?.OnActivated();
-
-            if (_viewModel is IPayloadViewModel vm)
-            {
-                vm.Load(PayloadId);
-            }
+            _viewModel?.InitWithPayload(PayloadId);
         }
 
         protected override void OnPause()

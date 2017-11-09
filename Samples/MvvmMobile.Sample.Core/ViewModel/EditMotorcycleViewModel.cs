@@ -52,8 +52,10 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Public Methods
-        public void Load(Guid payloadId)
+        public override void InitWithPayload(Guid payloadId)
         {
+            base.InitWithPayload(payloadId);
+
             var payload = LoadPayload<IMotorcyclePayload>(payloadId);
             if (payload == null)
             {

@@ -37,7 +37,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="ViewModel\IPayloadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />

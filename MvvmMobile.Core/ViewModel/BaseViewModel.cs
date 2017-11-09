@@ -102,5 +102,9 @@ namespace MvvmMobile.Core.ViewModel
                 done?.Invoke();
             });
         }
+
+        public virtual void InitWithPayload(Guid payloadId)
+        {
+        }
     }
 }

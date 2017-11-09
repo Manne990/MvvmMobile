@@ -10,5 +10,6 @@ namespace MvvmMobile.Core.ViewModel
         void OnPaused();
 
         Action<Guid> CallbackAction { set; }
+        void InitWithPayload(Guid payloadId);
     }
 }
