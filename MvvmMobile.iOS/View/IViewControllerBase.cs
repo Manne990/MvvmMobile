@@ -4,7 +4,7 @@ using UIKit;
 
 namespace MvvmMobile.iOS.View
 {
-    public interface IViewControllerBase
+    internal interface IViewControllerBase
     {
         bool AsModal { get; }
 
