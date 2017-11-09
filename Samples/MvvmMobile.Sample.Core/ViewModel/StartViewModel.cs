@@ -15,19 +15,13 @@ namespace MvvmMobile.Sample.Core.ViewModel
         {
             Motorcycles = new ObservableCollection<IMotorcycle>();
 
-            AddMotorcycleCommand = new RelayCommand(o =>
+            AddMotorcycleCommand = new RelayCommand(() =>
             {
                 navigation.NavigateTo<IEditMotorcycleViewModel>(null, MotorcycleAdded);
             });
 
-            EditMotorcycleCommand = new RelayCommand(o =>
+            EditMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
             {
-                var mc = o as IMotorcycle;
-                if (mc == null)
-                {
-                    return;
-                }
-
                 var payload = Resolver.Resolve<IMotorcyclePayload>();
 
                 payload.Motorcycle = mc;
@@ -35,14 +29,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
                 navigation.NavigateTo<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
             });
 
-            DeleteMotorcycleCommand = new RelayCommand(o =>
+            DeleteMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
             {
-                var mc = o as IMotorcycle;
-                if (mc == null)
-                {
-                    return;
-                }
-
                 Motorcycles.Remove(mc);
 
                 NotifyPropertyChanged(nameof(Motorcycles));
@@ -71,8 +59,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
         // Commands
         public RelayCommand AddMotorcycleCommand { get; }
-        public RelayCommand EditMotorcycleCommand { get; }
-        public RelayCommand DeleteMotorcycleCommand { get; }
+        public RelayCommand<IMotorcycle> EditMotorcycleCommand { get; }
+        public RelayCommand<IMotorcycle> DeleteMotorcycleCommand { get; }
 
 
         // -----------------------------------------------------------------------------

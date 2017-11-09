@@ -11,12 +11,12 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // Constructors
         public EditMotorcycleViewModel()
         {
-            CancelCommand = new RelayCommand(o => 
+            CancelCommand = new RelayCommand(() => 
             {
                 NavigateBack();
             });
 
-            SaveMotorcycleCommand = new RelayCommand(o =>
+            SaveMotorcycleCommand = new RelayCommand(() =>
             {
                 var mcPayload = Resolver.Resolve<IMotorcyclePayload>();
 

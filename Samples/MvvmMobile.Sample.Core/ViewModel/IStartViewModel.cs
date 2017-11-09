@@ -10,7 +10,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
         ObservableCollection<IMotorcycle> Motorcycles { get; }
 
         RelayCommand AddMotorcycleCommand { get; }
-        RelayCommand EditMotorcycleCommand { get; }
-        RelayCommand DeleteMotorcycleCommand { get; }
+        RelayCommand<IMotorcycle> EditMotorcycleCommand { get; }
+        RelayCommand<IMotorcycle> DeleteMotorcycleCommand { get; }
     }
 }
