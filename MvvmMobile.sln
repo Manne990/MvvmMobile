@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmMobile.Core", "MvvmMobi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmMobile.Sample.Core", "Samples\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj", "{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmMobile.Sample.Tests", "Samples\MvvmMobile.Sample.Tests\MvvmMobile.Sample.Tests.csproj", "{946AE238-D78F-4B67-9333-47ACE84EC59C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,10 +99,23 @@ Global
 		{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|iPhone.Build.0 = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{946AE238-D78F-4B67-9333-47ACE84EC59C}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{75B21CCE-D71F-4572-B048-D78CCCABB0B9} = {E3E4D709-8EF1-4A9B-A1E4-B42D4D7FEBE8}
 		{84967BF3-AEF9-455F-A5D4-576942F4A0D0} = {E3E4D709-8EF1-4A9B-A1E4-B42D4D7FEBE8}
 		{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C} = {E3E4D709-8EF1-4A9B-A1E4-B42D4D7FEBE8}
+		{946AE238-D78F-4B67-9333-47ACE84EC59C} = {E3E4D709-8EF1-4A9B-A1E4-B42D4D7FEBE8}
 	EndGlobalSection
 EndGlobal
