@@ -30,9 +30,6 @@ namespace MvvmMobile.Sample.Tests
             _navigation = Substitute.For<INavigation>();
             _container.Register(_navigation);
 
-            //_payload = Substitute.For<ISomePayload>();
-            //_container.Register(_payload);
-
             _subject = _container.Resolve<IStartViewModel>();
         }
 
