@@ -38,10 +38,13 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Model\Motorcycle.cs" />
     <Compile Include="Model\IMotorcycle.cs" />
+    <Compile Include="IoC\XlabsContainerBuilder.cs" />
+    <Compile Include="IoC\XlabsResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />
     <Folder Include="Model\" />
+    <Folder Include="IoC\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Core\MvvmMobile.Core.csproj">

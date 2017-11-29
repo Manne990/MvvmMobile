@@ -7,11 +7,9 @@ namespace MvvmMobile.Core
     {
         public static IResolver Resolver { get; private set; }
 
-        public static void Init(IContainerBuilder container, IResolver resolver)
+        public static void Init(IContainerBuilder container)
         {
-            //var container = Resolver.Resolve<IDependencyContainer>();
-
-            Resolver = resolver;
+            Resolver = container.Resolver;
 
             container.RegisterSingleton<IPayloads, Payloads>();
         }

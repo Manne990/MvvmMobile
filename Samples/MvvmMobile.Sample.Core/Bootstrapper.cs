@@ -1,19 +1,22 @@
-﻿using MvvmMobile.Sample.Core.Model;
+﻿using MvvmMobile.Core.Common;
+using MvvmMobile.Sample.Core.IoC;
+using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Core
 {
     public static class Bootstrapper
     {
-        public static void Init()
+        public static IContainerBuilder Init(XLabs.Ioc.IResolver resolver)
         {
-            var container = Resolver.Resolve<IDependencyContainer>();
+            var builder = new XlabsContainerBuilder(resolver);
 
-            container.Register<IMotorcyclePayload>(r => new MotorcyclePayload());
+            builder.Register<IMotorcyclePayload>(new MotorcyclePayload());
 
-            container.Register<IStartViewModel, StartViewModel>();
-            container.Register<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+            builder.Register<IStartViewModel, StartViewModel>();
+            builder.Register<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+
+            return builder;
         }
     }
 }

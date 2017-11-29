@@ -15,22 +15,31 @@ namespace MvvmMobile.Sample.Tests
     {
         private INavigation _navigation;
         private IStartViewModel _subject;
-        private TinyIoCContainer _container;
 
 
         [SetUp]
         public void SetUp()
         {
-            _container = new TinyIoCContainer();
-            Resolver.ResetResolver(new TinyResolver(_container));
+            // Init Tiny IoC
+            var container = new TinyIoCContainer();
 
-            _container.Register<IStartViewModel, StartViewModel>();
-            _container.Register<IMotorcyclePayload, MotorcyclePayload>();
+            container.Register<IDependencyContainer>(new TinyContainer(container));
+
+            var resolver = new TinyResolver(container);
+
+            // Init IoC Builder
+            var builder = new TestContainerBuilder(resolver);
+
+            MvvmMobile.Core.Bootstrapper.Init(builder);
+
+            // Register
+            builder.Register<IStartViewModel, StartViewModel>();
+            builder.Register<IMotorcyclePayload, MotorcyclePayload>();
 
             _navigation = Substitute.For<INavigation>();
-            _container.Register(_navigation);
+            builder.Register(_navigation);
 
-            _subject = _container.Resolve<IStartViewModel>();
+            _subject = builder.Resolver.Resolve<IStartViewModel>();
         }
 
         [Test]

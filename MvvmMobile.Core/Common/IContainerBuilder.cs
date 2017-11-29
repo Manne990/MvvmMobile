@@ -1,15 +1,11 @@
-﻿using System;
-
-namespace MvvmMobile.Core.Common
+﻿namespace MvvmMobile.Core.Common
 {
     public interface IContainerBuilder
     {
-        void Register<TInterface, TImplementation>();
-        void Register<TInterface>(TInterface instance) where TInterface : class;
-        void RegisterSingleton<TInterface>(TInterface instance) where TInterface : class;
-        void RegisterSingleton<TInterface, TImplementation>();
-        void RegisterGeneric(Type interfaceType, Type implentation);
+        IResolver Resolver { get; }
 
-        IResolver Build();
+        void Register<TInterface, TImplementation>() where TInterface : class where TImplementation : class, TInterface;
+        void Register<TInterface>(TInterface instance) where TInterface : class;
+        void RegisterSingleton<TInterface, TImplementation>() where TInterface : class where TImplementation : class, TInterface;
     }
 }

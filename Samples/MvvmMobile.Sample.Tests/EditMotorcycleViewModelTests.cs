@@ -18,29 +18,38 @@ namespace MvvmMobile.Sample.Tests
         private IPayloads _payloads;
         private IMotorcyclePayload _payload;
         private IEditMotorcycleViewModel _subject;
-        private TinyIoCContainer _container;
 
 
         [SetUp]
         public void SetUp()
         {
-            _container = new TinyIoCContainer();
-            Resolver.ResetResolver(new TinyResolver(_container));
+            // Init Tiny IoC
+            var container = new TinyIoCContainer();
 
-            _container.Register<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+            container.Register<IDependencyContainer>(new TinyContainer(container));
 
-            _container.Register<IMotorcyclePayload, MotorcyclePayload>();
+            var resolver = new TinyResolver(container);
+
+            // Init IoC Builder
+            var builder = new TestContainerBuilder(resolver);
+
+            MvvmMobile.Core.Bootstrapper.Init(builder);
+
+            // Register
+            builder.Register<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+
+            builder.Register<IMotorcyclePayload, MotorcyclePayload>();
 
             _navigation = Substitute.For<INavigation>();
-            _container.Register(_navigation);
+            builder.Register(_navigation);
 
-            _container.Register<IMotorcyclePayload, MotorcyclePayload>();
-            _payload = _container.Resolve<IMotorcyclePayload>();
+            builder.Register<IMotorcyclePayload, MotorcyclePayload>();
+            _payload = builder.Resolver.Resolve<IMotorcyclePayload>();
 
-            _container.Register<IPayloads, Payloads>();
-            _payloads = _container.Resolve<IPayloads>();
+            builder.Register<IPayloads, Payloads>();
+            _payloads = builder.Resolver.Resolve<IPayloads>();
 
-            _subject = _container.Resolve<IEditMotorcycleViewModel>();
+            _subject = builder.Resolver.Resolve<IEditMotorcycleViewModel>();
         }
 
         [Test]

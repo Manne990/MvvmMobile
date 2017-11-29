@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="StartViewModelTests.cs" />
     <Compile Include="EditMotorcycleViewModelTests.cs" />
+    <Compile Include="TestContainerBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
