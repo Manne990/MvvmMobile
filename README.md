@@ -13,7 +13,6 @@ Jonas Frid
 
 ## Create the shared project ##
 - Create a PCL project for your shared code and add a reference to MvvmMobile.Core
-- MvvmMobile uses XLabs.IoC so go ahead and add that NuGet package
 - Make sure that all viewmodel interfaces inherit from IBaseViewModel
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
@@ -37,7 +36,6 @@ NavigateBack(payload);
 - Create a Xamarin iOS project
 - Add a reference to your shared project
 - Add references to MvvmMobile.Core and MvvmMobile.iOS
-- Add the XLabs.IoC NuGet package
 - Create your view controllers
 
 All view controllers must inherit from ViewControllerBase or one of the other view controller base classes provided by MvvmMobile.
@@ -72,7 +70,6 @@ MvvmMobile.iOS.Bootstrapper.Init(new Dictionary<Type, Type>
 - Create a Xamarin Android project
 - Add a reference to your shared project
 - Add references to MvvmMobile.Core and MvvmMobile.Droid
-- Add the XLabs.IoC NuGet package
 - Create your activities and fragments
 
 All activities must inherit from ActivityBase and all fragments must inherit from FragmentBase.
