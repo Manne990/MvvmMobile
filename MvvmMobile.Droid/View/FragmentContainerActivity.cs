@@ -6,7 +6,6 @@ using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.Navigation;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
@@ -41,14 +40,14 @@ namespace MvvmMobile.Droid.View
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             // Get Payload
-            var payload = Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
+            var payload = Core.Bootstrapper.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
             if (payload == null)
             {
                 return base.OnCreateOptionsMenu(menu);
             }
 
             // Load Fragment
-            var app = (AppNavigation)Resolver.Resolve<INavigation>();
+            var app = (AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>();
 
             app.FragmentContainerId = Resource.Id.fragmentContainer;
             app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);

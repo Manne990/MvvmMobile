@@ -37,21 +37,13 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Common\RelayCommand.cs" />
-    <Compile Include="Common\IContainer.cs" />
+    <Compile Include="Common\IResolver.cs" />
     <Compile Include="Common\IContainerBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />
     <Folder Include="Navigation\" />
     <Folder Include="Common\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="XLabs.Ioc">
-      <HintPath>..\packages\XLabs.IoC.2.0.5782\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+Xamarin.iOS10\XLabs.Ioc.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

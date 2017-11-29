@@ -1,7 +1,6 @@
 ﻿using MvvmMobile.Core.Navigation;
 using MvvmMobile.iOS.Navigation;
 using UIKit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.iOS.View
 {
@@ -19,7 +18,7 @@ namespace MvvmMobile.iOS.View
             base.ViewDidLoad();
 
             // Init
-            _app = Resolver.Resolve<INavigation>() as AppNavigation;
+            _app = Core.Bootstrapper.Resolver.Resolve<INavigation>() as AppNavigation;
 
             // Monitor selection of tabs
             ViewControllerSelected += (sender, e) =>

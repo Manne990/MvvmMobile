@@ -40,12 +40,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="XLabs.Ioc">
-      <HintPath>..\packages\XLabs.IoC.2.0.5782\lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1\XLabs.Ioc.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Ioc.TinyIOC.Droid">
-      <HintPath>..\packages\XLabs.IoC.TinyIoC.2.0.5782\lib\MonoAndroid\XLabs.Ioc.TinyIOC.Droid.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -62,9 +56,6 @@
     <Compile Include="Common\IntentExtensions.cs" />
     <Compile Include="Model\ICallbackPayload.cs" />
     <Compile Include="Model\CallbackPayload.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\FragmentContainerActivityLayout.axml" />

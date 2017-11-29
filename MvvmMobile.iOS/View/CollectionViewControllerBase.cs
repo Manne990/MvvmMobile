@@ -4,7 +4,6 @@ using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Navigation;
 using UIKit;
-using XLabs.Ioc;
 
 namespace MvvmMobile.iOS.View
 {
@@ -33,7 +32,7 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewDidLoad();
 
-            ViewModel = Resolver.Resolve<T>();
+            ViewModel = Core.Bootstrapper.Resolver.Resolve<T>();
 
             _viewModel?.InitWithPayload(PayloadId);
         }
@@ -56,7 +55,7 @@ namespace MvvmMobile.iOS.View
 
             if (NavigationController != null)
             {
-                ((AppNavigation)Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
+                ((AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
             }
 
             if (NavigationItem != null)
@@ -146,7 +145,7 @@ namespace MvvmMobile.iOS.View
             PayloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
             payloads.Add(PayloadId, payload);
         }
 

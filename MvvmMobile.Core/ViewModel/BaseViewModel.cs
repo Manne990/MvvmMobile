@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using MvvmMobile.Core.Navigation;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Core.ViewModel
 {
@@ -69,7 +68,7 @@ namespace MvvmMobile.Core.ViewModel
         protected T LoadPayload<T>(Guid payloadId) where T : class
         {
             // Get Payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = Bootstrapper.Resolver.Resolve<IPayloads>();
             return payloads.GetAndRemove<T>(payloadId);
         }
 
@@ -77,7 +76,7 @@ namespace MvvmMobile.Core.ViewModel
 
         protected void NavigateBack(Action done = null)
         {
-            Resolver.Resolve<INavigation>().NavigateBack(() => 
+            Bootstrapper.Resolver.Resolve<INavigation>().NavigateBack(() => 
             {
                 done?.Invoke();
             });
@@ -94,10 +93,10 @@ namespace MvvmMobile.Core.ViewModel
             var payloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = Bootstrapper.Resolver.Resolve<IPayloads>();
             payloads.Add(payloadId, payload);
 
-            Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
+            Bootstrapper.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
             {
                 done?.Invoke();
             });

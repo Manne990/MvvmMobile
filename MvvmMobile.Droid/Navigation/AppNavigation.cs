@@ -9,7 +9,6 @@ using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Common;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.View;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.Navigation
 {
@@ -174,7 +173,7 @@ namespace MvvmMobile.Droid.Navigation
                     // No container -> Use generic fragment container activity
                     var intent = new Intent(Context, typeof(FragmentContainerActivity));
 
-                    var activityPayload = Resolver.Resolve<IFragmentContainerPayload>();
+                    var activityPayload = Core.Bootstrapper.Resolver.Resolve<IFragmentContainerPayload>();
 
                     activityPayload.FragmentType = concreteType;
                     activityPayload.FragmentPayload = payload;

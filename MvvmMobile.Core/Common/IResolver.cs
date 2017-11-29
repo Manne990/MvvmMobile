@@ -1,6 +1,6 @@
 ﻿namespace MvvmMobile.Core.Common
 {
-    public interface IContainer
+    public interface IResolver
     {
         T Resolve<T>();
     }

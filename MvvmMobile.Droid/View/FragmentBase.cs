@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Android.App;
 using MvvmMobile.Core.ViewModel;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
@@ -35,7 +34,7 @@ namespace MvvmMobile.Droid.View
             PayloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
 
             payloads.Add(PayloadId, payload);
         }
@@ -98,7 +97,7 @@ namespace MvvmMobile.Droid.View
         {
             base.OnCreate(savedInstanceState);
 
-            ViewModel = Resolver.Resolve<T>();
+            ViewModel = Core.Bootstrapper.Resolver.Resolve<T>();
         }
 
         public override void OnResume()

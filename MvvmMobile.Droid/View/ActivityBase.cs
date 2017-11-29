@@ -7,7 +7,6 @@ using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.Navigation;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Droid.View
 {
@@ -54,9 +53,9 @@ namespace MvvmMobile.Droid.View
         {
             base.OnCreate(savedInstanceState);
 
-            ViewModel = Resolver.Resolve<T>();
+            ViewModel = Core.Bootstrapper.Resolver.Resolve<T>();
 
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = this;
+            ((AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>()).Context = this;
 
             var extras = Intent.Extras;
 
@@ -83,7 +82,7 @@ namespace MvvmMobile.Droid.View
         {
             base.OnResume();
 
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = this;
+            ((AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>()).Context = this;
 
             if (_viewModel != null)
             {
@@ -145,7 +144,7 @@ namespace MvvmMobile.Droid.View
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            ((AppNavigation)Resolver.Resolve<INavigation>()).Context = this;
+            ((AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>()).Context = this;
 
             if (requestCode != AppNavigation.CallbackActivityRequestCode)
             {
@@ -167,7 +166,7 @@ namespace MvvmMobile.Droid.View
             var callbackId = new Guid(extras.GetString(AppNavigation.CallbackAppParameter));
 
             // Get the callback payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
             var callbackPayload = payloads.GetAndRemove<ICallbackPayload>(callbackId);
             if (callbackPayload == null)
             {

@@ -10,6 +10,6 @@ namespace MvvmMobile.Core.Common
         void RegisterSingleton<TInterface, TImplementation>();
         void RegisterGeneric(Type interfaceType, Type implentation);
 
-        IContainer Build();
+        IResolver Build();
     }
 }
