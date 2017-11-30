@@ -68,7 +68,7 @@ namespace MvvmMobile.Core.ViewModel
         protected T LoadPayload<T>(Guid payloadId) where T : class
         {
             // Get Payload
-            var payloads = Bootstrapper.Resolver.Resolve<IPayloads>();
+            var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
             return payloads.GetAndRemove<T>(payloadId);
         }
 
@@ -76,7 +76,7 @@ namespace MvvmMobile.Core.ViewModel
 
         protected void NavigateBack(Action done = null)
         {
-            Bootstrapper.Resolver.Resolve<INavigation>().NavigateBack(() => 
+            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(() => 
             {
                 done?.Invoke();
             });
@@ -93,10 +93,10 @@ namespace MvvmMobile.Core.ViewModel
             var payloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Bootstrapper.Resolver.Resolve<IPayloads>();
+            var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
             payloads.Add(payloadId, payload);
 
-            Bootstrapper.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
+            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
             {
                 done?.Invoke();
             });

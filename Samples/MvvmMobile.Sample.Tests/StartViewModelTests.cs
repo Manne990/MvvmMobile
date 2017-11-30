@@ -30,7 +30,7 @@ namespace MvvmMobile.Sample.Tests
             // Init IoC Builder
             var builder = new TestContainerBuilder(resolver);
 
-            MvvmMobile.Core.Bootstrapper.Init(builder);
+            MvvmMobile.Core.Mvvm.Api.Init(builder);
 
             // Register
             builder.Register<IStartViewModel, StartViewModel>();

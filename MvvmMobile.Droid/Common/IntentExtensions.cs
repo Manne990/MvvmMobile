@@ -25,7 +25,7 @@ namespace MvvmMobile.Droid.Common
                 return;
             }
 
-            var payload = Core.Bootstrapper.Resolver.Resolve<ICallbackPayload>();
+            var payload = Core.Mvvm.Api.Resolver.Resolve<ICallbackPayload>();
 
             payload.CallbackAction = callbackAction;
 
@@ -45,7 +45,7 @@ namespace MvvmMobile.Droid.Common
             intent.PutExtra(parameterName, payloadId.ToString());
 
             // Add payload
-            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
 
             payloads.Add(payloadId, payload);
         }

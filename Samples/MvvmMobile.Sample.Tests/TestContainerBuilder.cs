@@ -1,6 +1,4 @@
-﻿using MvvmMobile.Sample.Core.IoC;
-
-namespace MvvmMobile.Sample.Tests
+﻿namespace MvvmMobile.Sample.Tests
 {
     public class TestContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
     {
@@ -12,10 +10,15 @@ namespace MvvmMobile.Sample.Tests
 
             _container = XLabs.Ioc.Resolver.Resolve<XLabs.Ioc.IDependencyContainer>();
 
-            Resolver = new XlabsResolver();
+            Resolver = new TestResolver();
         }
 
         public MvvmMobile.Core.Common.IResolver Resolver { get; private set; }
+
+        public void Build()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void Register<TInterface, TImplementation>()
             where TInterface : class

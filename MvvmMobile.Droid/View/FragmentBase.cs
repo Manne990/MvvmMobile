@@ -34,7 +34,7 @@ namespace MvvmMobile.Droid.View
             PayloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
 
             payloads.Add(PayloadId, payload);
         }
@@ -97,7 +97,7 @@ namespace MvvmMobile.Droid.View
         {
             base.OnCreate(savedInstanceState);
 
-            ViewModel = Core.Bootstrapper.Resolver.Resolve<T>();
+            ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
         }
 
         public override void OnResume()

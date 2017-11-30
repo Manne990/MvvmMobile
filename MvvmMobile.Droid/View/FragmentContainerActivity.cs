@@ -40,14 +40,14 @@ namespace MvvmMobile.Droid.View
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             // Get Payload
-            var payload = Core.Bootstrapper.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
+            var payload = Core.Mvvm.Api.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
             if (payload == null)
             {
                 return base.OnCreateOptionsMenu(menu);
             }
 
             // Load Fragment
-            var app = (AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>();
+            var app = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
 
             app.FragmentContainerId = Resource.Id.fragmentContainer;
             app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);

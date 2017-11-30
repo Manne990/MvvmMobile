@@ -11,8 +11,18 @@ namespace MvvmMobile.Sample.Core.IoC
             _container = container;
         }
 
+        public bool IsRegistered<T>() where T : class
+        {
+            return _container.IsRegistered<T>();
+        }
+
         public T Resolve<T>() where T : class
         {
+            if (IsRegistered<T>() == false)
+            {
+                return default(T);
+            }
+
             return _container.Resolve<T>();
         }
     }

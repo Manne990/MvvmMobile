@@ -32,7 +32,7 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewDidLoad();
 
-            ViewModel = Core.Bootstrapper.Resolver.Resolve<T>();
+            ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
 
             _viewModel?.InitWithPayload(PayloadId);
         }
@@ -55,7 +55,7 @@ namespace MvvmMobile.iOS.View
 
             if (NavigationController != null)
             {
-                ((AppNavigation)Core.Bootstrapper.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
             }
 
             if (NavigationItem != null)
@@ -145,7 +145,7 @@ namespace MvvmMobile.iOS.View
             PayloadId = Guid.NewGuid();
 
             // Add payload
-            var payloads = Core.Bootstrapper.Resolver.Resolve<IPayloads>();
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
             payloads.Add(PayloadId, payload);
         }
 

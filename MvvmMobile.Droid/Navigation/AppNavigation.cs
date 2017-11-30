@@ -173,7 +173,7 @@ namespace MvvmMobile.Droid.Navigation
                     // No container -> Use generic fragment container activity
                     var intent = new Intent(Context, typeof(FragmentContainerActivity));
 
-                    var activityPayload = Core.Bootstrapper.Resolver.Resolve<IFragmentContainerPayload>();
+                    var activityPayload = Core.Mvvm.Api.Resolver.Resolve<IFragmentContainerPayload>();
 
                     activityPayload.FragmentType = concreteType;
                     activityPayload.FragmentPayload = payload;

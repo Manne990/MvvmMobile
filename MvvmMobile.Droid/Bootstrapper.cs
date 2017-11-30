@@ -16,7 +16,7 @@ namespace MvvmMobile.Droid
             _container = container;
 
             // Init Core
-            Core.Bootstrapper.SetupIoC(container);
+            Core.Mvvm.Api.SetupIoC(container);
 
             // Init Self
             container.RegisterSingleton<INavigation, AppNavigation>();
@@ -29,10 +29,10 @@ namespace MvvmMobile.Droid
         public static void Init(Dictionary<Type, Type> viewMapper)
         {
             // Init Core
-            Core.Bootstrapper.Init(_container);
+            Core.Mvvm.Api.Init(_container);
 
             // Init Navigation
-            Core.Bootstrapper.Resolver.Resolve<INavigation>().Init(viewMapper);
+            Core.Mvvm.Api.Resolver.Resolve<INavigation>().Init(viewMapper);
         }
     }
 }

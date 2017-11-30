@@ -18,7 +18,7 @@ namespace MvvmMobile.iOS.View
             base.ViewDidLoad();
 
             // Init
-            _app = Core.Bootstrapper.Resolver.Resolve<INavigation>() as AppNavigation;
+            _app = Core.Mvvm.Api.Resolver.Resolve<INavigation>() as AppNavigation;
 
             // Monitor selection of tabs
             ViewControllerSelected += (sender, e) =>
