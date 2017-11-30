@@ -9,10 +9,14 @@ namespace MvvmMobile.Droid
 {
     public static class Bootstrapper
     {
-        public static void Init(IContainerBuilder container, Dictionary<Type, Type> viewMapper)
+        private static IContainerBuilder _container;
+
+        public static void SetupIoC(IContainerBuilder container)
         {
+            _container = container;
+
             // Init Core
-            Core.Bootstrapper.Init(container);
+            Core.Bootstrapper.SetupIoC(container);
 
             // Init Self
             container.RegisterSingleton<INavigation, AppNavigation>();
@@ -20,9 +24,15 @@ namespace MvvmMobile.Droid
             container.Register<ILoadTabPayload>(new LoadTabPayload());
             container.Register<ICallbackPayload>(new CallbackPayload());
             container.Register<IFragmentContainerPayload>(new FragmentContainerPayload());
+        }
+
+        public static void Init(Dictionary<Type, Type> viewMapper)
+        {
+            // Init Core
+            Core.Bootstrapper.Init(_container);
 
             // Init Navigation
-            container.Resolver.Resolve<INavigation>().Init(viewMapper);
+            Core.Bootstrapper.Resolver.Resolve<INavigation>().Init(viewMapper);
         }
     }
 }

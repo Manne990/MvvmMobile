@@ -8,16 +8,26 @@ namespace MvvmMobile.iOS
 {
     public static class Bootstrapper
     {
-        public static void Init(IContainerBuilder container, Dictionary<Type, Type> viewMapper)
+        private static IContainerBuilder _container;
+
+        public static void SetupIoC(IContainerBuilder container)
         {
+            _container = container;
+
             // Init Core
-            Core.Bootstrapper.Init(container);
+            Core.Bootstrapper.SetupIoC(container);
 
             // Init Self
             container.RegisterSingleton<INavigation, AppNavigation>();
+        }
+
+        public static void Init(Dictionary<Type, Type> viewMapper)
+        {
+            // Init Core
+            Core.Bootstrapper.Init(_container);
 
             // Init Navigation
-            container.Resolver.Resolve<INavigation>().Init(viewMapper);
+            Core.Bootstrapper.Resolver.Resolve<INavigation>().Init(viewMapper);
         }
     }
 }

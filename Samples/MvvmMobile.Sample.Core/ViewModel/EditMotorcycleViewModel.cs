@@ -2,7 +2,6 @@
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
@@ -18,7 +17,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             SaveMotorcycleCommand = new RelayCommand(() =>
             {
-                var mcPayload = Resolver.Resolve<IMotorcyclePayload>();
+                var mcPayload = MvvmMobile.Core.Bootstrapper.Resolver.Resolve<IMotorcyclePayload>();
 
                 mcPayload.Motorcycle = _motorcycle;
 

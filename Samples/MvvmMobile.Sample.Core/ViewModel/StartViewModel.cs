@@ -4,7 +4,6 @@ using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
-using XLabs.Ioc;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
@@ -22,7 +21,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             EditMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
             {
-                var payload = Resolver.Resolve<IMotorcyclePayload>();
+                var payload = MvvmMobile.Core.Bootstrapper.Resolver.Resolve<IMotorcyclePayload>();
 
                 payload.Motorcycle = mc;
 
@@ -69,7 +68,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
         private void MotorcycleAdded(Guid payloadId)
         {
             // Get Payload
-            var payloads = Resolver.Resolve<IPayloads>();
+            var payloads = MvvmMobile.Core.Bootstrapper.Resolver.Resolve<IPayloads>();
             var payload = payloads.GetAndRemove<IMotorcyclePayload>(payloadId);
             if (payload?.Motorcycle == null)
             {

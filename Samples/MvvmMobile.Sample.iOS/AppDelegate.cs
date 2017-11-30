@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Foundation;
-using MvvmMobile.Core.Common;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.iOS.View;
-using TinyIoC;
 using UIKit;
-using XLabs.Ioc;
-using XLabs.Ioc.TinyIOC;
 
 namespace MvvmMobile.Sample.iOS
 {
@@ -24,17 +20,20 @@ namespace MvvmMobile.Sample.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // Init Sample Core with TinyIoC
-            var builder = InitWithXlabsTinyIoc();
+            // Init IoC
+            var builder = Core.Bootstrapper.Init();
+
+            MvvmMobile.iOS.Bootstrapper.SetupIoC(builder);
+
+            builder.Build();
 
             // Init MvvmMobile
             MvvmMobile.iOS.Bootstrapper.Init(
-                builder,
                 new Dictionary<Type, Type>
-                {
-                    { typeof(IStartViewModel), typeof(StartViewController) },
-                    { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
-                });
+            {
+                { typeof(IStartViewModel), typeof(StartViewController) },
+                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
+            });
 
             return true;
         }
@@ -68,19 +67,6 @@ namespace MvvmMobile.Sample.iOS
         public override void WillTerminate(UIApplication application)
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
-        }
-
-        private IContainerBuilder InitWithXlabsTinyIoc()
-        {
-            // Init Tiny IoC
-            var container = TinyIoCContainer.Current;
-
-            container.Register<IDependencyContainer>(new TinyContainer(container));
-
-            var resolver = new TinyResolver(container);
-
-            // Init Sample Core
-            return Core.Bootstrapper.Init(resolver);
         }
     }
 }

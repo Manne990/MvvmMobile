@@ -43,11 +43,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="XLabs.Ioc">
-      <HintPath>..\..\packages\XLabs.IoC.2.0.5782\lib\portable-net45+netcore45+wp8+MonoAndroid1+MonoTouch1\XLabs.Ioc.dll</HintPath>
-    </Reference>
-    <Reference Include="XLabs.Ioc.TinyIOC.Droid">
-      <HintPath>..\..\packages\XLabs.IoC.TinyIoC.2.0.5782\lib\MonoAndroid\XLabs.Ioc.TinyIOC.Droid.dll</HintPath>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Autofac">
+      <HintPath>..\..\packages\Autofac.4.6.2\lib\netstandard1.1\Autofac.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,8 +98,12 @@
       <Project>{E5C5B57C-B8B7-400B-8C3B-E948ABC0FED6}</Project>
       <Name>MvvmMobile.Droid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MvvmMobile.Core\MvvmMobile.Core.csproj">
+      <Project>{55109E7C-3DAB-48AE-BCBC-EE3142F82A6C}</Project>
+      <Name>MvvmMobile.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">
-      <Project>{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}</Project>
+      <Project>{5F09DF70-0F13-45B4-A9AD-A56129FEBE28}</Project>
       <Name>MvvmMobile.Sample.Core</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,9 +7,9 @@ namespace MvvmMobile.Sample.Core
 {
     public static class Bootstrapper
     {
-        public static IContainerBuilder Init(XLabs.Ioc.IResolver resolver)
+        public static IContainerBuilder Init()
         {
-            var builder = new XlabsContainerBuilder(resolver);
+            var builder = new AutofacContainerBuilder();
 
             builder.Register<IMotorcyclePayload>(new MotorcyclePayload());
 

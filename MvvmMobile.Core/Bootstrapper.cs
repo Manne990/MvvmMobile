@@ -7,11 +7,14 @@ namespace MvvmMobile.Core
     {
         public static IResolver Resolver { get; private set; }
 
+        public static void SetupIoC(IContainerBuilder container)
+        {
+            container.RegisterSingleton<IPayloads, Payloads>();
+        }
+
         public static void Init(IContainerBuilder container)
         {
             Resolver = container.Resolver;
-
-            container.RegisterSingleton<IPayloads, Payloads>();
         }
     }
 }

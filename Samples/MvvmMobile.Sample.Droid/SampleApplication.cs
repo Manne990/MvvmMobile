@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
-using MvvmMobile.Core.Common;
 using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.Droid.Activities.Start;
 using MvvmMobile.Sample.Droid.Fragments.Edit;
-using TinyIoC;
-using XLabs.Ioc;
-using XLabs.Ioc.TinyIOC;
 
 namespace MvvmMobile.Sample.Droid
 {
@@ -28,18 +24,21 @@ namespace MvvmMobile.Sample.Droid
         {
             base.OnCreate();
 
-            // Init Sample Core with TinyIoC
-            var builder = InitWithXlabsTinyIoc();
+            // Init IoC
+            var builder = Core.Bootstrapper.Init();
+
+            MvvmMobile.Droid.Bootstrapper.SetupIoC(builder);
+
+            builder.Build();
 
             // Init MvvmMobile
             MvvmMobile.Droid.Bootstrapper.Init(
-                builder,
                 new Dictionary<Type, Type>
-                {
-                    { typeof(IStartViewModel), typeof(StartActivity) },
-                    //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) }
-                    { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
-                });
+            {
+                { typeof(IStartViewModel), typeof(StartActivity) },
+                //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) }
+                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
+            });
         }
 
         public override void OnTerminate()
@@ -73,19 +72,6 @@ namespace MvvmMobile.Sample.Droid
 
         public void OnActivityStopped(Activity activity)
         {
-        }
-
-        private IContainerBuilder InitWithXlabsTinyIoc()
-        {
-            // Init Tiny IoC
-            var container = TinyIoCContainer.Current;
-
-            container.Register<IDependencyContainer>(new TinyContainer(container));
-
-            var resolver = new TinyResolver(container);
-
-            // Init Sample Core
-            return Core.Bootstrapper.Init(resolver);
         }
     }
 }

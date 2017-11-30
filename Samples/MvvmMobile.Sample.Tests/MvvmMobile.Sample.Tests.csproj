@@ -55,11 +55,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj">
-      <Project>{81E47C3A-1ECF-4F2F-A9E7-C0BCF6D6B51C}</Project>
-      <Name>MvvmMobile.Sample.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
