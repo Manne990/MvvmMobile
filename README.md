@@ -7,18 +7,18 @@ Mikael Stalvik
 Jonas Frid
 
 ## Getting Started ##
-- Create a PCL project for the shared code
+- Create a .NET Standard project for the shared code
 - Create a Xamarin iOS project
 - Create a Xamarin Android project
 
 ## Create the shared project ##
-- Create a PCL project for your shared code and add a reference to MvvmMobile.Core
+- Create a .NET Standard (version 2.0 or later) project for your shared code and add a reference to MvvmMobile.Core
 - Make sure that all viewmodel interfaces inherit from IBaseViewModel
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
 When navigating from one viewmodel to another, resolve INavigation and call the method NavigateTo.
 ```
-var navigation = Resolver.Resolve<INavigation>();
+var navigation = Mvvm.Api.Resolver.Resolve<INavigation>();
 navigation.NavigateTo<IMySecondViewModel>(payload, ReturnAction);
 ```
 The 'payload' is an instance of a class that implements IPayload and this is a way to pass a payload of data to the receiving viewmodel.
@@ -27,7 +27,7 @@ The 'ReturnAction' is an Action that is called (with an optional payload) when n
 
 To return to the previous viewmodel and optionally pass a payload, just call NavigateBack from the viewmodel.
 ```
-var payload = Resolver.Resolve<ISomePayload>();
+var payload = Mvvm.Api.Resolver.Resolve<ISomePayload>();
 payload.SomeData = someData;
 NavigateBack(payload);
 ```
