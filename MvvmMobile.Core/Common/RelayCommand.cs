@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 
 namespace MvvmMobile.Core.Common
 {
-    public sealed class RelayCommand : ICommand
+    public sealed class RelayCommand
     {
         // Private Members
         private readonly Action<object> _execute;
@@ -29,17 +27,9 @@ namespace MvvmMobile.Core.Common
 
         // -----------------------------------------------------------------------------
 
-        // Events
-        public event EventHandler CanExecuteChanged;
-
-
-        // -----------------------------------------------------------------------------
-
         // Public Methods
         public bool CanExecute(object parameter)
         {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-
             return _canExecute?.Invoke(parameter) ?? true;
         }
 
@@ -87,11 +77,6 @@ namespace MvvmMobile.Core.Common
 
         public void Execute(T parameter)
         {
-            if(EqualityComparer<T>.Default.Equals(parameter, default(T)))
-            {
-                return;
-            }
-
             if (CanExecute(parameter))
             {
                 _execute?.Invoke(parameter);
