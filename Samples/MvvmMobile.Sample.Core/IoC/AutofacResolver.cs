@@ -13,7 +13,7 @@ namespace MvvmMobile.Sample.Core.IoC
 
         public bool IsRegistered<T>() where T : class
         {
-            return _container.IsRegistered<T>();
+            return _container?.IsRegistered<T>() ?? false;
         }
 
         public T Resolve<T>() where T : class
@@ -23,7 +23,7 @@ namespace MvvmMobile.Sample.Core.IoC
                 return default(T);
             }
 
-            return _container.Resolve<T>();
+            return _container?.Resolve<T>();
         }
     }
 }
