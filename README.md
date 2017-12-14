@@ -8,6 +8,7 @@ Jonas Frid
 
 ## Getting Started ##
 - Create a .NET Standard project for the shared code
+- Setup the IoC Container
 - Create a Xamarin iOS project
 - Create a Xamarin Android project
 
@@ -32,6 +33,82 @@ payload.SomeData = someData;
 NavigateBack(payload);
 ```
 
+## Setup the IoC Container ##
+MvvmMobile does not contain an IoC container. This has been abstracted away and enables you to use the IoC solution of your choosing!
+
+First, create a class that implements MvvmMobile.Core.Common.IResolver.
+Example with Autofac:
+```
+public class AutofacResolver : MvvmMobile.Core.Common.IResolver
+{
+    private readonly IContainer _container;
+
+    public AutofacResolver(IContainer container)
+    {
+        _container = container;
+    }
+
+    public bool IsRegistered<T>() where T : class
+    {
+        return _container.IsRegistered<T>();
+    }
+
+    public T Resolve<T>() where T : class
+    {
+        if (IsRegistered<T>() == false)
+        {
+            return default(T);
+        }
+
+        return _container.Resolve<T>();
+    }
+}
+```
+
+Then, create a class that implements MvvmMobile.Core.Common.IContainerBuilder.
+Example with Autofac:
+```
+public class AutofacContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
+{
+    private readonly ContainerBuilder _containerBuilder;
+
+    public AutofacContainerBuilder()
+    {
+        _containerBuilder = new ContainerBuilder();
+    }
+
+    public MvvmMobile.Core.Common.IResolver Resolver { get; private set; }
+
+    public void Register<TInterface>(TInterface instance) where TInterface : class
+    {
+        _containerBuilder?.RegisterInstance(instance).As<TInterface>();
+    }
+
+    public void Register<TInterface, TImplementation>()
+        where TInterface : class
+        where TImplementation : class, TInterface
+    {
+        _containerBuilder?.RegisterType<TImplementation>()?.As<TInterface>();
+    }
+
+    public void RegisterSingleton<TInterface, TImplementation>()
+        where TInterface : class
+        where TImplementation : class, TInterface
+    {
+        _containerBuilder?.RegisterType<TImplementation>()?.As<TInterface>()?.SingleInstance();
+    }
+
+    public void Build()
+    {
+        var container = _containerBuilder.Build();
+
+        Resolver = new AutofacResolver(container);
+    }
+}
+```
+
+The instance of your IContainerBuilder class is then passed to MvvmMobile with the init process described below for the plattforms.
+
 ## Create the Xamarin iOS project ##
 - Create a Xamarin iOS project
 - Add a reference to your shared project
@@ -42,23 +119,27 @@ All view controllers must inherit from ViewControllerBase or one of the other vi
 
 If you use storyboards then you need to add the Storyboard attribute to your view controller class.
 ```
-  [Storyboard(storyboardName:"TheNameOfTheStoryBoard", storyboardId:"TheIdOfTheViewControllerInTheStoryboard")]
-  public partial class MyFirstController : ViewControllerBase<IMyFirstViewModel>
+[Storyboard(storyboardName:"TheNameOfTheStoryBoard", storyboardId:"TheIdOfTheViewControllerInTheStoryboard")]
+public partial class MyFirstController : ViewControllerBase<IMyFirstViewModel>
 ```
 
 Your view controllers can override ViewModel_PropertyChanged to be notified of property changes in the connected view model.
 ```
-  protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-  {
-      if (e.PropertyName == nameof(ViewModel.SomeProperty))
-      {
-          SomeTextField.Text = ViewModel.SomeProperty;
-      }
-  }
+protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+{
+    if (e.PropertyName == nameof(ViewModel.SomeProperty))
+    {
+        SomeTextField.Text = ViewModel.SomeProperty;
+    }
+}
 ```
 
-In AppDelegate.cs and the FinishedLaunching method. Initialize MvvmMobile with the mapping between your viewmodels and your view controllers.
+In AppDelegate.cs and the FinishedLaunching method. Initialize MvvmMobile with the IoC container builder instance created above and the mapping between your viewmodels and your view controllers.
 ```
+MvvmMobile.iOS.Bootstrapper.SetupIoC(builder);
+
+builder.Build();
+
 MvvmMobile.iOS.Bootstrapper.Init(new Dictionary<Type, Type>
 {
     { typeof(IMyFirstViewModel), typeof(MyFirstController) },
@@ -76,17 +157,21 @@ All activities must inherit from ActivityBase and all fragments must inherit fro
 
 Your activities/fragments can override ViewModel_PropertyChanged to be notified of property changes in the connected view model.
 ```
-  protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-  {
-      if (e.PropertyName == nameof(ViewModel.SomeProperty))
-      {
-          SomeEditText.Text = ViewModel.SomeProperty;
-      }
-  }
+protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+{
+    if (e.PropertyName == nameof(ViewModel.SomeProperty))
+    {
+        SomeEditText.Text = ViewModel.SomeProperty;
+    }
+}
 ```
 
-In your application class. Initialize MvvmMobile with the mapping between your viewmodels and your activities/fragments.
+In your application class. Initialize MvvmMobile with the IoC container builder instance created above and the mapping between your viewmodels and your activities/fragments.
 ```
+MvvmMobile.Droid.Bootstrapper.SetupIoC(builder);
+
+builder.Build();
+            
 MvvmMobile.Droid.Bootstrapper.Init(new Dictionary<Type, Type>
 {
     { typeof(IMyFirstViewModel), typeof(MyFirstActivity) },
