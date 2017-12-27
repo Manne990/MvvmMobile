@@ -82,6 +82,7 @@
     <AndroidResource Include="Resources\menu\EditMotorcycleActivityMenu.xml" />
     <AndroidResource Include="Resources\layout\StartActivityItemLayout.axml" />
     <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\values\style.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

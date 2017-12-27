@@ -46,20 +46,47 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f040000
-			public const int black = 2130968576;
-			
 			// aapt resource value: 0x7f040003
-			public const int darkGray = 2130968579;
+			public const int accent = 2130968579;
 			
-			// aapt resource value: 0x7f040002
-			public const int gray = 2130968578;
+			// aapt resource value: 0x7f040008
+			public const int black = 2130968584;
 			
-			// aapt resource value: 0x7f040004
-			public const int red = 2130968580;
+			// aapt resource value: 0x7f04000c
+			public const int darkGray = 2130968588;
+			
+			// aapt resource value: 0x7f040007
+			public const int divider = 2130968583;
+			
+			// aapt resource value: 0x7f04000a
+			public const int gray = 2130968586;
+			
+			// aapt resource value: 0x7f040006
+			public const int icons = 2130968582;
+			
+			// aapt resource value: 0x7f04000b
+			public const int lightGray = 2130968587;
+			
+			// aapt resource value: 0x7f040000
+			public const int primary = 2130968576;
 			
 			// aapt resource value: 0x7f040001
-			public const int white = 2130968577;
+			public const int primary_dark = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int primary_light = 2130968578;
+			
+			// aapt resource value: 0x7f040004
+			public const int primary_text = 2130968580;
+			
+			// aapt resource value: 0x7f04000d
+			public const int red = 2130968589;
+			
+			// aapt resource value: 0x7f040005
+			public const int secondary_text = 2130968581;
+			
+			// aapt resource value: 0x7f040009
+			public const int white = 2130968585;
 			
 			static Color()
 			{
@@ -74,35 +101,35 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int brandEditText = 2131165184;
+			// aapt resource value: 0x7f080000
+			public const int brandEditText = 2131230720;
 			
-			// aapt resource value: 0x7f070004
-			public const int deleteButton = 2131165188;
+			// aapt resource value: 0x7f080004
+			public const int deleteButton = 2131230724;
 			
-			// aapt resource value: 0x7f070003
-			public const int fragmentContainer = 2131165187;
+			// aapt resource value: 0x7f080003
+			public const int fragmentContainer = 2131230723;
 			
-			// aapt resource value: 0x7f070007
-			public const int listView = 2131165191;
+			// aapt resource value: 0x7f080007
+			public const int listView = 2131230727;
 			
-			// aapt resource value: 0x7f070005
-			public const int mainLayout = 2131165189;
+			// aapt resource value: 0x7f080005
+			public const int mainLayout = 2131230725;
 			
-			// aapt resource value: 0x7f070009
-			public const int menuAdd = 2131165193;
+			// aapt resource value: 0x7f080009
+			public const int menuAdd = 2131230729;
 			
-			// aapt resource value: 0x7f070008
-			public const int menuDone = 2131165192;
+			// aapt resource value: 0x7f080008
+			public const int menuDone = 2131230728;
 			
-			// aapt resource value: 0x7f070001
-			public const int modelEditText = 2131165185;
+			// aapt resource value: 0x7f080001
+			public const int modelEditText = 2131230721;
 			
-			// aapt resource value: 0x7f070006
-			public const int titleTextView = 2131165190;
+			// aapt resource value: 0x7f080006
+			public const int titleTextView = 2131230726;
 			
-			// aapt resource value: 0x7f070002
-			public const int yearEditText = 2131165186;
+			// aapt resource value: 0x7f080002
+			public const int yearEditText = 2131230722;
 			
 			static Id()
 			{
@@ -142,11 +169,11 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int EditMotorcycleActivityMenu = 2131099648;
+			// aapt resource value: 0x7f070000
+			public const int EditMotorcycleActivityMenu = 2131165184;
 			
-			// aapt resource value: 0x7f060001
-			public const int StartActivityMenu = 2131099649;
+			// aapt resource value: 0x7f070001
+			public const int StartActivityMenu = 2131165185;
 			
 			static Menu()
 			{
@@ -201,6 +228,22 @@ namespace MvvmMobile.Sample.Droid
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Style
+		{
+			
+			// aapt resource value: 0x7f060000
+			public const int AppTheme = 2131099648;
+			
+			static Style()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Style()
 			{
 			}
 		}
