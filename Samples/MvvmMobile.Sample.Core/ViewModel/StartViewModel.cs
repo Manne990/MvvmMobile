@@ -22,6 +22,11 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             EditMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
             {
+                if (mc == null)
+                {
+                    return;
+                }
+
                 var payload = Mvvm.Api.Resolver.Resolve<IMotorcyclePayload>();
 
                 payload.Motorcycle = mc;
@@ -31,6 +36,11 @@ namespace MvvmMobile.Sample.Core.ViewModel
 
             DeleteMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
             {
+                if (mc == null)
+                {
+                    return;
+                }
+
                 Motorcycles.Remove(mc);
 
                 NotifyPropertyChanged(nameof(Motorcycles));
