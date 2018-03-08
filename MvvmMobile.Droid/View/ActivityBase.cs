@@ -48,6 +48,12 @@ namespace MvvmMobile.Droid.View
 
         // -----------------------------------------------------------------------------
 
+        // Events
+        public event EventHandler BackButtonPressed;
+
+
+        // -----------------------------------------------------------------------------
+
         // Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -110,6 +116,8 @@ namespace MvvmMobile.Droid.View
         {
             if (BackButtonEnabled)
             {
+                BackButtonPressed?.Invoke(this, EventArgs.Empty);
+
                 base.OnBackPressed();
             }
         }

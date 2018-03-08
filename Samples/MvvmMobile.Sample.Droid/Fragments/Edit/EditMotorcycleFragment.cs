@@ -73,7 +73,12 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             return base.OnOptionsItemSelected(item);
         }
 
-        public override void OnDestroyView()
+		protected override void OnBackPressed()
+		{
+            ViewModel?.CancelCommand.Execute();
+		}
+
+		public override void OnDestroyView()
         {
             base.OnDestroyView();
 

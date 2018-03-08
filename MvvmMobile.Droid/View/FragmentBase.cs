@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Android.App;
+using Android.Views;
 using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.Droid.View
@@ -16,8 +17,10 @@ namespace MvvmMobile.Droid.View
 
         // Lifecycle
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
+        {}
+
+        protected virtual void OnBackPressed()
+        {}
 
 
         // -----------------------------------------------------------------------------
@@ -104,6 +107,12 @@ namespace MvvmMobile.Droid.View
         {
             base.OnResume();
 
+            if (ParentActivity != null)
+            {
+                ParentActivity.BackButtonPressed -= ActivityBackButtonPressed;
+                ParentActivity.BackButtonPressed += ActivityBackButtonPressed;
+            }
+
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
@@ -118,12 +127,29 @@ namespace MvvmMobile.Droid.View
         {
             base.OnPause();
 
+            if (ParentActivity != null)
+            {
+                ParentActivity.BackButtonPressed -= ActivityBackButtonPressed;
+            }
+
             _viewModel?.OnPaused();
 
             if (_viewModel != null)
             { 
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
             }
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            ParentActivity?.OnBackPressed();
+
+            return base.OnOptionsItemSelected(item);
+        }
+
+        private void ActivityBackButtonPressed(object sender, EventArgs e)
+        {
+            OnBackPressed();
         }
     }
 }
