@@ -39,3 +39,5 @@ Thumbs.db
 # dotCover
 *.dotCover
 .mvvmmobile.droidres.db
+.mvvmmobile.db
+UserPrefs.xml
