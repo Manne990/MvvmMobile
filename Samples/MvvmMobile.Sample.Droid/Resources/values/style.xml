@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <!-- Themes -->
     <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Colors -->
         <item name="android:colorPrimary">@color/primary</item>
@@ -17,6 +18,22 @@
         <item name="android:editTextStyle">@style/EditTextStyle</item>
     </style>
 
+    <!-- TextView -->
+    <style name="standardTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="fieldLabelTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+    
+    <!-- EditText -->
     <style name="EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:textColor">@color/black</item>
     </style>

@@ -70,7 +70,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
@@ -87,6 +87,7 @@
     <AndroidResource Include="Resources\drawable\ripple_with_white_background.xml" />
     <AndroidResource Include="Resources\transition\fade.xml" />
     <AndroidResource Include="Resources\transition\slide.xml" />
+    <AndroidResource Include="Resources\values\dimens.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

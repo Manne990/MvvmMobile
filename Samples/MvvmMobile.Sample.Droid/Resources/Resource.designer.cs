@@ -98,6 +98,40 @@ namespace MvvmMobile.Sample.Droid
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f070006
+			public const int elevation_fab = 2131165190;
+			
+			// aapt resource value: 0x7f070005
+			public const int elevation_toolbar = 2131165189;
+			
+			// aapt resource value: 0x7f070000
+			public const int margin_normal = 2131165184;
+			
+			// aapt resource value: 0x7f070003
+			public const int spacing_double = 2131165187;
+			
+			// aapt resource value: 0x7f070004
+			public const int spacing_huge = 2131165188;
+			
+			// aapt resource value: 0x7f070001
+			public const int spacing_micro = 2131165185;
+			
+			// aapt resource value: 0x7f070002
+			public const int spacing_normal = 2131165186;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -117,38 +151,38 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a0000
-			public const int brandEditText = 2131361792;
+			// aapt resource value: 0x7f0c0000
+			public const int brandEditText = 2131492864;
 			
-			// aapt resource value: 0x7f0a0004
-			public const int deleteButton = 2131361796;
+			// aapt resource value: 0x7f0c0004
+			public const int deleteButton = 2131492868;
 			
-			// aapt resource value: 0x7f0a0003
-			public const int fragmentContainer = 2131361795;
+			// aapt resource value: 0x7f0c0003
+			public const int fragmentContainer = 2131492867;
 			
-			// aapt resource value: 0x7f0a0007
-			public const int listView = 2131361799;
+			// aapt resource value: 0x7f0c0007
+			public const int listView = 2131492871;
 			
-			// aapt resource value: 0x7f0a0005
-			public const int mainLayout = 2131361797;
+			// aapt resource value: 0x7f0c0005
+			public const int mainLayout = 2131492869;
 			
-			// aapt resource value: 0x7f0a000a
-			public const int menuAdd = 2131361802;
+			// aapt resource value: 0x7f0c000a
+			public const int menuAdd = 2131492874;
 			
-			// aapt resource value: 0x7f0a0009
-			public const int menuDone = 2131361801;
+			// aapt resource value: 0x7f0c0009
+			public const int menuDone = 2131492873;
 			
-			// aapt resource value: 0x7f0a0001
-			public const int modelEditText = 2131361793;
+			// aapt resource value: 0x7f0c0001
+			public const int modelEditText = 2131492865;
 			
-			// aapt resource value: 0x7f0a0006
-			public const int titleTextView = 2131361798;
+			// aapt resource value: 0x7f0c0006
+			public const int titleTextView = 2131492870;
 			
-			// aapt resource value: 0x7f0a0008
-			public const int toolbar = 2131361800;
+			// aapt resource value: 0x7f0c0008
+			public const int toolbar = 2131492872;
 			
-			// aapt resource value: 0x7f0a0002
-			public const int yearEditText = 2131361794;
+			// aapt resource value: 0x7f0c0002
+			public const int yearEditText = 2131492866;
 			
 			static Id()
 			{
@@ -156,6 +190,22 @@ namespace MvvmMobile.Sample.Droid
 			}
 			
 			private Id()
+			{
+			}
+		}
+		
+		public partial class Integer
+		{
+			
+			// aapt resource value: 0x7f080000
+			public const int transition_anim_duration = 2131230720;
+			
+			static Integer()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Integer()
 			{
 			}
 		}
@@ -191,11 +241,11 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f090000
-			public const int EditMotorcycleActivityMenu = 2131296256;
+			// aapt resource value: 0x7f0b0000
+			public const int EditMotorcycleActivityMenu = 2131427328;
 			
-			// aapt resource value: 0x7f090001
-			public const int StartActivityMenu = 2131296257;
+			// aapt resource value: 0x7f0b0001
+			public const int StartActivityMenu = 2131427329;
 			
 			static Menu()
 			{
@@ -226,23 +276,23 @@ namespace MvvmMobile.Sample.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f070003
-			public const int add = 2131165187;
+			// aapt resource value: 0x7f090003
+			public const int add = 2131296259;
 			
-			// aapt resource value: 0x7f070000
-			public const int app_name = 2131165184;
+			// aapt resource value: 0x7f090000
+			public const int app_name = 2131296256;
 			
-			// aapt resource value: 0x7f070005
-			public const int delete = 2131165189;
+			// aapt resource value: 0x7f090005
+			public const int delete = 2131296261;
 			
-			// aapt resource value: 0x7f070004
-			public const int done = 2131165188;
+			// aapt resource value: 0x7f090004
+			public const int done = 2131296260;
 			
-			// aapt resource value: 0x7f070002
-			public const int motorcycle = 2131165186;
+			// aapt resource value: 0x7f090002
+			public const int motorcycle = 2131296258;
 			
-			// aapt resource value: 0x7f070001
-			public const int motorcycles = 2131165185;
+			// aapt resource value: 0x7f090001
+			public const int motorcycles = 2131296257;
 			
 			static String()
 			{
@@ -257,11 +307,17 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f080000
-			public const int AppTheme = 2131230720;
+			// aapt resource value: 0x7f0a0000
+			public const int AppTheme = 2131361792;
 			
-			// aapt resource value: 0x7f080001
-			public const int EditTextStyle = 2131230721;
+			// aapt resource value: 0x7f0a0003
+			public const int EditTextStyle = 2131361795;
+			
+			// aapt resource value: 0x7f0a0002
+			public const int fieldLabelTextView = 2131361794;
+			
+			// aapt resource value: 0x7f0a0001
+			public const int standardTextView = 2131361793;
 			
 			static Style()
 			{
