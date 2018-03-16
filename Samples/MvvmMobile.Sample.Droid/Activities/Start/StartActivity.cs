@@ -1,8 +1,8 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
@@ -13,7 +13,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
     public class StartActivity : ActivityBase<IStartViewModel>
     {
         // Private Members
-        private ListView _listView;
+        private RecyclerView _listView;
         private StartAdapter _adapter;
         private FloatingActionButton _addButton;
 
@@ -29,12 +29,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             SetContentView(Resource.Layout.StartActivityLayout);
 
             // Toolbar
-            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
+            SetActionBar(FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar));
 
             // Controls
-            _listView = FindViewById<ListView>(Resource.Id.listView);
+            _listView = FindViewById<RecyclerView>(Resource.Id.listView);
+            _listView.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
             _adapter = new StartAdapter(EditMotorcycle, DeleteMotorcycle, LayoutInflater);
-            _listView.Adapter = _adapter;
+            _listView.SetAdapter(_adapter);
 
             _addButton = FindViewById<FloatingActionButton>(Resource.Id.fab);
             _addButton.Click += (sender, args) => 
@@ -76,7 +77,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
             if (_listView != null)
             {
-                _listView.Adapter = null;
+                _listView.SetAdapter(null);
             }
 
             _listView = null;

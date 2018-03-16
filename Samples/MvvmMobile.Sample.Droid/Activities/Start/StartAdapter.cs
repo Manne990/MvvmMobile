@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using MvvmMobile.Sample.Core.Model;
 
 namespace MvvmMobile.Sample.Droid.Activities.Start
 {
-    public class StartAdapter : BaseAdapter<IMotorcycle>
+    public class StartAdapter : RecyclerView.Adapter
     {
         // Private Members
         private ObservableCollection<IMotorcycle> _motorcycles;
@@ -40,35 +40,18 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // -----------------------------------------------------------------------------
 
         // Overrides
-        public override int Count => _motorcycles?.Count ?? 0;
+        public override int ItemCount => _motorcycles?.Count ?? 0;
 
-        public override IMotorcycle this[int position] => _motorcycles[position];
-
-        public override long GetItemId(int position)
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            return position;
+            var view = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.StartActivityItemLayout, parent, false);
+            return new StartItemViewHolder(view, SelectCartItem, DeleteCartItem);
         }
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            StartItemViewHolder holder;
-
-            var view = convertView ?? _inflater.Inflate(Resource.Layout.StartActivityItemLayout, null);
-
-            if (convertView == null)
-            {
-                holder = new StartItemViewHolder(view, SelectCartItem, DeleteCartItem);
-
-                view.Tag = holder;
-            }
-            else
-            {
-                holder = convertView.Tag as StartItemViewHolder;
-            }
-
-            holder.Update(_motorcycles[position], position);
-
-            return view;
+            var viewHolder = holder as StartItemViewHolder;
+            viewHolder?.Update(_motorcycles[position], position);
         }
 
 

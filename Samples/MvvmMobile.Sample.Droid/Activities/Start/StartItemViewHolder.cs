@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using MvvmMobile.Sample.Core.Model;
@@ -6,7 +7,7 @@ using MvvmMobile.Sample.Droid.Common;
 
 namespace MvvmMobile.Sample.Droid.Activities.Start
 {
-    public class StartItemViewHolder : Java.Lang.Object
+    public class StartItemViewHolder : RecyclerView.ViewHolder
     {
         // Private Members
         private readonly LinearLayout _mainLayout;
@@ -25,7 +26,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public StartItemViewHolder(View itemView, Action<int> selectListener, Action<int> deleteListener)
+        public StartItemViewHolder(View itemView, Action<int> selectListener, Action<int> deleteListener) : base(itemView)
         {
             // Init
             _selectListener = selectListener;
