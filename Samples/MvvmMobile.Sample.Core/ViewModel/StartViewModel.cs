@@ -46,9 +46,20 @@ namespace MvvmMobile.Sample.Core.ViewModel
                 NotifyPropertyChanged(nameof(Motorcycles));
             });
 
-            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });
             Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 1999 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2002 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2005 });
             Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "625 SuperComp", Year = 2002 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "690", Year = 2009 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "990 SuperDuke", Year = 2005 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 1999 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2003 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2015 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2000 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2005 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2010 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2011 });
         }
 
 
