@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using MvvmMobile.Droid.View;
@@ -14,6 +15,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // Private Members
         private ListView _listView;
         private StartAdapter _adapter;
+        private FloatingActionButton _addButton;
 
 
         // -----------------------------------------------------------------------------
@@ -32,8 +34,13 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             // Controls
             _listView = FindViewById<ListView>(Resource.Id.listView);
             _adapter = new StartAdapter(EditMotorcycle, DeleteMotorcycle, LayoutInflater);
-
             _listView.Adapter = _adapter;
+
+            _addButton = FindViewById<FloatingActionButton>(Resource.Id.fab);
+            _addButton.Click += (sender, args) => 
+            {
+                AddMotorcycle();
+            };
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

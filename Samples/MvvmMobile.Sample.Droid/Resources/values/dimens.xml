@@ -8,7 +8,6 @@
     <dimen name="spacing_huge">72dp</dimen>
 
     <dimen name="elevation_toolbar">4dp</dimen>
-    <dimen name="elevation_fab">6dp</dimen>
 
     <integer name="transition_anim_duration">300</integer>
 </resources>
