@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
@@ -25,6 +26,9 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             // Init
             SetContentView(Resource.Layout.StartActivityLayout);
 
+            // Toolbar
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
+
             // Controls
             _listView = FindViewById<ListView>(Resource.Id.listView);
             _adapter = new StartAdapter(EditMotorcycle, DeleteMotorcycle, LayoutInflater);
@@ -32,14 +36,14 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             _listView.Adapter = _adapter;
         }
 
-        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
 
             return true;
         }
 
-        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        public override bool OnOptionsItemSelected(IMenuItem item)
         {
             if (item.ItemId == Resource.Id.menuAdd)
             {

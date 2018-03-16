@@ -81,7 +81,7 @@ namespace MvvmMobile.Droid.View
         {
             base.OnStart();
 
-            ActionBar.SetDisplayHomeAsUpEnabled(true);
+            ActionBar?.SetDisplayHomeAsUpEnabled(true); //TODO: Refactor to work without action bar
         }
 
         protected override void OnResume()
@@ -141,7 +141,7 @@ namespace MvvmMobile.Droid.View
         {
             BackButtonEnabled = enable;
 
-            ActionBar?.SetDisplayHomeAsUpEnabled(enable);
+            ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
         }
 
 

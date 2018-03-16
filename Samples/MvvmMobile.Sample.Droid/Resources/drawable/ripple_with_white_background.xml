@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/accent"> <!-- The ripple color -->
+
+    <!-- the normal bg color -->
+    <item>
+        <color android:color="@color/white" />
+    </item>
+
+    <!-- make sure the ripple doesn't exceed the bounds -->
+    <item android:id="@android:id/mask"
+          android:drawable="@android:color/white" />
+</ripple>

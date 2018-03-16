@@ -32,6 +32,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         public void LoadData(ObservableCollection<IMotorcycle> motorcycles)
         {
             _motorcycles = motorcycles;
+
             NotifyDataSetChanged();
         }
 

@@ -40,13 +40,15 @@ namespace MvvmMobile.Sample.Droid.Common
                     }
 
                     _hasMoved = true;
-                    _onPanMovedListener?.Invoke(new SamplePanMoveArgs() { MovedX = e.RawX - _startX, MovedY = e.RawY - _startY, InnerX = e.GetX() });
+                    _onPanMovedListener?.Invoke(new SamplePanMoveArgs { MovedX = e.RawX - _startX, MovedY = e.RawY - _startY, InnerX = e.GetX() });
                     return true;
 
                 case MotionEventActions.Up:
                     if(_hasMoved == false)
                     {
+                        v.Pressed = true;
                         _onTapListener?.Invoke();
+                        v.Pressed = false;
                     }
                     else
                     {

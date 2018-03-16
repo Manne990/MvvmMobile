@@ -22,8 +22,6 @@ namespace MvvmMobile.Sample.iOS.View
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            //ViewModel.SetBinding(BrandTextField, "Motorcycle.Brand", true);
         }
 
         public override void ViewWillAppear(bool animated)

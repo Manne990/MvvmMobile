@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.Content;
+using Android.OS;
 using Android.Widget;
 using Java.Lang;
 using MvvmMobile.Core.Navigation;
@@ -24,6 +25,15 @@ namespace MvvmMobile.Droid.Navigation
 
         // Private Members
         private Dictionary<Type, Type> _viewMapperDictionary;
+        private bool _useActivityTransitions;
+
+        private bool CanUseActivityTrasitions
+        {
+            get
+            {
+                return _useActivityTransitions && Context != null && Context is Activity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
+            }
+        }
 
 
         // -----------------------------------------------------------------------------
@@ -36,9 +46,10 @@ namespace MvvmMobile.Droid.Navigation
         // -----------------------------------------------------------------------------
 
         // Public Methods
-        public void Init(Dictionary<Type, Type> viewMapper)
+        public void Init(Dictionary<Type, Type> viewMapper, bool useActivityTransitions = false)
         {
             _viewMapperDictionary = viewMapper;
+            _useActivityTransitions = useActivityTransitions;
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
@@ -83,12 +94,27 @@ namespace MvvmMobile.Droid.Navigation
 
                 intent.SetCallback(callback);
 
-                currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                if (CanUseActivityTrasitions)
+                {
+                    currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, ActivityOptions.MakeSceneTransitionAnimation(Context as Activity).ToBundle());
+                }
+                else
+                {
+                    currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                }
 
                 return;
             }
 
-            Context.StartActivity(intent);
+            if (CanUseActivityTrasitions)
+            {
+                Context.StartActivity(intent, ActivityOptions.MakeSceneTransitionAnimation(Context as Activity).ToBundle());
+            }
+            else
+            {
+                Context.StartActivity(intent);
+            }
+
         }
 
         public void NavigateBack(Action done = null)
@@ -97,7 +123,14 @@ namespace MvvmMobile.Droid.Navigation
             {
                 if (activity.FragmentManager?.BackStackEntryCount <= 1)
                 {
-                    activity.Finish();
+                    if (CanUseActivityTrasitions)
+                    {
+                        activity.FinishAfterTransition();
+                    }
+                    else
+                    {
+                        activity.Finish();
+                    }
                 }
                 else
                 {
@@ -130,7 +163,15 @@ namespace MvvmMobile.Droid.Navigation
                 else if (activity.FragmentManager?.BackStackEntryCount == 1)
                 {
                     callbackAction.Invoke(payloadId);
-                    activity.Finish();
+
+                    if (CanUseActivityTrasitions)
+                    {
+                        activity.FinishAfterTransition();
+                    }
+                    else
+                    {
+                        activity.Finish();
+                    }
                 }
                 else
                 {

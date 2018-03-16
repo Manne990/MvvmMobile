@@ -26,13 +26,13 @@ namespace MvvmMobile.Droid
             container.Register<IFragmentContainerPayload>(new FragmentContainerPayload());
         }
 
-        public static void Init(Dictionary<Type, Type> viewMapper)
+        public static void Init(Dictionary<Type, Type> viewMapper, bool useActivityTransitions = false)
         {
             // Init Core
             Core.Mvvm.Api.Init(_container);
 
             // Init Navigation
-            Core.Mvvm.Api.Resolver.Resolve<INavigation>().Init(viewMapper);
+            ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Init(viewMapper, useActivityTransitions);
         }
     }
 }

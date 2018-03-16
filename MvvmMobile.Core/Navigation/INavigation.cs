@@ -6,8 +6,6 @@ namespace MvvmMobile.Core.Navigation
 {
     public interface INavigation
     {
-        void Init(Dictionary<Type, Type> viewMapper);
-
         void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null);
         void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel;
         void NavigateBack(Action done = null);

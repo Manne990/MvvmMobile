@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MvvmMobile.Sample.Droid</RootNamespace>
     <AssemblyName>MvvmMobile.Sample.Droid</AssemblyName>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -83,6 +83,10 @@
     <AndroidResource Include="Resources\layout\StartActivityItemLayout.axml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\style.xml" />
+    <AndroidResource Include="Resources\layout\Toolbar.xml" />
+    <AndroidResource Include="Resources\drawable\ripple_with_white_background.xml" />
+    <AndroidResource Include="Resources\transition\fade.xml" />
+    <AndroidResource Include="Resources\transition\slide.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -93,6 +97,7 @@
     <Folder Include="Resources\menu\" />
     <Folder Include="Fragments\Edit\" />
     <Folder Include="Common\" />
+    <Folder Include="Resources\transition\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

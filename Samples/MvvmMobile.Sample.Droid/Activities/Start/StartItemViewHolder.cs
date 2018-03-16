@@ -55,6 +55,8 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // Public Methods
         public void Update(IMotorcycle motorcycle, int position)
         {
+            HideSwipeButtons(false);
+
             _position = position;
 
             if (motorcycle == null)
@@ -160,7 +162,6 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine(_lastDeltaX);
                 var layoutParams = (RelativeLayout.LayoutParams)_mainLayout.LayoutParameters;
 
                 layoutParams.LeftMargin = Convert.ToInt32(_lastDeltaX);
@@ -191,6 +192,8 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             }
             else
             {
+                _editMode = false;
+
                 var layoutParams = (RelativeLayout.LayoutParams)_mainLayout.LayoutParameters;
 
                 layoutParams.LeftMargin = 0;

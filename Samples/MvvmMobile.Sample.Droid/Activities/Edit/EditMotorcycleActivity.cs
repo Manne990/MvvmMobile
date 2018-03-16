@@ -1,5 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Transitions;
+using Android.Views;
 using Android.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.ViewModel;
@@ -25,20 +27,26 @@ namespace MvvmMobile.Sample.Droid.Activities.Edit
             // Init
             SetContentView(Resource.Layout.EditMotorcycleLayout);
 
+            // Toolbar
+            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
+
+            // Transitions
+            Window.EnterTransition = TransitionInflater.From(this).InflateTransition(Resource.Transition.slide);
+
             // Controls
             _brandEditText = FindViewById<TextView>(Resource.Id.brandEditText);
             _modelEditText = FindViewById<TextView>(Resource.Id.modelEditText);
             _yearEditText = FindViewById<TextView>(Resource.Id.yearEditText);
         }
 
-        public override bool OnCreateOptionsMenu(Android.Views.IMenu menu)
+        public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.EditMotorcycleActivityMenu, menu);
 
             return true;
         }
 
-        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        public override bool OnOptionsItemSelected(IMenuItem item)
         {
             if (item.ItemId == Resource.Id.menuDone)
             {
@@ -67,9 +75,10 @@ namespace MvvmMobile.Sample.Droid.Activities.Edit
         public override void OnBackPressed()
         {
             ViewModel?.CancelCommand.Execute();
+            FinishAfterTransition();
         }
 
-        protected override void OnDestroy()
+		protected override void OnDestroy()
         {
             base.OnDestroy();
 

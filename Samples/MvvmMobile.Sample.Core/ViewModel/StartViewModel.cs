@@ -47,6 +47,8 @@ namespace MvvmMobile.Sample.Core.ViewModel
             });
 
             Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 1999 });
+            Motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "625 SuperComp", Year = 2002 });
         }
 
 

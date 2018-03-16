@@ -27,7 +27,7 @@ namespace MvvmMobile.iOS
             Core.Mvvm.Api.Init(_container);
 
             // Init Navigation
-            Core.Mvvm.Api.Resolver.Resolve<INavigation>().Init(viewMapper);
+            ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Init(viewMapper);
         }
     }
 }

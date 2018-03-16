@@ -46,47 +46,47 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f040003
-			public const int accent = 2130968579;
+			// aapt resource value: 0x7f060003
+			public const int accent = 2131099651;
 			
-			// aapt resource value: 0x7f040008
-			public const int black = 2130968584;
+			// aapt resource value: 0x7f060008
+			public const int black = 2131099656;
 			
-			// aapt resource value: 0x7f04000c
-			public const int darkGray = 2130968588;
+			// aapt resource value: 0x7f06000c
+			public const int darkGray = 2131099660;
 			
-			// aapt resource value: 0x7f040007
-			public const int divider = 2130968583;
+			// aapt resource value: 0x7f060007
+			public const int divider = 2131099655;
 			
-			// aapt resource value: 0x7f04000a
-			public const int gray = 2130968586;
+			// aapt resource value: 0x7f06000a
+			public const int gray = 2131099658;
 			
-			// aapt resource value: 0x7f040006
-			public const int icons = 2130968582;
+			// aapt resource value: 0x7f060006
+			public const int icons = 2131099654;
 			
-			// aapt resource value: 0x7f04000b
-			public const int lightGray = 2130968587;
+			// aapt resource value: 0x7f06000b
+			public const int lightGray = 2131099659;
 			
-			// aapt resource value: 0x7f040000
-			public const int primary = 2130968576;
+			// aapt resource value: 0x7f060000
+			public const int primary = 2131099648;
 			
-			// aapt resource value: 0x7f040001
-			public const int primary_dark = 2130968577;
+			// aapt resource value: 0x7f060001
+			public const int primary_dark = 2131099649;
 			
-			// aapt resource value: 0x7f040002
-			public const int primary_light = 2130968578;
+			// aapt resource value: 0x7f060002
+			public const int primary_light = 2131099650;
 			
-			// aapt resource value: 0x7f040004
-			public const int primary_text = 2130968580;
+			// aapt resource value: 0x7f060004
+			public const int primary_text = 2131099652;
 			
-			// aapt resource value: 0x7f04000d
-			public const int red = 2130968589;
+			// aapt resource value: 0x7f06000d
+			public const int red = 2131099661;
 			
-			// aapt resource value: 0x7f040005
-			public const int secondary_text = 2130968581;
+			// aapt resource value: 0x7f060005
+			public const int secondary_text = 2131099653;
 			
-			// aapt resource value: 0x7f040009
-			public const int white = 2130968585;
+			// aapt resource value: 0x7f060009
+			public const int white = 2131099657;
 			
 			static Color()
 			{
@@ -98,38 +98,57 @@ namespace MvvmMobile.Sample.Droid
 			}
 		}
 		
+		public partial class Drawable
+		{
+			
+			// aapt resource value: 0x7f020000
+			public const int ripple_with_white_background = 2130837504;
+			
+			static Drawable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Drawable()
+			{
+			}
+		}
+		
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080000
-			public const int brandEditText = 2131230720;
+			// aapt resource value: 0x7f0a0000
+			public const int brandEditText = 2131361792;
 			
-			// aapt resource value: 0x7f080004
-			public const int deleteButton = 2131230724;
+			// aapt resource value: 0x7f0a0004
+			public const int deleteButton = 2131361796;
 			
-			// aapt resource value: 0x7f080003
-			public const int fragmentContainer = 2131230723;
+			// aapt resource value: 0x7f0a0003
+			public const int fragmentContainer = 2131361795;
 			
-			// aapt resource value: 0x7f080007
-			public const int listView = 2131230727;
+			// aapt resource value: 0x7f0a0007
+			public const int listView = 2131361799;
 			
-			// aapt resource value: 0x7f080005
-			public const int mainLayout = 2131230725;
+			// aapt resource value: 0x7f0a0005
+			public const int mainLayout = 2131361797;
 			
-			// aapt resource value: 0x7f080009
-			public const int menuAdd = 2131230729;
+			// aapt resource value: 0x7f0a000a
+			public const int menuAdd = 2131361802;
 			
-			// aapt resource value: 0x7f080008
-			public const int menuDone = 2131230728;
+			// aapt resource value: 0x7f0a0009
+			public const int menuDone = 2131361801;
 			
-			// aapt resource value: 0x7f080001
-			public const int modelEditText = 2131230721;
+			// aapt resource value: 0x7f0a0001
+			public const int modelEditText = 2131361793;
 			
-			// aapt resource value: 0x7f080006
-			public const int titleTextView = 2131230726;
+			// aapt resource value: 0x7f0a0006
+			public const int titleTextView = 2131361798;
 			
-			// aapt resource value: 0x7f080002
-			public const int yearEditText = 2131230722;
+			// aapt resource value: 0x7f0a0008
+			public const int toolbar = 2131361800;
+			
+			// aapt resource value: 0x7f0a0002
+			public const int yearEditText = 2131361794;
 			
 			static Id()
 			{
@@ -144,17 +163,20 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Layout
 		{
 			
-			// aapt resource value: 0x7f030000
-			public const int EditMotorcycleLayout = 2130903040;
+			// aapt resource value: 0x7f040000
+			public const int EditMotorcycleLayout = 2130968576;
 			
-			// aapt resource value: 0x7f030001
-			public const int FragmentContainerActivityLayout = 2130903041;
+			// aapt resource value: 0x7f040001
+			public const int FragmentContainerActivityLayout = 2130968577;
 			
-			// aapt resource value: 0x7f030002
-			public const int StartActivityItemLayout = 2130903042;
+			// aapt resource value: 0x7f040002
+			public const int StartActivityItemLayout = 2130968578;
 			
-			// aapt resource value: 0x7f030003
-			public const int StartActivityLayout = 2130903043;
+			// aapt resource value: 0x7f040003
+			public const int StartActivityLayout = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int Toolbar = 2130968580;
 			
 			static Layout()
 			{
@@ -169,11 +191,11 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int EditMotorcycleActivityMenu = 2131165184;
+			// aapt resource value: 0x7f090000
+			public const int EditMotorcycleActivityMenu = 2131296256;
 			
-			// aapt resource value: 0x7f070001
-			public const int StartActivityMenu = 2131165185;
+			// aapt resource value: 0x7f090001
+			public const int StartActivityMenu = 2131296257;
 			
 			static Menu()
 			{
@@ -188,8 +210,8 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Mipmap
 		{
 			
-			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			// aapt resource value: 0x7f030000
+			public const int Icon = 2130903040;
 			
 			static Mipmap()
 			{
@@ -204,23 +226,23 @@ namespace MvvmMobile.Sample.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050003
-			public const int add = 2131034115;
+			// aapt resource value: 0x7f070003
+			public const int add = 2131165187;
 			
-			// aapt resource value: 0x7f050000
-			public const int app_name = 2131034112;
+			// aapt resource value: 0x7f070000
+			public const int app_name = 2131165184;
 			
-			// aapt resource value: 0x7f050005
-			public const int delete = 2131034117;
+			// aapt resource value: 0x7f070005
+			public const int delete = 2131165189;
 			
-			// aapt resource value: 0x7f050004
-			public const int done = 2131034116;
+			// aapt resource value: 0x7f070004
+			public const int done = 2131165188;
 			
-			// aapt resource value: 0x7f050002
-			public const int motorcycle = 2131034114;
+			// aapt resource value: 0x7f070002
+			public const int motorcycle = 2131165186;
 			
-			// aapt resource value: 0x7f050001
-			public const int motorcycles = 2131034113;
+			// aapt resource value: 0x7f070001
+			public const int motorcycles = 2131165185;
 			
 			static String()
 			{
@@ -235,11 +257,11 @@ namespace MvvmMobile.Sample.Droid
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int AppTheme = 2131099648;
+			// aapt resource value: 0x7f080000
+			public const int AppTheme = 2131230720;
 			
-			// aapt resource value: 0x7f060001
-			public const int EditTextStyle = 2131099649;
+			// aapt resource value: 0x7f080001
+			public const int EditTextStyle = 2131230721;
 			
 			static Style()
 			{
@@ -247,6 +269,25 @@ namespace MvvmMobile.Sample.Droid
 			}
 			
 			private Style()
+			{
+			}
+		}
+		
+		public partial class Transition
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int fade = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int slide = 2131034113;
+			
+			static Transition()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Transition()
 			{
 			}
 		}
