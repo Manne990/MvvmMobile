@@ -79,6 +79,11 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
             // Update local cache
             _motorcycles = sorted;
+
+            if (removed.Count == 0 && added.Count == 0)
+            {
+                NotifyDataSetChanged();
+            }
         }
 
 
