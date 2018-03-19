@@ -27,7 +27,7 @@ namespace MvvmMobile.Core.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChanged(string propertyName)
-        { 
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
             if (_isActive == false)

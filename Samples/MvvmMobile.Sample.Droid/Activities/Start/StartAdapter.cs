@@ -35,13 +35,50 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // Public Methods
         public void LoadData(ObservableCollection<IMotorcycle> motorcycles)
         {
-            _motorcycles = motorcycles
+            // Check for null
+            if (motorcycles == null)
+            {
+                return;
+            }
+
+            // If incoming list is empty -> Clear local cache
+            if (motorcycles.Count == 0)
+            {
+                _motorcycles = motorcycles;
+                NotifyDataSetChanged();
+            }
+
+            // Sort incoming list
+            var sorted = motorcycles
                 .OrderBy(m => m.Brand)
                 .ThenBy(m => m.Model)
                 .ThenBy(m => m.Year)
                 .ToObservableCollection();
 
-            NotifyDataSetChanged();
+            // If local cache is empty -> Update cache from local list
+            if (_motorcycles.Count == 0)
+            {
+                _motorcycles = sorted;
+                NotifyDataSetChanged();
+                return;
+            }
+
+            // Find removed items
+            var removed = _motorcycles.Except(sorted).ToObservableCollection();
+            foreach (var item in removed)
+            {
+                NotifyItemRemoved(_motorcycles.IndexOf(item));
+            }
+
+            // Find added items
+            var added = sorted.Except(_motorcycles).ToObservableCollection();
+            foreach (var item in added)
+            {
+                NotifyItemInserted(sorted.IndexOf(item));
+            }
+
+            // Update local cache
+            _motorcycles = sorted;
         }
 
 
@@ -66,16 +103,14 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // -----------------------------------------------------------------------------
 
         // Private Members
-        private void SelectCartItem(int position)
+        private void SelectCartItem(Guid id)
         {
-            _selectListener(_motorcycles[position]);
+            _selectListener(_motorcycles?.FirstOrDefault(m => m.Id == id));
         }
 
-        private void DeleteCartItem(int position)
+        private void DeleteCartItem(Guid id)
         {
-            //NotifyItemRemoved(position);
-
-            _deleteListener?.Invoke(_motorcycles[position]);
+            _deleteListener?.Invoke(_motorcycles?.FirstOrDefault(m => m.Id == id));
         }
     }
 }

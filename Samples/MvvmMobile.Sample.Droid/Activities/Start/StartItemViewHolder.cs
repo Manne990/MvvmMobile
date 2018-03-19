@@ -14,10 +14,10 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         private readonly RelativeLayout _deleteButton;
         private readonly TextView _titleTextView;
 
-        private readonly Action<int> _selectListener;
+        private readonly Action<Guid> _selectListener;
 
         private int _deleteButtonWidth;
-        private int _position;
+        private Guid _id;
         private bool _editMode;
         private float _lastDeltaX;
         private bool _shouldCancelPan;
@@ -26,7 +26,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public StartItemViewHolder(View itemView, Action<int> selectListener, Action<int> deleteListener) : base(itemView)
+        public StartItemViewHolder(View itemView, Action<Guid> selectListener, Action<Guid> deleteListener) : base(itemView)
         {
             // Init
             _selectListener = selectListener;
@@ -44,7 +44,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             }));
 
             // Click Events
-            _deleteButton.Click += (sender, e) => deleteListener?.Invoke(_position);
+            _deleteButton.Click += (sender, e) => deleteListener?.Invoke(_id);
 
             // Gestures
             _mainLayout.SetOnTouchListener(new SampleOnTouchListener(MainLayoutPanStarted, MainLayoutPanMoved, MainLayoutPanEnded, ItemSelected));
@@ -58,12 +58,12 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         {
             HideSwipeButtons(false);
 
-            _position = position;
-
             if (motorcycle == null)
             {
                 return;
             }
+
+            _id = motorcycle.Id;
 
             _titleTextView.Text = motorcycle.ToString();
         }
@@ -76,7 +76,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         {
             if (_editMode == false)
             {
-                _selectListener?.Invoke(_position);
+                _selectListener?.Invoke(_id);
             }
 
             HideSwipeButtons(true);

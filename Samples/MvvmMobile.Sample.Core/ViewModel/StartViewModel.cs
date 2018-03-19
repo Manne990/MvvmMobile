@@ -13,8 +13,6 @@ namespace MvvmMobile.Sample.Core.ViewModel
         // Constructors
         public StartViewModel(INavigation navigation)
         {
-            Motorcycles = new ObservableCollection<IMotorcycle>();
-
             AddMotorcycleCommand = new RelayCommand(() =>
             {
                 navigation.NavigateTo<IEditMotorcycleViewModel>(null, MotorcycleAdded);
@@ -41,7 +39,7 @@ namespace MvvmMobile.Sample.Core.ViewModel
                     return;
                 }
 
-                Motorcycles.Remove(mc);
+                Motorcycles?.Remove(mc);
 
                 NotifyPropertyChanged(nameof(Motorcycles));
             });
@@ -65,11 +63,6 @@ namespace MvvmMobile.Sample.Core.ViewModel
             motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2011 });
 
             Motorcycles = motorcycles;
-
-            Motorcycles.CollectionChanged += (sender, e) => 
-            {
-                System.Diagnostics.Debug.WriteLine("CollectionChanged!");
-            };
         }
 
 
