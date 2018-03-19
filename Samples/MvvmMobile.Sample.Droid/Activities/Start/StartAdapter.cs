@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Android.Support.V7.Widget;
 using Android.Views;
+using MvvmMobile.Sample.Core.Common;
 using MvvmMobile.Sample.Core.Model;
 
 namespace MvvmMobile.Sample.Droid.Activities.Start
@@ -23,6 +25,8 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             _selectListener = selectListener;
             _deleteListener = deleteListener;
             _inflater = inflater;
+
+            _motorcycles = new ObservableCollection<IMotorcycle>();
         }
 
 
@@ -31,7 +35,11 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         // Public Methods
         public void LoadData(ObservableCollection<IMotorcycle> motorcycles)
         {
-            _motorcycles = motorcycles;
+            _motorcycles = motorcycles
+                .OrderBy(m => m.Brand)
+                .ThenBy(m => m.Model)
+                .ThenBy(m => m.Year)
+                .ToObservableCollection();
 
             NotifyDataSetChanged();
         }
@@ -65,6 +73,8 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
         private void DeleteCartItem(int position)
         {
+            //NotifyItemRemoved(position);
+
             _deleteListener?.Invoke(_motorcycles[position]);
         }
     }
