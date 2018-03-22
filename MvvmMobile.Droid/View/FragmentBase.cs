@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using Android.App;
+using Android.Support.V4.App;
 using Android.Views;
 using MvvmMobile.Core.ViewModel;
 
