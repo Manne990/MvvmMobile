@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Core\MvvmMobile.Core.csproj">
-      <Project>{55109E7C-3DAB-48AE-BCBC-EE3142F82A6C}</Project>
+      <Project>{234CCC6F-3664-4141-98E3-7E445BEEECDB}</Project>
       <Name>MvvmMobile.Core</Name>
     </ProjectReference>
   </ItemGroup>
