@@ -148,5 +148,15 @@ namespace MvvmMobile.iOS.Navigation
                 done?.Invoke();
             });
         }
+
+        public void NavigateBack<T>(Action done = null)
+        {
+            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+        }
+
+        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        {
+            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+        }
     }
 }

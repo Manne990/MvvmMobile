@@ -60,6 +60,8 @@ namespace MvvmMobile.Droid.View
         {
             base.OnCreate(savedInstanceState);
 
+            BackButtonEnabled = true;
+
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
 
             ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Context = this;
@@ -83,6 +85,7 @@ namespace MvvmMobile.Droid.View
             base.OnStart();
 
             ActionBar?.SetDisplayHomeAsUpEnabled(true); //TODO: Refactor to work without action bar
+            SupportActionBar?.SetDisplayHomeAsUpEnabled(true); //TODO: Refactor to work without action bar
         }
 
         protected override void OnResume()
@@ -143,6 +146,7 @@ namespace MvvmMobile.Droid.View
             BackButtonEnabled = enable;
 
             ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
+            SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
         }
 
 

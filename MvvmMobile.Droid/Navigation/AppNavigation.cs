@@ -196,6 +196,16 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
+        public void NavigateBack<T>(Action done = null)
+        {
+            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+        }
+
+        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        {
+            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+        }
+
         public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
         {
             try
