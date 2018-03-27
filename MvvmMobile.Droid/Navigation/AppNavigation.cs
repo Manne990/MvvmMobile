@@ -196,14 +196,75 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public void NavigateBack<T>(Action done = null)
+        public void NavigateBack<T>(Action done = null) where T : IBaseViewModel
         {
-            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+            if (Context is AppCompatActivity activity)
+            {
+                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                {
+                    if (_viewMapperDictionary.TryGetValue(typeof(T), out Type concreteType) == false)
+                    {
+                        throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    }
+
+                    //TODO: Implement scenario for when the target view is a fragment!
+
+                    var concreteTypeJava = Class.FromType(concreteType);
+                    var intent = new Intent(Context, concreteTypeJava);
+
+                    intent.AddFlags(ActivityFlags.ClearTop);
+
+                    Context.StartActivity(intent);
+                }
+                else
+                {
+                    //TODO: Implement for fragments!
+                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Not implemented for fragments!");
+                }
+
+                done?.Invoke();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an activity!");
+            }
         }
 
-        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null) where T : IBaseViewModel
         {
-            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+            if (Context is AppCompatActivity activity)
+            {
+                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                {
+                    callbackAction.Invoke(payloadId);
+
+                    if (_viewMapperDictionary.TryGetValue(typeof(T), out Type concreteType) == false)
+                    {
+                        throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    }
+
+                    //TODO: Implement scenario for when the target view is a fragment!
+
+                    var concreteTypeJava = Class.FromType(concreteType);
+                    var intent = new Intent(Context, concreteTypeJava);
+
+                    intent.AddFlags(ActivityFlags.ClearTop);
+
+                    Context.StartActivity(intent);
+                }
+                else
+                {
+                    //TODO: Implement for fragments!
+                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Not implemented for fragments!");
+                    //callbackAction.Invoke(payloadId);
+                }
+
+                done?.Invoke();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an activity!");
+            }
         }
 
         public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
