@@ -149,12 +149,12 @@ namespace MvvmMobile.iOS.Navigation
             });
         }
 
-        public void NavigateBack<T>(Action done = null)
+        public void NavigateBack<T>(Action done = null) where T : IBaseViewModel
         {
             System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
         }
 
-        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null) where T : IBaseViewModel
         {
             System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
         }
