@@ -22,7 +22,7 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             base.OnCreate(savedInstanceState);
 
             Title = GetString(Resource.String.motorcycle);
-            SetHasOptionsMenu(true);
+            HasOptionsMenu = true;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
