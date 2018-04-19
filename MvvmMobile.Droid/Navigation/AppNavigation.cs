@@ -97,7 +97,16 @@ namespace MvvmMobile.Droid.Navigation
 
                 if (CanUseActivityTransitions)
                 {
-                    currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                    try
+                    {
+                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                    }
+                    catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
+                    {
+                        System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
+                        _useActivityTransitions = false;
+                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                    }
                 }
                 else
                 {
@@ -109,7 +118,16 @@ namespace MvvmMobile.Droid.Navigation
 
             if (CanUseActivityTransitions)
             {
-                Context.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                try
+                {
+                    Context.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                }
+                catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
+                {
+                    System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
+                    _useActivityTransitions = false;
+                    Context.StartActivity(intent);
+                }
             }
             else
             {
