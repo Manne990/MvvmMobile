@@ -30,12 +30,12 @@ namespace MvvmMobile.iOS.Navigation
             _viewMapperDictionary = viewMapper;
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback);
+            NavigateTo(typeof(T), parameter, callback, clearHistory);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
             if (viewModelType == null)
             {
@@ -96,10 +96,10 @@ namespace MvvmMobile.iOS.Navigation
                 }
 
                 // Handle modal
-                if (frameworkVc.AsModal)
+                if (frameworkVc.AsModal || clearHistory)
                 {
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), true, null);
+                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
                     return;
                 }
             }

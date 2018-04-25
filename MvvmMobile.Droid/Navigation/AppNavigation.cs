@@ -53,12 +53,12 @@ namespace MvvmMobile.Droid.Navigation
             _useActivityTransitions = useActivityTransitions;
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback);
+            NavigateTo(typeof(T), parameter, callback, clearHistory);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
             if (viewModelType == null)
             {
@@ -78,6 +78,11 @@ namespace MvvmMobile.Droid.Navigation
 
             var concreteTypeJava = Class.FromType(concreteType);
             var intent = new Intent(Context, concreteTypeJava);
+
+            if (clearHistory)
+            {
+                intent.AddFlags(ActivityFlags.ClearTop);
+            }
 
             if (parameter != null)
             {
