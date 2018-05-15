@@ -98,6 +98,8 @@ namespace MvvmMobile.iOS.Navigation
                 // Handle modal
                 if (frameworkVc.AsModal || clearHistory)
                 {
+					frameworkVc.AsModal = true;
+
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                     NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
                     return;

@@ -6,7 +6,7 @@ namespace MvvmMobile.iOS.View
 {
     internal interface IViewControllerBase
     {
-        bool AsModal { get; }
+		bool AsModal { get; set; }
 
         void SetPayload(IPayload payload);
         void SetCallback(Action<Guid> callbackAction);
