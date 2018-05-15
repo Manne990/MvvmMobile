@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.Core.Navigation
@@ -11,7 +12,7 @@ namespace MvvmMobile.Core.Navigation
         void NavigateBack(Action done = null);
         void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null);
 
-        void NavigateBack<T>(Action done = null) where T : IBaseViewModel;
-        void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null) where T : IBaseViewModel;
+        Task NavigateBack<T>() where T : IBaseViewModel;
+		Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel;
     }
 }

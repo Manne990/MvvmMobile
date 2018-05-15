@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Common;
@@ -151,14 +152,53 @@ namespace MvvmMobile.iOS.Navigation
             });
         }
 
-        public void NavigateBack<T>(Action done = null) where T : IBaseViewModel
+		public async Task NavigateBack<T>() where T : IBaseViewModel
         {
-            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
-        }
+			// Check the navigation controller
+            if (NavigationController?.VisibleViewController == null)
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Could not find a navigation controller or a visible VC!");
+                return;
+            }
 
-        public void NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId, Action done = null) where T : IBaseViewModel
+			while (true)
+			{
+				// Get the current VC
+				var currentVC = NavigationController.VisibleViewController as IViewControllerBase;
+                if (currentVC == null)
+                {
+                    throw new Exception("The current VC does not implement IViewControllerBase!");
+                }
+
+				// Get the target vc type
+				if (_viewMapperDictionary.TryGetValue(typeof(T), out Type viewControllerType) == false)
+                {
+					throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                }
+
+                // Check if the current VC is the target VC
+				if (currentVC.GetType() == viewControllerType)
+                {
+                    return;
+                }
+
+				// Dismiss the VC
+                if (currentVC.AsModal)
+                {
+					await NavigationController?.DismissViewControllerAsync(false);
+                }
+                else
+                {
+					NavigationController?.PopViewController(false);
+                }
+			}
+		}
+
+		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
         {
-            System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateBack<T> IS NOT IMPLEMENTED!");
+			await NavigateBack<T>();
+
+			callbackAction.Invoke(payloadId);
         }
     }
 }
