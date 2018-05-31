@@ -32,6 +32,7 @@ namespace MvvmMobile.Droid.Navigation
         {
             get
             {
+                //return false;
                 return _useActivityTransitions && Context != null && Context is AppCompatActivity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             }
         }
@@ -89,56 +90,61 @@ namespace MvvmMobile.Droid.Navigation
                 intent.SetPayload(parameter);
             }
 
+            var currentActivity = Context as AppCompatActivity;
+            if (currentActivity == null)
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Context is null or not an activity!");
+                return;
+            }
+
             if (callback != null)
             {
-                var currentActivity = Context as AppCompatActivity;
-                if (currentActivity == null)
-                {
-                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Context is null or not an activity!");
-                    return;
-                }
-
                 intent.SetCallback(callback);
 
+                currentActivity.RunOnUiThread(() => 
+                {
+                    if (CanUseActivityTransitions)
+                    {
+                        try
+                        {
+                            currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                        }
+                        catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
+                        {
+                            System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
+                            _useActivityTransitions = false;
+                            currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                        }
+                    }
+                    else
+                    {
+                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                    }
+                });
+
+                return;
+            }
+
+            currentActivity.RunOnUiThread(() => 
+            {
                 if (CanUseActivityTransitions)
                 {
                     try
                     {
-                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                        currentActivity.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
                     }
                     catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
                     {
                         System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
                         _useActivityTransitions = false;
-                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                        currentActivity.StartActivity(intent);
                     }
                 }
                 else
                 {
-                    currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                    currentActivity.StartActivity(intent);
                 }
-
-                return;
-            }
-
-            if (CanUseActivityTransitions)
-            {
-                try
-                {
-                    Context.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
-                }
-                catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
-                {
-                    System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
-                    _useActivityTransitions = false;
-                    Context.StartActivity(intent);
-                }
-            }
-            else
-            {
-                Context.StartActivity(intent);
-            }
-
+            });
         }
 
         public void NavigateBack(Action done = null)
