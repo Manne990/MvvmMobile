@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
@@ -10,7 +11,7 @@ using MvvmMobile.Droid.Navigation;
 
 namespace MvvmMobile.Droid.View
 {
-    public class ActivityBase<T> : Activity where T : class, IBaseViewModel
+    public class ActivityBase<T> : AppCompatActivity where T : class, IBaseViewModel
     {
         // Private Members
         private const string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";
@@ -59,6 +60,8 @@ namespace MvvmMobile.Droid.View
         {
             base.OnCreate(savedInstanceState);
 
+            BackButtonEnabled = true;
+
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
 
             ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Context = this;
@@ -82,6 +85,7 @@ namespace MvvmMobile.Droid.View
             base.OnStart();
 
             ActionBar?.SetDisplayHomeAsUpEnabled(true); //TODO: Refactor to work without action bar
+            SupportActionBar?.SetDisplayHomeAsUpEnabled(true); //TODO: Refactor to work without action bar
         }
 
         protected override void OnResume()
@@ -142,6 +146,7 @@ namespace MvvmMobile.Droid.View
             BackButtonEnabled = enable;
 
             ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
+            SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
         }
 
 

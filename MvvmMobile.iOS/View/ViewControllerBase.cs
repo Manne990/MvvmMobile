@@ -90,7 +90,7 @@ namespace MvvmMobile.iOS.View
         // Properties
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
-        public bool AsModal { get; protected set; }
+		public bool AsModal { get; set; }
 
         private T _viewModel;
         protected T ViewModel

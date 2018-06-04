@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Common;
@@ -30,12 +31,12 @@ namespace MvvmMobile.iOS.Navigation
             _viewMapperDictionary = viewMapper;
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback);
+            NavigateTo(typeof(T), parameter, callback, clearHistory);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
             if (viewModelType == null)
             {
@@ -96,10 +97,12 @@ namespace MvvmMobile.iOS.Navigation
                 }
 
                 // Handle modal
-                if (frameworkVc.AsModal)
+                if (frameworkVc.AsModal || clearHistory)
                 {
+					frameworkVc.AsModal = true;
+
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), true, null);
+                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
                     return;
                 }
             }
@@ -147,6 +150,55 @@ namespace MvvmMobile.iOS.Navigation
 
                 done?.Invoke();
             });
+        }
+
+		public async Task NavigateBack<T>() where T : IBaseViewModel
+        {
+			// Check the navigation controller
+            if (NavigationController?.VisibleViewController == null)
+            {
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Could not find a navigation controller or a visible VC!");
+                return;
+            }
+
+			while (true)
+			{
+				// Get the current VC
+				var currentVC = NavigationController.VisibleViewController as IViewControllerBase;
+                if (currentVC == null)
+                {
+                    throw new Exception("The current VC does not implement IViewControllerBase!");
+                }
+
+				// Get the target vc type
+				if (_viewMapperDictionary.TryGetValue(typeof(T), out Type viewControllerType) == false)
+                {
+					throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                }
+
+                // Check if the current VC is the target VC
+				if (currentVC.GetType() == viewControllerType)
+                {
+                    return;
+                }
+
+				// Dismiss the VC
+                if (currentVC.AsModal)
+                {
+					await NavigationController?.DismissViewControllerAsync(false);
+                }
+                else
+                {
+					NavigationController?.PopViewController(false);
+                }
+			}
+		}
+
+		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        {
+			await NavigateBack<T>();
+
+			callbackAction.Invoke(payloadId);
         }
     }
 }

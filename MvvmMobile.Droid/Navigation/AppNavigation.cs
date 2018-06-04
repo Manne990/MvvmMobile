@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.App;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
+using Android.Support.V7.App;
 using Android.Widget;
 using Java.Lang;
 using MvvmMobile.Core.Navigation;
@@ -13,7 +14,7 @@ using MvvmMobile.Droid.View;
 
 namespace MvvmMobile.Droid.Navigation
 {
-    public sealed class AppNavigation : INavigation
+	public class AppNavigation : INavigation
     {
         // Constants
         internal const int CallbackActivityRequestCode = 9999;
@@ -27,11 +28,11 @@ namespace MvvmMobile.Droid.Navigation
         private Dictionary<Type, Type> _viewMapperDictionary;
         private bool _useActivityTransitions;
 
-        private bool CanUseActivityTrasitions
+        private bool CanUseActivityTransitions
         {
             get
             {
-                return _useActivityTransitions && Context != null && Context is Activity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
+                return _useActivityTransitions && Context != null && Context is AppCompatActivity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             }
         }
 
@@ -52,12 +53,12 @@ namespace MvvmMobile.Droid.Navigation
             _useActivityTransitions = useActivityTransitions;
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback);
+            NavigateTo(typeof(T), parameter, callback, clearHistory);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
             if (viewModelType == null)
             {
@@ -78,6 +79,11 @@ namespace MvvmMobile.Droid.Navigation
             var concreteTypeJava = Class.FromType(concreteType);
             var intent = new Intent(Context, concreteTypeJava);
 
+            if (clearHistory)
+            {
+                intent.AddFlags(ActivityFlags.ClearTop);
+            }
+
             if (parameter != null)
             {
                 intent.SetPayload(parameter);
@@ -85,7 +91,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (callback != null)
             {
-                var currentActivity = Context as Activity;
+                var currentActivity = Context as AppCompatActivity;
                 if (currentActivity == null)
                 {
                     System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Context is null or not an activity!");
@@ -94,9 +100,18 @@ namespace MvvmMobile.Droid.Navigation
 
                 intent.SetCallback(callback);
 
-                if (CanUseActivityTrasitions)
+                if (CanUseActivityTransitions)
                 {
-                    currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, ActivityOptions.MakeSceneTransitionAnimation(Context as Activity).ToBundle());
+                    try
+                    {
+                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                    }
+                    catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
+                    {
+                        System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
+                        _useActivityTransitions = false;
+                        currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode);
+                    }
                 }
                 else
                 {
@@ -106,9 +121,18 @@ namespace MvvmMobile.Droid.Navigation
                 return;
             }
 
-            if (CanUseActivityTrasitions)
+            if (CanUseActivityTransitions)
             {
-                Context.StartActivity(intent, ActivityOptions.MakeSceneTransitionAnimation(Context as Activity).ToBundle());
+                try
+                {
+                    Context.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                }
+                catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
+                {
+                    System.Diagnostics.Debug.WriteLine("Activity transitions are not working on this device. Transitions will be disabled.");
+                    _useActivityTransitions = false;
+                    Context.StartActivity(intent);
+                }
             }
             else
             {
@@ -119,11 +143,11 @@ namespace MvvmMobile.Droid.Navigation
 
         public void NavigateBack(Action done = null)
         {
-            if (Context is Activity activity)
+            if (Context is AppCompatActivity activity)
             {
                 if (activity.FragmentManager?.BackStackEntryCount <= 1)
                 {
-                    if (CanUseActivityTrasitions)
+                    if (CanUseActivityTransitions)
                     {
                         activity.FinishAfterTransition();
                     }
@@ -154,7 +178,7 @@ namespace MvvmMobile.Droid.Navigation
 
         public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
         {
-            if (Context is Activity activity)
+            if (Context is AppCompatActivity activity)
             {
                 if (activity.FragmentManager?.BackStackEntryCount == 0)
                 {
@@ -164,7 +188,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     callbackAction.Invoke(payloadId);
 
-                    if (CanUseActivityTrasitions)
+                    if (CanUseActivityTransitions)
                     {
                         activity.FinishAfterTransition();
                     }
@@ -195,12 +219,53 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
+		public async Task NavigateBack<T>() where T : IBaseViewModel
+        {
+			await Task.Delay(1);
+
+            if (Context is AppCompatActivity activity)
+            {
+                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                {
+                    if (_viewMapperDictionary.TryGetValue(typeof(T), out Type concreteType) == false)
+                    {
+                        throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    }
+
+                    //TODO: Implement scenario for when the target view is a fragment!
+
+                    var concreteTypeJava = Class.FromType(concreteType);
+                    var intent = new Intent(Context, concreteTypeJava);
+
+                    intent.AddFlags(ActivityFlags.ClearTop);
+
+                    Context.StartActivity(intent);
+                }
+                else
+                {
+                    //TODO: Implement for fragments!
+                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Not implemented for fragments!");
+                }
+            }
+            else
+            {
+				System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
+            }
+        }
+
+		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        {
+			await NavigateBack<T>();
+
+            callbackAction.Invoke(payloadId);
+        }
+
         public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
         {
             try
             {
                 // Get the current activity
-                var activity = Context as Activity;
+                var activity = Context as AppCompatActivity;
                 if (activity == null)
                 {
                     System.Diagnostics.Debug.WriteLine("AppNavigation.LoadFragment: Context is null or not an activity!");
@@ -243,7 +308,7 @@ namespace MvvmMobile.Droid.Navigation
                 }
 
                 // Push the fragment
-                var ft = activity.FragmentManager.BeginTransaction();
+                var ft = activity.SupportFragmentManager.BeginTransaction();
 
                 ft.Replace(FragmentContainerId, fragment, concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
