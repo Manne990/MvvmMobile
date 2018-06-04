@@ -5421,9 +5421,6 @@ namespace MvvmMobile.Sample.Droid
 			// aapt resource value: 0x7f0b0161
 			public const int Base_Widget_Design_TabLayout = 2131427681;
 			
-			// aapt resource value: 0x7f0b0183
-			public const int EditTextStyle = 2131427715;
-			
 			// aapt resource value: 0x7f0b001e
 			public const int Platform_AppCompat = 2131427358;
 			
@@ -6068,6 +6065,9 @@ namespace MvvmMobile.Sample.Droid
 			
 			// aapt resource value: 0x7f0b0178
 			public const int Widget_Design_TextInputLayout = 2131427704;
+			
+			// aapt resource value: 0x7f0b0183
+			public const int editTextStyle = 2131427715;
 			
 			// aapt resource value: 0x7f0b0182
 			public const int fieldLabelTextView = 2131427714;

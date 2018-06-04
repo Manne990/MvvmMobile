@@ -16,7 +16,8 @@
         <EditText
             android:id="@+id/brandEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/editTextStyle" />
         <TextView
             android:layout_marginTop="@dimen/spacing_normal"
             android:text="Model"
@@ -24,7 +25,8 @@
         <EditText
             android:id="@+id/modelEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/editTextStyle" />
         <TextView
             android:layout_marginTop="@dimen/spacing_normal"
             android:text="Year"
@@ -32,6 +34,7 @@
         <EditText
             android:id="@+id/yearEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/editTextStyle" />
     </LinearLayout>
 </LinearLayout>
