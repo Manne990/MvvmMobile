@@ -19,7 +19,7 @@ namespace MvvmMobile.iOS.Navigation
         // -----------------------------------------------------------------------------
 
         // Public Properties
-        public TabBarControllerBase TabBarController { get; set; }
+        //public TabBarControllerBase TabBarController { get; set; }
         public UINavigationController NavigationController { get; set; }
 
 
