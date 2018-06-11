@@ -11,6 +11,7 @@ namespace MvvmMobile.iOS.View
     {
         // Private Members
         private AppNavigation _app;
+        private UINavigationController _parentNavController;
         private bool _isFramesReady;
 
 
@@ -74,12 +75,12 @@ namespace MvvmMobile.iOS.View
 
             if (NavigationController != null)
             {
+                _parentNavController = NavigationController;
                 ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
             }
-
-            if (NavigationItem != null)
+            else if (ViewControllers != null && ViewControllers.Length > 0 && ViewControllers[0] is UINavigationController firstVc)
             {
-                NavigationItem.Title = Title;
+                SetCurrentNavigationController(firstVc);
             }
 
             if (_viewModel != null)
@@ -89,6 +90,24 @@ namespace MvvmMobile.iOS.View
             }
 
             _viewModel?.OnActivated();
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            if (ViewControllers != null && ViewControllers.Length > 0 && ViewControllers[0] is UINavigationController firstVc)
+            {
+                if (_parentNavController != null)
+                {
+                    _parentNavController.NavigationItem.Title = firstVc.Title;
+                }
+
+                if (NavigationItem != null)
+                {
+                    NavigationItem.Title = firstVc.Title;
+                }
+            }
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -206,6 +225,16 @@ namespace MvvmMobile.iOS.View
             }
 
             _app.NavigationController = navController;
+
+            if (NavigationItem != null)
+            {
+                NavigationItem.Title = navController.VisibleViewController.Title;
+            }
+
+            if (_parentNavController != null)
+            {
+                _parentNavController.NavigationItem.Title = navController.VisibleViewController.Title;
+            }
         }
     }
 }
