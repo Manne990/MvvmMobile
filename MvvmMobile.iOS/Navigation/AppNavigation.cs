@@ -177,12 +177,18 @@ namespace MvvmMobile.iOS.Navigation
                 }
 
                 // Check if the current VC is the target VC
-				if (currentVC.GetType() == viewControllerType)
+                if (currentVC.GetType() == viewControllerType)
                 {
                     return;
                 }
 
-				// Dismiss the VC
+                var parentTabVc = NavigationController.VisibleViewController.TabBarController;
+                if (parentTabVc != null && parentTabVc.GetType() == viewControllerType)
+                {
+                    return;
+                }
+
+                // Dismiss the VC
                 if (currentVC.AsModal)
                 {
 					await NavigationController?.DismissViewControllerAsync(false);
