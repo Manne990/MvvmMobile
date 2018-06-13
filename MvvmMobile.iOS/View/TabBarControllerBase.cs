@@ -52,9 +52,6 @@ namespace MvvmMobile.iOS.View
 
             // Setup ViewModel
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
-
-            // Handle Payload
-            _viewModel?.InitWithPayload(PayloadId);
         }
 
         public override void ViewWillLayoutSubviews()
@@ -72,6 +69,9 @@ namespace MvvmMobile.iOS.View
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+
+            // Handle Payload
+            _viewModel?.InitWithPayload(PayloadId);
 
             if (NavigationController != null)
             {
