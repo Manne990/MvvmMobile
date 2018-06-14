@@ -96,6 +96,7 @@
     <Folder Include="View\" />
     <Folder Include="ViewController\Start\" />
     <Folder Include="ViewController\Edit\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -118,6 +119,7 @@
     <Compile Include="ViewController\Edit\EditMotorcycleViewController.designer.cs">
       <DependentUpon>EditMotorcycleViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Navigation\CustomNavigation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Foundation;
+using MvvmMobile.Sample.Core.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.iOS.Navigation;
 using MvvmMobile.Sample.iOS.View;
 using UIKit;
 
@@ -24,6 +26,8 @@ namespace MvvmMobile.Sample.iOS
             var builder = Core.Bootstrapper.Init();
 
             MvvmMobile.iOS.Bootstrapper.SetupIoC(builder);
+
+            builder.RegisterSingleton<ICustomNavigation, CustomNavigation>();
 
             builder.Build();
 

@@ -108,6 +108,7 @@
     <Compile Include="Common\LeftMarginAnimation.cs" />
     <Compile Include="Common\AnimationListener.cs" />
     <Compile Include="Common\PreDrawListener.cs" />
+    <Compile Include="Navigation\CustomNavigation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -149,6 +150,7 @@
     <Folder Include="Fragments\Edit\" />
     <Folder Include="Common\" />
     <Folder Include="Resources\transition\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

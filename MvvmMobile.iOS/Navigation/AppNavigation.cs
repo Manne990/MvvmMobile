@@ -12,23 +12,31 @@ namespace MvvmMobile.iOS.Navigation
 {
     public class AppNavigation : INavigation
     {
-        // Private Members
-        private Dictionary<Type, Type> _viewMapperDictionary;
+        // Properties
+        //public TabBarControllerBase TabBarController { get; set; }
+        public UINavigationController NavigationController { private get; set; }
+        public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
 
         // -----------------------------------------------------------------------------
 
-        // Public Properties
-        //public TabBarControllerBase TabBarController { get; set; }
-        public UINavigationController NavigationController { get; set; }
+        // Virtual Methods
+        public virtual UINavigationController GetNavigationController()
+        {
+            return NavigationController;
+        }
 
+        public virtual Dictionary<Type, Type> GetViewMapper()
+        {
+            return ViewMapperDictionary;
+        }
 
         // -----------------------------------------------------------------------------
 
         // Public Methods
         public void Init(Dictionary<Type, Type> viewMapper)
         {
-            _viewMapperDictionary = viewMapper;
+            ViewMapperDictionary = viewMapper;
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
@@ -45,14 +53,14 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             // Check the navigation controller
-            if (NavigationController == null)
+            if (GetNavigationController() == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Could not find a navigation controller!");
                 return;
             }
 
             // Get the vc type
-            if (_viewMapperDictionary.TryGetValue(viewModelType, out Type viewControllerType) == false)
+            if (GetViewMapper().TryGetValue(viewModelType, out Type viewControllerType) == false)
             {
                 throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
@@ -102,26 +110,26 @@ namespace MvvmMobile.iOS.Navigation
 					frameworkVc.AsModal = true;
 
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-                    NavigationController?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
+                    GetNavigationController()?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
                     return;
                 }
             }
 
             // Push the vc
-            NavigationController?.PushViewController(vc, true);
+            GetNavigationController()?.PushViewController(vc, true);
         }
 
         public void NavigateBack(Action done = null)
         {
             // Check the navigation controller
-            if (NavigationController?.VisibleViewController == null)
+            if (GetNavigationController()?.VisibleViewController == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Could not find a navigation controller or a visible VC!");
                 return;
             }
 
             // Get the current VC
-            var currentVC = NavigationController.VisibleViewController as IViewControllerBase;
+            var currentVC = GetNavigationController().VisibleViewController as IViewControllerBase;
             if (currentVC == null)
             {
                 throw new Exception("The current VC does not implement IViewControllerBase!");
@@ -130,14 +138,14 @@ namespace MvvmMobile.iOS.Navigation
             // Dismiss the VC
             if (currentVC.AsModal)
             {
-                NavigationController?.DismissViewController(true, () => 
+                GetNavigationController()?.DismissViewController(true, () => 
                 {
                     done?.Invoke();
                 });
             }
             else
             {
-                NavigationController?.PopViewController(true);
+                GetNavigationController()?.PopViewController(true);
                 done?.Invoke();
             }
         }
@@ -155,7 +163,7 @@ namespace MvvmMobile.iOS.Navigation
 		public async Task NavigateBack<T>() where T : IBaseViewModel
         {
 			// Check the navigation controller
-            if (NavigationController?.VisibleViewController == null)
+            if (GetNavigationController()?.VisibleViewController == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Could not find a navigation controller or a visible VC!");
                 return;
@@ -164,14 +172,14 @@ namespace MvvmMobile.iOS.Navigation
 			while (true)
 			{
 				// Get the current VC
-				var currentVC = NavigationController.VisibleViewController as IViewControllerBase;
+                var currentVC = GetNavigationController().VisibleViewController as IViewControllerBase;
                 if (currentVC == null)
                 {
                     throw new Exception("The current VC does not implement IViewControllerBase!");
                 }
 
 				// Get the target vc type
-				if (_viewMapperDictionary.TryGetValue(typeof(T), out Type viewControllerType) == false)
+                if (GetViewMapper().TryGetValue(typeof(T), out Type viewControllerType) == false)
                 {
 					throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
                 }
@@ -182,7 +190,7 @@ namespace MvvmMobile.iOS.Navigation
                     return;
                 }
 
-                var parentTabVc = NavigationController.VisibleViewController.TabBarController;
+                var parentTabVc = GetNavigationController().VisibleViewController.TabBarController;
                 if (parentTabVc != null && parentTabVc.GetType() == viewControllerType)
                 {
                     return;
@@ -191,11 +199,11 @@ namespace MvvmMobile.iOS.Navigation
                 // Dismiss the VC
                 if (currentVC.AsModal)
                 {
-					await NavigationController?.DismissViewControllerAsync(false);
+                    await GetNavigationController()?.DismissViewControllerAsync(false);
                 }
                 else
                 {
-					NavigationController?.PopViewController(false);
+                    GetNavigationController()?.PopViewController(false);
                 }
 			}
 		}
