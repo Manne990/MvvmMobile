@@ -13,8 +13,8 @@ namespace MvvmMobile.Sample.Core
 
             builder.Register<IMotorcyclePayload>(new MotorcyclePayload());
 
-            builder.Register<IStartViewModel, StartViewModel>();
-            builder.Register<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+            builder.RegisterSingleton<IStartViewModel, StartViewModel>();
+            builder.RegisterSingleton<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
 
             return builder;
         }
