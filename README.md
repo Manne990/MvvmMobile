@@ -113,7 +113,23 @@ public class AutofacContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
 }
 ```
 
-The instance of your IContainerBuilder class is then passed to MvvmMobile with the init process described below for the plattforms.
+Finally, create a class that creates the container builder and register all common core types.
+Example:
+```
+public static class Bootstrapper
+{
+    public static IContainerBuilder Init()
+    {
+        var builder = new AutofacContainerBuilder();
+
+        builder.RegisterSingleton<IMyFirstViewModel, MyFirstViewModel>();
+        builder.RegisterSingleton<IMySecondViewModel, MySecondViewModel>();
+        builder.RegisterSingleton<IMyFirstService, MyFirstService>();
+
+        return builder;
+    }
+}
+```
 
 ## Create the Xamarin iOS project ##
 - Create a Xamarin iOS project
@@ -142,6 +158,10 @@ protected override void ViewModel_PropertyChanged(object sender, System.Componen
 
 In AppDelegate.cs and the FinishedLaunching method. Initialize MvvmMobile with the IoC container builder instance created above and the mapping between your viewmodels and your view controllers.
 ```
+var builder = Core.Bootstrapper.Init(); // The Init method of your Bootstrapper class created in your shared project above
+
+//TODO: Register iOS specific types here...
+
 MvvmMobile.iOS.Bootstrapper.SetupIoC(builder);
 
 builder.Build();
@@ -174,6 +194,10 @@ protected override void ViewModel_PropertyChanged(object sender, System.Componen
 
 In your application class. Initialize MvvmMobile with the IoC container builder instance created above and the mapping between your viewmodels and your activities/fragments.
 ```
+var builder = Core.Bootstrapper.Init(); // The Init method of your Bootstrapper class created in your shared project above
+
+//TODO: Register Android specific types here...
+
 MvvmMobile.Droid.Bootstrapper.SetupIoC(builder);
 
 builder.Build();
