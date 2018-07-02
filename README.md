@@ -42,7 +42,7 @@ NavigateBack(payload);
 ## Setup the IoC Container ##
 MvvmMobile does not contain an IoC container. This has been abstracted away and enables you to use the IoC solution of your choosing!
 
-First, create a class that implements MvvmMobile.Core.Common.IResolver.
+First, create a class that implements MvvmMobile.Core.Common.IResolver.   
 Example with Autofac:
 ```
 public class AutofacResolver : MvvmMobile.Core.Common.IResolver
