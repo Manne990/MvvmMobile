@@ -6,6 +6,11 @@ MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android wi
 Mikael Stalvik  
 Jonas Frid
 
+## NuGet ##
+https://www.nuget.org/packages/MvvmMobile.Core/   
+https://www.nuget.org/packages/MvvmMobile.Droid/   
+https://www.nuget.org/packages/MvvmMobile.iOS/
+
 ## Getting Started ##
 - Create a .NET Standard project for the shared code
 - Setup the IoC Container
