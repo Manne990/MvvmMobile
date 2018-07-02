@@ -13,7 +13,8 @@ Jonas Frid
 - Create a Xamarin Android project
 
 ## Create the shared project ##
-- Create a .NET Standard (version 2.0 or later) project for your shared code and add a reference to MvvmMobile.Core
+- Create a .NET Standard (version 2.0 or later) project for your shared code
+- Add the NuGet package MvvmMobile.Core (https://www.nuget.org/packages/MvvmMobile.Core/)
 - Make sure that all viewmodel interfaces inherit from IBaseViewModel
 - Make sure that all viewmodel classes inherit from BaseViewModel
 
@@ -112,7 +113,7 @@ The instance of your IContainerBuilder class is then passed to MvvmMobile with t
 ## Create the Xamarin iOS project ##
 - Create a Xamarin iOS project
 - Add a reference to your shared project
-- Add references to MvvmMobile.Core and MvvmMobile.iOS
+- Add the NuGet package MvvmMobile.iOS (https://www.nuget.org/packages/MvvmMobile.iOS/)
 - Create your view controllers
 
 All view controllers must inherit from ViewControllerBase or one of the other view controller base classes provided by MvvmMobile.
@@ -150,7 +151,7 @@ MvvmMobile.iOS.Bootstrapper.Init(new Dictionary<Type, Type>
 ## Create the Xamarin Android project ##
 - Create a Xamarin Android project
 - Add a reference to your shared project
-- Add references to MvvmMobile.Core and MvvmMobile.Droid
+- Add the NuGet package MvvmMobile.Droid (https://www.nuget.org/packages/MvvmMobile.Droid/)
 - Create your activities and fragments
 
 All activities must inherit from ActivityBase and all fragments must inherit from FragmentBase.
