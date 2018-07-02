@@ -43,3 +43,4 @@ Thumbs.db
 UserPrefs.xml
 .vs
 .mfractor
+*.nupkg

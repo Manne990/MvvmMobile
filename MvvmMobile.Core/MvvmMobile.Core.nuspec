@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata minClientVersion="">
+    <id>MvvmMobile.Core</id>
+    <version>1.0.1</version>
+    <title>MvvmMobile.Core</title>
+    <authors>Jonas Frid, Mikael Stalvik</authors>
+    <owners>Jonas Frid, Mikael Stalvik</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Manne990/MvvmMobile</projectUrl>
+    <description>MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android with a focus on abstracted navigation. This ensures high testability of the viewmodel classes.</description>
+    <summary>MvvmMobile is an MVVM framework for Xamarin</summary>
+    <releaseNotes></releaseNotes>
+    <copyright></copyright>
+    <language></language>
+    <tags>xamarin mvvm android ios</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/jonas.frid/Documents/Projects/iDoApps/MvvmMobile/MvvmMobile.Core/bin/Release/netstandard2.0/MvvmMobile.Core.dll" target="lib/netstandard2.0/MvvmMobile.Core.dll" />
+  </files>
+</package>
