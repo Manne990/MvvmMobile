@@ -25,7 +25,7 @@ namespace MvvmMobile.Droid.Navigation
         // -----------------------------------------------------------------------------
 
         // Private Members
-        private Dictionary<Type, Type> _viewMapperDictionary;
+        //private Dictionary<Type, Type> _viewMapperDictionary;
         private bool _useActivityTransitions;
 
         private bool CanUseActivityTransitions
@@ -33,16 +33,31 @@ namespace MvvmMobile.Droid.Navigation
             get
             {
                 //return false;
-                return _useActivityTransitions && Context != null && Context is AppCompatActivity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
+                return _useActivityTransitions && GetContext() != null && GetContext() is AppCompatActivity && Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop;
             }
         }
 
 
         // -----------------------------------------------------------------------------
 
+        // Virtual Methods
+        public virtual Context GetContext()
+        {
+            return Context;
+        }
+
+        public virtual Dictionary<Type, Type> GetViewMapper()
+        {
+            return ViewMapperDictionary;
+        }
+
+
+        // -----------------------------------------------------------------------------
+
         // Public Properties
-        public Context Context { get; set; }
+        public Context Context { private get; set; }
         public int FragmentContainerId { get; set; }
+        public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
 
         // -----------------------------------------------------------------------------
@@ -50,7 +65,7 @@ namespace MvvmMobile.Droid.Navigation
         // Public Methods
         public void Init(Dictionary<Type, Type> viewMapper, bool useActivityTransitions = false)
         {
-            _viewMapperDictionary = viewMapper;
+            ViewMapperDictionary = viewMapper;
             _useActivityTransitions = useActivityTransitions;
         }
 
@@ -66,7 +81,7 @@ namespace MvvmMobile.Droid.Navigation
                 return;
             }
 
-            if (_viewMapperDictionary.TryGetValue(viewModelType, out Type concreteType) == false)
+            if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
             {
                 throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
@@ -78,7 +93,7 @@ namespace MvvmMobile.Droid.Navigation
             }
 
             var concreteTypeJava = Class.FromType(concreteType);
-            var intent = new Intent(Context, concreteTypeJava);
+            var intent = new Intent(GetContext(), concreteTypeJava);
 
             if (clearHistory)
             {
@@ -90,7 +105,7 @@ namespace MvvmMobile.Droid.Navigation
                 intent.SetPayload(parameter);
             }
 
-            var currentActivity = Context as AppCompatActivity;
+            var currentActivity = GetContext() as AppCompatActivity;
             if (currentActivity == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Context is null or not an activity!");
@@ -107,7 +122,7 @@ namespace MvvmMobile.Droid.Navigation
                     {
                         try
                         {
-                            currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                            currentActivity.StartActivityForResult(intent, CallbackActivityRequestCode, Android.App.ActivityOptions.MakeSceneTransitionAnimation(GetContext() as AppCompatActivity).ToBundle());
                         }
                         catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
                         {
@@ -131,7 +146,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     try
                     {
-                        currentActivity.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(Context as AppCompatActivity).ToBundle());
+                        currentActivity.StartActivity(intent, Android.App.ActivityOptions.MakeSceneTransitionAnimation(GetContext() as AppCompatActivity).ToBundle());
                     }
                     catch //REMARK: This is due to that this crashes on some devices even if the Android version supports this
                     {
@@ -149,7 +164,7 @@ namespace MvvmMobile.Droid.Navigation
 
         public void NavigateBack(Action done = null)
         {
-            if (Context is AppCompatActivity activity)
+            if (GetContext() is AppCompatActivity activity)
             {
                 if (activity.FragmentManager?.BackStackEntryCount <= 1)
                 {
@@ -184,7 +199,7 @@ namespace MvvmMobile.Droid.Navigation
 
         public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
         {
-            if (Context is AppCompatActivity activity)
+            if (GetContext() is AppCompatActivity activity)
             {
                 if (activity.FragmentManager?.BackStackEntryCount == 0)
                 {
@@ -229,11 +244,11 @@ namespace MvvmMobile.Droid.Navigation
         {
 			await Task.Delay(1);
 
-            if (Context is AppCompatActivity activity)
+            if (GetContext() is AppCompatActivity activity)
             {
                 if (activity.FragmentManager?.BackStackEntryCount <= 1)
                 {
-                    if (_viewMapperDictionary.TryGetValue(typeof(T), out Type concreteType) == false)
+                    if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
                     {
                         throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
                     }
@@ -241,11 +256,11 @@ namespace MvvmMobile.Droid.Navigation
                     //TODO: Implement scenario for when the target view is a fragment!
 
                     var concreteTypeJava = Class.FromType(concreteType);
-                    var intent = new Intent(Context, concreteTypeJava);
+                    var intent = new Intent(GetContext(), concreteTypeJava);
 
                     intent.AddFlags(ActivityFlags.ClearTop);
 
-                    Context.StartActivity(intent);
+                    GetContext().StartActivity(intent);
                 }
                 else
                 {
@@ -271,7 +286,7 @@ namespace MvvmMobile.Droid.Navigation
             try
             {
                 // Get the current activity
-                var activity = Context as AppCompatActivity;
+                var activity = GetContext() as AppCompatActivity;
                 if (activity == null)
                 {
                     System.Diagnostics.Debug.WriteLine("AppNavigation.LoadFragment: Context is null or not an activity!");
@@ -283,7 +298,7 @@ namespace MvvmMobile.Droid.Navigation
                 if (fragmentContainer == null)
                 {
                     // No container -> Use generic fragment container activity
-                    var intent = new Intent(Context, typeof(FragmentContainerActivity));
+                    var intent = new Intent(GetContext(), typeof(FragmentContainerActivity));
 
                     var activityPayload = Core.Mvvm.Api.Resolver.Resolve<IFragmentContainerPayload>();
 
@@ -293,7 +308,7 @@ namespace MvvmMobile.Droid.Navigation
 
                     intent.SetPayload(activityPayload);
 
-                    Context.StartActivity(intent);
+                    GetContext().StartActivity(intent);
 
                     return null;
                 }

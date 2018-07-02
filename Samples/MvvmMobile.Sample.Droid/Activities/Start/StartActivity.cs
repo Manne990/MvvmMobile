@@ -67,6 +67,8 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             base.OnResume();
 
             EnableBackButton(false);
+
+            _adapter?.LoadData(ViewModel.Motorcycles);
         }
 
         protected override void OnDestroy()
