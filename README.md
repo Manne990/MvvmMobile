@@ -71,7 +71,7 @@ public class AutofacResolver : MvvmMobile.Core.Common.IResolver
 }
 ```
 
-Then, create a class that implements MvvmMobile.Core.Common.IContainerBuilder.
+Then, create a class that implements MvvmMobile.Core.Common.IContainerBuilder.   
 Example with Autofac:
 ```
 public class AutofacContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
@@ -113,7 +113,7 @@ public class AutofacContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
 }
 ```
 
-Finally, create a class that creates the container builder and register all common core types.
+Finally, create a class that creates the container builder and register all common core types.   
 Example:
 ```
 public static class Bootstrapper
