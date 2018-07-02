@@ -3,17 +3,19 @@ using MvvmMobile.Core;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
+using MvvmMobile.Sample.Core.Navigation;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
     public class EditMotorcycleViewModel : BaseViewModel, IEditMotorcycleViewModel
     {
         // Constructors
-        public EditMotorcycleViewModel()
+        public EditMotorcycleViewModel(ICustomNavigation navigation)
         {
             CancelCommand = new RelayCommand(() => 
             {
-                NavigateBack();
+                navigation?.NavigateToRoot();
+                //NavigateBack();
             });
 
             SaveMotorcycleCommand = new RelayCommand(() =>

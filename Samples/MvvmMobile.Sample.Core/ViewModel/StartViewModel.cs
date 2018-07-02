@@ -5,13 +5,14 @@ using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
+using MvvmMobile.Sample.Core.Navigation;
 
 namespace MvvmMobile.Sample.Core.ViewModel
 {
     public class StartViewModel : BaseViewModel, IStartViewModel
     {
         // Constructors
-        public StartViewModel(INavigation navigation)
+        public StartViewModel(ICustomNavigation navigation)
         {
             AddMotorcycleCommand = new RelayCommand(() =>
             {
