@@ -1,5 +1,0 @@
-# 2018-07-03
-Version 1.0 ready and released on nuget.org.
-
-It is now possible to override the navigation and extend with solution specific navigation features.
-Look at ICustomNavigation and the CustomNavigation classes in the sample for more details.
