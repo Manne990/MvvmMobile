@@ -1,6 +1,6 @@
 # Release Notes #
 
-## 1.0 ##
+## Version 1.0 ##
 3 JUL 2018   
 
 First release on nuget.org.   
