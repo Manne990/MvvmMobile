@@ -37,6 +37,8 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             _brandEditText = view.FindViewById<TextView>(Resource.Id.brandEditText);
             _modelEditText = view.FindViewById<TextView>(Resource.Id.modelEditText);
             _yearEditText = view.FindViewById<TextView>(Resource.Id.yearEditText);
+
+            ParentActivity.SetSupportActionBar(view.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
         }
 
         public override void OnResume()
@@ -44,6 +46,7 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             base.OnResume();
 
             ParentActivity.Title = Title;
+            //ParentActivity.SupportActionBar.Title = Title;
             ParentActivity.EnableBackButton(true);
         }
 

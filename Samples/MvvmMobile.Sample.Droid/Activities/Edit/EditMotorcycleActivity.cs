@@ -28,7 +28,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Edit
             SetContentView(Resource.Layout.EditMotorcycleLayout);
 
             // Toolbar
-            SetActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
 
             // Transitions
             Window.EnterTransition = TransitionInflater.From(this).InflateTransition(Resource.Transition.slide);

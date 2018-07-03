@@ -9,7 +9,7 @@ using MvvmMobile.Droid.Navigation;
 
 namespace MvvmMobile.Droid.View
 {
-    [Activity(Label = "", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Test", ScreenOrientation = ScreenOrientation.Portrait)]
     internal sealed class FragmentContainerActivity : ActivityBase<IBaseViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -19,7 +19,25 @@ namespace MvvmMobile.Droid.View
             // Init
             SetContentView(Resource.Layout.FragmentContainerActivityLayout);
 
-            FragmentManager?.PopBackStackImmediate();
+            SupportFragmentManager?.PopBackStackImmediate();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            // Get Payload
+            var payload = Core.Mvvm.Api.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
+            if (payload == null)
+            {
+                return;
+            }
+
+            // Load Fragment
+            var app = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
+
+            app.FragmentContainerId = Resource.Id.fragmentContainer;
+            app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);
         }
 
         public override void OnBackPressed()
@@ -29,7 +47,7 @@ namespace MvvmMobile.Droid.View
                 return;
             }
 
-            if (FragmentManager != null && FragmentManager.BackStackEntryCount <= 1)
+            if (SupportFragmentManager != null && SupportFragmentManager.BackStackEntryCount <= 1)
             {
                 Finish();
             }
@@ -39,19 +57,6 @@ namespace MvvmMobile.Droid.View
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            // Get Payload
-            var payload = Core.Mvvm.Api.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
-            if (payload == null)
-            {
-                return base.OnCreateOptionsMenu(menu);
-            }
-
-            // Load Fragment
-            var app = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
-
-            app.FragmentContainerId = Resource.Id.fragmentContainer;
-            app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);
-
             return base.OnCreateOptionsMenu(menu);
         }
 

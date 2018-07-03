@@ -2,7 +2,6 @@
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
-using Android.Views;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel;
@@ -29,7 +28,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             SetContentView(Resource.Layout.StartActivityLayout);
 
             // Toolbar
-            SetActionBar(FindViewById<Android.Widget.Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
 
             // Controls
             _listView = FindViewById<RecyclerView>(Resource.Id.listView);
@@ -42,24 +41,6 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             {
                 AddMotorcycle();
             };
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
-
-            return true;
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            if (item.ItemId == Resource.Id.menuAdd)
-            {
-                AddMotorcycle();
-                return true;
-            }
-
-            return base.OnOptionsItemSelected(item);
         }
 
         protected override void OnResume()

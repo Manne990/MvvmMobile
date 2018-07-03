@@ -166,7 +166,7 @@ namespace MvvmMobile.Droid.Navigation
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -181,7 +181,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     try
                     {
-                        activity.FragmentManager?.PopBackStackImmediate();
+                        activity.SupportFragmentManager?.PopBackStackImmediate();
                     }
                     catch
                     {
@@ -201,11 +201,11 @@ namespace MvvmMobile.Droid.Navigation
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.FragmentManager?.BackStackEntryCount == 0)
+                if (activity.SupportFragmentManager?.BackStackEntryCount == 0)
                 {
                     callbackAction.Invoke(payloadId);
                 }
-                else if (activity.FragmentManager?.BackStackEntryCount == 1)
+                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1)
                 {
                     callbackAction.Invoke(payloadId);
 
@@ -222,7 +222,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     try
                     {
-                        activity.FragmentManager?.PopBackStackImmediate();
+                        activity.SupportFragmentManager?.PopBackStackImmediate();
                     }
                     catch
                     {
@@ -246,7 +246,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.FragmentManager?.BackStackEntryCount <= 1)
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
                 {
                     if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
                     {
