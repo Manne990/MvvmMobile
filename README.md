@@ -113,7 +113,7 @@ public class AutofacContainerBuilder : MvvmMobile.Core.Common.IContainerBuilder
 }
 ```
 
-Finally, create a class that creates the container builder and register all common core types.   
+Finally, create the container builder and register all shared types.   
 Example:
 ```
 public static class Bootstrapper
@@ -210,5 +210,5 @@ MvvmMobile.Droid.Bootstrapper.Init(new Dictionary<Type, Type>
 ```
 
 ## Samples ##
-For a more detailed view of MvvmMobile, have a look at the sample project included in this repo!
-Happy coding!
+For a more detailed view of MvvmMobile, have a look at the sample project included in this repo!   
+Happy coding! :-)
