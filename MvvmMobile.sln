@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmMobile.Core", "MvvmMobi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmMobile.Sample.Core", "Samples\MvvmMobile.Sample.Core\MvvmMobile.Sample.Core.csproj", "{5F09DF70-0F13-45B4-A9AD-A56129FEBE28}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{FFFC7544-42AC-4EE1-B835-B62561064BD1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		Release Notes.txt = Release Notes.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
