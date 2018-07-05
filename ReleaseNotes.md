@@ -1,8 +1,8 @@
 # Release Notes #
 
 ## Version 1.0 ##
-3 JUL 2018   
-
+July 3, 2018   
+   
 First release on nuget.org.   
    
 It is now possible to override the navigation and extend with solution specific navigation features.   
