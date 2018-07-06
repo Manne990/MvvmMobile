@@ -14,5 +14,8 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Navigation\" />
+    <Folder Include="ViewModel\Motorcycles\" />
+    <Folder Include="ViewModel\Home\" />
+    <Folder Include="ViewModel\Navigation\" />
   </ItemGroup>
 </Project>

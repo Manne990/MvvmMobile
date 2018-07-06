@@ -1,7 +1,7 @@
 using System;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS.View

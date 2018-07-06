@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Foundation;
 using MvvmMobile.Sample.Core.Navigation;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.iOS.Navigation;
 using MvvmMobile.Sample.iOS.View;
 using UIKit;

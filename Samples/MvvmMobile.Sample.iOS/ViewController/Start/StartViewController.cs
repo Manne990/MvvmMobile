@@ -2,7 +2,7 @@ using System;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.iOS.ViewController.Start;
 
 namespace MvvmMobile.Sample.iOS.View

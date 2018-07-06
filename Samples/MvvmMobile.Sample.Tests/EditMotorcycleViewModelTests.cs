@@ -2,7 +2,8 @@
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.Navigation;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using NSubstitute;
 using NUnit.Framework;
 using TinyIoC;
@@ -14,7 +15,7 @@ namespace MvvmMobile.Sample.Tests
     [TestFixture, Parallelizable]
     public class EditMotorcycleViewModelTests
     {
-        private INavigation _navigation;
+        private ICustomNavigation _navigation;
         private IPayloads _payloads;
         private IMotorcyclePayload _payload;
         private IEditMotorcycleViewModel _subject;
@@ -40,7 +41,7 @@ namespace MvvmMobile.Sample.Tests
 
             builder.Register<IMotorcyclePayload, MotorcyclePayload>();
 
-            _navigation = Substitute.For<INavigation>();
+            _navigation = Substitute.For<ICustomNavigation>();
             builder.Register(_navigation);
 
             builder.Register<IMotorcyclePayload, MotorcyclePayload>();

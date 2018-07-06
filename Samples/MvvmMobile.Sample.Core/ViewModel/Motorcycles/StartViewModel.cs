@@ -7,7 +7,7 @@ using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.Navigation;
 
-namespace MvvmMobile.Sample.Core.ViewModel
+namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 {
     public class StartViewModel : BaseViewModel, IStartViewModel
     {

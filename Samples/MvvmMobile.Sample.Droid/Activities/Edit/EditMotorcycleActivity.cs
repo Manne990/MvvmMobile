@@ -4,7 +4,7 @@ using Android.Transitions;
 using Android.Views;
 using Android.Widget;
 using MvvmMobile.Droid.View;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 
 namespace MvvmMobile.Sample.Droid.Activities.Edit
 {

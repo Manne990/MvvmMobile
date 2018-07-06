@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using MvvmMobile.Sample.Core.Navigation;
 using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.Droid.Activities.Edit;
 using MvvmMobile.Sample.Droid.Activities.Start;
 using MvvmMobile.Sample.Droid.Fragments.Edit;

@@ -1,7 +1,8 @@
 ﻿using System;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Sample.Core.Model;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.Navigation;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using NSubstitute;
 using NUnit.Framework;
 using TinyIoC;
@@ -13,7 +14,7 @@ namespace MvvmMobile.Sample.Tests
     [TestFixture, Parallelizable]
     public class StartViewModelTests
     {
-        private INavigation _navigation;
+        private ICustomNavigation _navigation;
         private IStartViewModel _subject;
 
 
@@ -36,7 +37,7 @@ namespace MvvmMobile.Sample.Tests
             builder.Register<IStartViewModel, StartViewModel>();
             builder.Register<IMotorcyclePayload, MotorcyclePayload>();
 
-            _navigation = Substitute.For<INavigation>();
+            _navigation = Substitute.For<ICustomNavigation>();
             builder.Register(_navigation);
 
             _subject = builder.Resolver.Resolve<IStartViewModel>();

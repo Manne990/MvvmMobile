@@ -3,7 +3,7 @@ using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
 
-namespace MvvmMobile.Sample.Core.ViewModel
+namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 {
     public interface IStartViewModel : IBaseViewModel
     {

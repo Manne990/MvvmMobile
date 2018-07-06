@@ -4,7 +4,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
-using MvvmMobile.Sample.Core.ViewModel;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 
 namespace MvvmMobile.Sample.Droid.Activities.Start
 {
