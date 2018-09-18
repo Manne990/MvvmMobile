@@ -166,11 +166,10 @@ MvvmMobile.iOS.Bootstrapper.SetupIoC(builder);
 
 builder.Build();
 
-MvvmMobile.iOS.Bootstrapper.Init(new Dictionary<Type, Type>
-{
-    { typeof(IMyFirstViewModel), typeof(MyFirstController) },
-    { typeof(IMySecondViewModel), typeof(MySecondViewController) }
-});
+MvvmMobile.iOS.Bootstrapper.Init();
+
+MvvmMobile.iOS.Bootstrapper.AddViewMapping<IMyFirstViewModel, MyFirstController>();
+MvvmMobile.iOS.Bootstrapper.AddViewMapping<IMySecondViewModel, MySecondViewController>();
 ```
 
 ## Create the Xamarin Android project ##
@@ -201,12 +200,11 @@ var builder = Core.Bootstrapper.Init(); // The Init method of your Bootstrapper 
 MvvmMobile.Droid.Bootstrapper.SetupIoC(builder);
 
 builder.Build();
-            
-MvvmMobile.Droid.Bootstrapper.Init(new Dictionary<Type, Type>
-{
-    { typeof(IMyFirstViewModel), typeof(MyFirstActivity) },
-    { typeof(IMySecondViewModel), typeof(SomeFragment) }
-});
+
+MvvmMobile.Droid.Bootstrapper.Init(true);
+
+MvvmMobile.Droid.Bootstrapper.AddViewMapping<IMyFirstViewModel, MyFirstActivity>();
+MvvmMobile.Droid.Bootstrapper.AddViewMapping<IMySecondViewModel, SomeFragment>();
 ```
 
 ## Samples ##

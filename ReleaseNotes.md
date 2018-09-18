@@ -1,5 +1,10 @@
 # Release Notes #
 
+## Version 1.0.2 ##
+Sep 18, 2018
+
+Changed the view mapping to a generic type safe solution.
+
 ## Version 1.0.1 ##
 July 3, 2018   
    
