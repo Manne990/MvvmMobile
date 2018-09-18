@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
@@ -11,7 +12,7 @@ using MvvmMobile.Droid.Navigation;
 
 namespace MvvmMobile.Droid.View
 {
-    public class ActivityBase<T> : AppCompatActivity where T : class, IBaseViewModel
+    public class ActivityBase<T> : AppCompatActivity, IPlatformView where T : class, IBaseViewModel
     {
         // Private Members
         private const string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";

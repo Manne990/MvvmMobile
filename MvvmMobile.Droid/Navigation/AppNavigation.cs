@@ -6,6 +6,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Widget;
 using Java.Lang;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Common;
@@ -25,9 +26,7 @@ namespace MvvmMobile.Droid.Navigation
         // -----------------------------------------------------------------------------
 
         // Private Members
-        //private Dictionary<Type, Type> _viewMapperDictionary;
         private bool _useActivityTransitions;
-
         private bool CanUseActivityTransitions
         {
             get
@@ -48,6 +47,11 @@ namespace MvvmMobile.Droid.Navigation
 
         public virtual Dictionary<Type, Type> GetViewMapper()
         {
+            if (ViewMapperDictionary == null)
+            {
+                Init();
+            }
+
             return ViewMapperDictionary;
         }
 
@@ -63,10 +67,25 @@ namespace MvvmMobile.Droid.Navigation
         // -----------------------------------------------------------------------------
 
         // Public Methods
-        public void Init(Dictionary<Type, Type> viewMapper, bool useActivityTransitions = false)
+        public void Init(bool useActivityTransitions = false)
         {
-            ViewMapperDictionary = viewMapper;
+            ViewMapperDictionary = new Dictionary<Type, Type>();
             _useActivityTransitions = useActivityTransitions;
+        }
+
+        public void AddViewMapping<TViewModel, TPlatformView>() where TViewModel : IBaseViewModel where TPlatformView : IPlatformView
+        {
+            if (ViewMapperDictionary == null)
+            {
+                Init();
+            }
+
+            if (ViewMapperDictionary.ContainsKey(typeof(TViewModel)))
+            {
+                throw new System.Exception($"The viewmodel '{typeof(TViewModel).ToString()}' does already exist in view mapper!");
+            }
+
+            ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel

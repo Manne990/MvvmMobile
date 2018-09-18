@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Foundation;
+﻿using Foundation;
 using MvvmMobile.Sample.Core.Navigation;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.iOS.Navigation;
@@ -9,8 +7,6 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS
 {
-    // The UIApplicationDelegate for the application. This class is responsible for launching the
-    // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
     [Register("AppDelegate")]
     public class AppDelegate : UIApplicationDelegate
     {
@@ -32,12 +28,10 @@ namespace MvvmMobile.Sample.iOS
             builder.Build();
 
             // Init MvvmMobile
-            MvvmMobile.iOS.Bootstrapper.Init(
-                new Dictionary<Type, Type>
-            {
-                { typeof(IStartViewModel), typeof(StartViewController) },
-                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleViewController) }
-            });
+            MvvmMobile.iOS.Bootstrapper.Init();
+
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<IStartViewModel, StartViewController>();
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleViewController>();
 
             return true;
         }

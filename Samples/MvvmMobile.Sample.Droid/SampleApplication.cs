@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
 using MvvmMobile.Sample.Core.Navigation;
-using MvvmMobile.Sample.Core.ViewModel;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.Droid.Activities.Edit;
 using MvvmMobile.Sample.Droid.Activities.Start;
-using MvvmMobile.Sample.Droid.Fragments.Edit;
 using MvvmMobile.Sample.Droid.Navigation;
 
 namespace MvvmMobile.Sample.Droid
@@ -38,13 +35,10 @@ namespace MvvmMobile.Sample.Droid
             builder.Build();
 
             // Init MvvmMobile
-            MvvmMobile.Droid.Bootstrapper.Init(
-                new Dictionary<Type, Type>
-            {
-                { typeof(IStartViewModel), typeof(StartActivity) },
-                { typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleActivity) },
-                //{ typeof(IEditMotorcycleViewModel), typeof(EditMotorcycleFragment) }
-            }, true);
+            MvvmMobile.Droid.Bootstrapper.Init(true);
+
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IStartViewModel, StartActivity>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleActivity>();
         }
 
         public override void OnTerminate()

@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using Android.Support.V4.App;
 using Android.Views;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.Droid.View
 {
-    public class FragmentBase : Fragment
+    public class FragmentBase : Fragment, IPlatformView
     {
         // Properties
         public string Title { get; protected set; }
@@ -53,7 +54,7 @@ namespace MvvmMobile.Droid.View
         }
     }
 
-    public class FragmentBase<T> : FragmentBase where T : class, IBaseViewModel
+    public class FragmentBase<T> : FragmentBase, IPlatformView where T : class, IBaseViewModel
     {
         // Properties
         protected ActivityBase<IBaseViewModel> ParentActivity

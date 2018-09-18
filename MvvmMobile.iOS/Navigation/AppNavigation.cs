@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Common;
@@ -28,15 +29,35 @@ namespace MvvmMobile.iOS.Navigation
 
         public virtual Dictionary<Type, Type> GetViewMapper()
         {
+            if (ViewMapperDictionary == null)
+            {
+                Init();
+            }
+
             return ViewMapperDictionary;
         }
 
         // -----------------------------------------------------------------------------
 
         // Public Methods
-        public void Init(Dictionary<Type, Type> viewMapper)
+        public void Init()
         {
-            ViewMapperDictionary = viewMapper;
+            ViewMapperDictionary = new Dictionary<Type, Type>();
+        }
+
+        public void AddViewMapping<TViewModel, TPlatformView>() where TViewModel : IBaseViewModel where TPlatformView : IPlatformView
+        {
+            if (ViewMapperDictionary == null)
+            {
+                Init();
+            }
+
+            if (ViewMapperDictionary.ContainsKey(typeof(TViewModel)))
+            {
+                throw new System.Exception($"The viewmodel '{typeof(TViewModel).ToString()}' does already exist in view mapper!");
+            }
+
+            ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
