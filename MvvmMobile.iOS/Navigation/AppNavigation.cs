@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using MvvmMobile.Core.Common;
@@ -43,6 +44,34 @@ namespace MvvmMobile.iOS.Navigation
         public void Init()
         {
             ViewMapperDictionary = new Dictionary<Type, Type>();
+        }
+
+        public UIViewController RequestView<TViewModel>() where TViewModel : IBaseViewModel
+        {
+            // Get the vc type
+            var viewModelType = typeof(TViewModel);
+
+            if (GetViewMapper().TryGetValue(viewModelType, out Type viewControllerType) == false)
+            {
+                throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            // Create the vc
+            var attributes = viewControllerType.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(StoryboardAttribute));
+            if (attributes == null)
+            {
+                // Instantiate the VC
+                return Activator.CreateInstance(viewControllerType) as UIViewController;
+            }
+            else
+            {
+                // Instantiate the VC from a storyboard
+                var storyBoardName = attributes.ConstructorArguments[0].Value.ToString();
+                var storyBoardId = attributes.ConstructorArguments[1].Value.ToString();
+                var storyboard = UIStoryboard.FromName(storyBoardName, null);
+
+                return storyboard.InstantiateViewController(storyBoardId);
+            }
         }
 
         public void AddViewMapping<TViewModel, TPlatformView>() where TViewModel : IBaseViewModel where TPlatformView : IPlatformView

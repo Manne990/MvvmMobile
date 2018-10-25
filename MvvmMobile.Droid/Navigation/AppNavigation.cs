@@ -73,6 +73,19 @@ namespace MvvmMobile.Droid.Navigation
             _useActivityTransitions = useActivityTransitions;
         }
 
+        public FragmentBase RequestFragment<TViewModel>() where TViewModel : IBaseViewModel
+        {
+            // Get the vc type
+            var viewModelType = typeof(TViewModel);
+
+            if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
+            {
+                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            return concreteType.IsSubclassOf(typeof(FragmentBase)) ? (FragmentBase)Activator.CreateInstance(concreteType) : null;
+        }
+
         public void AddViewMapping<TViewModel, TPlatformView>() where TViewModel : IBaseViewModel where TPlatformView : IPlatformView
         {
             if (ViewMapperDictionary == null)
