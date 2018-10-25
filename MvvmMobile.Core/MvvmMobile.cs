@@ -6,8 +6,8 @@ namespace MvvmMobile.Core
 {
     public sealed class Mvvm
     {
-        private static volatile Mvvm instance;
-        private static object syncRoot = new Object();
+        private static volatile Mvvm _instance;
+        private static readonly object _syncRoot = new Object();
 
         private Mvvm() {}
 
@@ -15,18 +15,18 @@ namespace MvvmMobile.Core
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    lock (syncRoot)
+                    lock (_syncRoot)
                     {
-                        if (instance == null)
+                        if (_instance == null)
                         {
-                            instance = new Mvvm();
+                            _instance = new Mvvm();
                         }
                     }
                 }
 
-                return instance;
+                return _instance;
             }
         }
 
