@@ -20,6 +20,7 @@ namespace MvvmMobile.Sample.Core
             builder.RegisterSingleton<IStartViewModel, StartViewModel>();
             builder.RegisterSingleton<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
 
+            builder.RegisterSingleton<INavStartViewModel, NavStartViewModel>();
             builder.RegisterSingleton<INav1ViewModel, Nav1ViewModel>();
             builder.RegisterSingleton<INav2ViewModel, Nav2ViewModel>();
             builder.RegisterSingleton<INav3ViewModel, Nav3ViewModel>();

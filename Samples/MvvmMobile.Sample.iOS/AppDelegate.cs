@@ -35,6 +35,7 @@ namespace MvvmMobile.Sample.iOS
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<IStartViewModel, StartViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleViewController>();
 
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<INavStartViewModel, NavStartViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1ViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav2ViewModel, Nav2ViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav3ViewModel, Nav3ViewController>();

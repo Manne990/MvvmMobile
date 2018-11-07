@@ -3,6 +3,7 @@
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
   <ReleaseVersion>1.0.2</ReleaseVersion>
+  <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
 </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -113,6 +114,10 @@
     <Compile Include="Common\AnimationListener.cs" />
     <Compile Include="Common\PreDrawListener.cs" />
     <Compile Include="Navigation\CustomNavigation.cs" />
+    <Compile Include="Fragments\Navigation\Nav1Fragment.cs" />
+    <Compile Include="Fragments\Navigation\Nav2Fragment.cs" />
+    <Compile Include="Fragments\Navigation\Nav3Fragment.cs" />
+    <Compile Include="Activities\Navigation\NavStartActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -143,6 +148,8 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_white_24dp.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_white_24dp.png" />
+    <AndroidResource Include="Resources\layout\NavStartActivityLayout.axml" />
+    <AndroidResource Include="Resources\layout\NavFragmentLayout.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -155,6 +162,8 @@
     <Folder Include="Common\" />
     <Folder Include="Resources\transition\" />
     <Folder Include="Navigation\" />
+    <Folder Include="Fragments\Navigation\" />
+    <Folder Include="Activities\Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.Droid\MvvmMobile.Droid.csproj">

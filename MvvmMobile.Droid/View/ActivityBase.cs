@@ -12,7 +12,45 @@ using MvvmMobile.Droid.Navigation;
 
 namespace MvvmMobile.Droid.View
 {
-    public class ActivityBase<T> : AppCompatActivity, IPlatformView where T : class, IBaseViewModel
+    public class ActivityBase : AppCompatActivity
+    {
+        // Events
+        public event EventHandler BackButtonPressed;
+
+
+        // -----------------------------------------------------------------------------
+
+        // Properties
+        protected bool BackButtonEnabled { get; set; }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Overrides
+        public override void OnBackPressed()
+        {
+            if (BackButtonEnabled)
+            {
+                BackButtonPressed?.Invoke(this, EventArgs.Empty);
+
+                base.OnBackPressed();
+            }
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Public Methods
+        public void EnableBackButton(bool enable)
+        {
+            BackButtonEnabled = enable;
+
+            ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
+            SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
+        }
+    }
+
+    public class ActivityBase<T> : ActivityBase, IPlatformView where T : class, IBaseViewModel
     {
         // Private Members
         private const string CallBackPayloadId = "MvvmMobileActivityBase-CallBackPayloadId";
@@ -42,16 +80,8 @@ namespace MvvmMobile.Droid.View
             }
         }
 
-        protected bool BackButtonEnabled { get; private set; }
-
         protected Guid PayloadId { get; private set; }
         protected Guid CallbackId { get; private set; }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Events
-        public event EventHandler BackButtonPressed;
 
 
         // -----------------------------------------------------------------------------
@@ -117,16 +147,6 @@ namespace MvvmMobile.Droid.View
             }
         }
 
-        public override void OnBackPressed()
-        {
-            if (BackButtonEnabled)
-            {
-                BackButtonPressed?.Invoke(this, EventArgs.Empty);
-
-                base.OnBackPressed();
-            }
-        }
-
         public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
         {
             OnBackPressed();
@@ -136,18 +156,6 @@ namespace MvvmMobile.Droid.View
 
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-        }
-
-
-        // -----------------------------------------------------------------------------
-
-        // Public Methods
-        public void EnableBackButton(bool enable)
-        {
-            BackButtonEnabled = enable;
-
-            ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
-            SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
         }
 
 

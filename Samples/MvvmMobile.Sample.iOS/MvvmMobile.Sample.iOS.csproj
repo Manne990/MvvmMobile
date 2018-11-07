@@ -128,6 +128,7 @@
     <Compile Include="ViewController\Navigation\Nav1ViewController.cs" />
     <Compile Include="ViewController\Navigation\Nav2ViewController.cs" />
     <Compile Include="ViewController\Navigation\Nav3ViewController.cs" />
+    <Compile Include="ViewController\Navigation\NavStartViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">

@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
+using Android.Views;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
@@ -50,6 +51,24 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             EnableBackButton(false);
 
             _adapter?.LoadData(ViewModel.Motorcycles);
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
+
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.menuNav)
+            {
+                ViewModel?.StartNavigationDemoCommand?.Execute();
+                return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
 
         protected override void OnDestroy()

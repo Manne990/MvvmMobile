@@ -1,7 +1,6 @@
 ﻿using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
-using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 
 namespace MvvmMobile.Sample.Core.ViewModel.Navigation
 {
@@ -21,7 +20,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
 
             HomeCommand = new RelayCommand(() => 
             {
-                navigation.NavigateBack<IStartViewModel>();
+                navigation.NavigateBack<INavStartViewModel>();
             });
         }
 
