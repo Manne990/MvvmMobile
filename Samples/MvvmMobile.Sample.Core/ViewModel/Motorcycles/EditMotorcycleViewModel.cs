@@ -14,7 +14,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         {
             CancelCommand = new RelayCommand(() => 
             {
-                navigation?.NavigateToRoot();
+                navigation?.NavigateBack<IStartViewModel>();
+                //navigation?.NavigateToRoot();
                 //NavigateBack();
             });
 

@@ -19,7 +19,11 @@ namespace MvvmMobile.Droid.View
             // Init
             SetContentView(Resource.Layout.FragmentContainerActivityLayout);
 
-            SupportFragmentManager?.PopBackStackImmediate();
+            // Pop off all fragments
+            while (SupportFragmentManager?.BackStackEntryCount > 0)
+            {
+                SupportFragmentManager?.PopBackStackImmediate();
+            }
         }
 
         protected override void OnResume()

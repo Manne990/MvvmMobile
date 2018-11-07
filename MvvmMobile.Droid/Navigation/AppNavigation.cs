@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
@@ -272,21 +273,60 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-		public async Task NavigateBack<T>() where T : IBaseViewModel
+        public async Task NavigateBack<T>() where T : IBaseViewModel
         {
-			await Task.Delay(1);
+            await Task.Delay(1);
 
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
                 {
-                    if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
+                    throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                }
+
+                var targetIsFragment = concreteType.IsSubclassOf(typeof(FragmentBase));
+                if (targetIsFragment)
+                {
+                    // Target = Fragment
+                    while (activity.SupportFragmentManager?.BackStackEntryCount > 0)
                     {
-                        throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                        var fragment = activity.SupportFragmentManager?.Fragments.LastOrDefault();
+                        if (fragment.GetType() == concreteType)
+                        {
+                            // The target fragment was found!
+                            return;
+                        }
+
+                        activity.SupportFragmentManager?.PopBackStackImmediate();
                     }
 
-                    //TODO: Implement scenario for when the target view is a fragment!
+                    // If we reach this point then the target fragment was not found in the current activitys fragment back stack...
+                    // ...or the fragment back stack was empty.
+                    // What to do now?
+                }
+                else
+                {
+                    // Target = Activity
+                    var targetEqualsSourceActivity = activity.GetType() == concreteType;
+                    if (targetEqualsSourceActivity)
+                    {
+                        // Back to same activity
+                        if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                        {
+                            // Back to same activity and no fragment back stack -> Do nothing
+                            return;
+                        }
 
+                        // Empty the fragment back stack
+                        while (activity.SupportFragmentManager?.BackStackEntryCount > 1)
+                        {
+                            activity.SupportFragmentManager?.PopBackStackImmediate();
+                        }
+
+                        return;
+                    }
+
+                    // Back to another activity
                     var concreteTypeJava = Class.FromType(concreteType);
                     var intent = new Intent(GetContext(), concreteTypeJava);
 
@@ -294,15 +334,10 @@ namespace MvvmMobile.Droid.Navigation
 
                     GetContext().StartActivity(intent);
                 }
-                else
-                {
-                    //TODO: Implement for fragments!
-                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Not implemented for fragments!");
-                }
             }
             else
             {
-				System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
             }
         }
 

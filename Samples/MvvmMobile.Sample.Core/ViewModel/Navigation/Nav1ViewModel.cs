@@ -20,7 +20,9 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
 
             HomeCommand = new RelayCommand(() => 
             {
-                navigation.NavigateBack<INavStartViewModel>();
+                //navigation.NavigateBack<INavStartViewModel>();
+                //navigation.NavigateBack<Motorcycles.IStartViewModel>();
+                navigation.NavigateBack<INav1ViewModel>();
             });
         }
 
