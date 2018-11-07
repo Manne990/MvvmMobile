@@ -3,6 +3,7 @@ using MvvmMobile.Sample.Core.IoC;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Home;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
 namespace MvvmMobile.Sample.Core
 {
@@ -18,6 +19,10 @@ namespace MvvmMobile.Sample.Core
 
             builder.RegisterSingleton<IStartViewModel, StartViewModel>();
             builder.RegisterSingleton<IEditMotorcycleViewModel, EditMotorcycleViewModel>();
+
+            builder.RegisterSingleton<INav1ViewModel, Nav1ViewModel>();
+            builder.RegisterSingleton<INav2ViewModel, Nav2ViewModel>();
+            builder.RegisterSingleton<INav3ViewModel, Nav3ViewModel>();
 
             return builder;
         }

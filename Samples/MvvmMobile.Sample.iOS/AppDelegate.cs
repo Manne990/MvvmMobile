@@ -1,8 +1,10 @@
 ﻿using Foundation;
 using MvvmMobile.Sample.Core.Navigation;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using MvvmMobile.Sample.Core.ViewModel.Navigation;
 using MvvmMobile.Sample.iOS.Navigation;
 using MvvmMobile.Sample.iOS.View;
+using MvvmMobile.Sample.iOS.ViewController.Navigation;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS
@@ -32,6 +34,10 @@ namespace MvvmMobile.Sample.iOS
 
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<IStartViewModel, StartViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleViewController>();
+
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1ViewController>();
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav2ViewModel, Nav2ViewController>();
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav3ViewModel, Nav3ViewController>();
 
             return true;
         }

@@ -1,4 +1,5 @@
 using System;
+using Foundation;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
@@ -71,6 +72,11 @@ namespace MvvmMobile.Sample.iOS.View
         private void DeleteMotorcycle(IMotorcycle motorcycle)
         {
             ViewModel?.DeleteMotorcycleCommand.Execute(motorcycle);
+        }
+
+        partial void StartNavDemo(NSObject sender)
+        {
+            ViewModel?.StartNavigationDemoCommand?.Execute();
         }
     }
 }
