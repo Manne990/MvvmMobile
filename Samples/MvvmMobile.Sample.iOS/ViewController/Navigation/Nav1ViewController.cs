@@ -38,7 +38,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
             _nextButton.SetTitle("Next", UIControlState.Normal);
             _nextButton.TouchUpInside += (s, e) =>
             {
-                ViewModel?.NextCommand?.Execute();
+                ViewModel?.NextViewCommand?.Execute();
             };
 
             _backButton = UIButton.FromType(UIButtonType.System);

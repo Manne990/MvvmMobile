@@ -10,7 +10,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
         {
             StartCommand = new RelayCommand(() =>
             {
-                navigation.NavigateTo<INav1ViewModel>();
+                navigation.NavigateToSubView<INav1AViewModel>();
             });
 
             DoneCommand = new RelayCommand(() => 

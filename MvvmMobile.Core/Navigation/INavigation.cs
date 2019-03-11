@@ -9,6 +9,9 @@ namespace MvvmMobile.Core.Navigation
         void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false);
         void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel;
 
+        void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false);
+        void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel;
+
         void NavigateBack(Action done = null);
         void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null);
 

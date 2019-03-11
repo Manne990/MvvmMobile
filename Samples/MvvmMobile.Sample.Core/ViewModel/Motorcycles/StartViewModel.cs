@@ -48,7 +48,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 
             StartNavigationDemoCommand = new RelayCommand(() => 
             {
-                navigation.NavigateTo<INavStartViewModel>();
+                navigation.NavigateTo<INav1ViewModel>();
             });
 
             // Create Mock Data

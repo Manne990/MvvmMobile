@@ -8,6 +8,7 @@ using MvvmMobile.Sample.Core.ViewModel.Navigation;
 using MvvmMobile.Sample.Droid.Activities.Edit;
 using MvvmMobile.Sample.Droid.Activities.Navigation;
 using MvvmMobile.Sample.Droid.Activities.Start;
+using MvvmMobile.Sample.Droid.Activity.Navigation;
 using MvvmMobile.Sample.Droid.Fragments.Navigation;
 using MvvmMobile.Sample.Droid.Navigation;
 
@@ -44,42 +45,23 @@ namespace MvvmMobile.Sample.Droid
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleActivity>();
 
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<INavStartViewModel, NavStartActivity>();
-            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1Fragment>();
-            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav2ViewModel, Nav2Fragment>();
-            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav3ViewModel, Nav3Fragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1Activity>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1AViewModel, Nav1AFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1BViewModel, Nav1BFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1CViewModel, Nav1CFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav2ViewModel, Nav2Activity>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav2AViewModel, Nav2AFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav2BViewModel, Nav2BFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav2CViewModel, Nav2CFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav3ViewModel, Nav3Activity>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav3AViewModel, Nav3AFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav3BViewModel, Nav3BFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav3CViewModel, Nav3CFragment>();
         }
 
         public override void OnTerminate()
         {
             base.OnTerminate();
-        }
-
-        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
-        {
-        }
-
-        public void OnActivityDestroyed(Activity activity)
-        {
-        }
-
-        public void OnActivityPaused(Activity activity)
-        {
-        }
-
-        public void OnActivityResumed(Activity activity)
-        {
-        }
-
-        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
-        {
-        }
-
-        public void OnActivityStarted(Activity activity)
-        {
-        }
-
-        public void OnActivityStopped(Activity activity)
-        {
         }
     }
 }

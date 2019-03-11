@@ -121,8 +121,14 @@ namespace MvvmMobile.Droid.Navigation
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
             {
+#if BACKWARD_COMPATIBLE_MODE
+                Console.WriteLine("Navigating to Fragments through NavigateTo() is deprecated.");
                 LoadFragment(concreteType, parameter, callback);
                 return;
+
+#else
+                throw new NotSupportedException("Navigating to Fragments through NavigateTo() is deprecated.");
+#endif
             }
 
             var concreteTypeJava = Class.FromType(concreteType);
@@ -149,7 +155,7 @@ namespace MvvmMobile.Droid.Navigation
             {
                 intent.SetCallback(callback);
 
-                currentActivity.RunOnUiThread(() => 
+                currentActivity.RunOnUiThread(() =>
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -173,7 +179,7 @@ namespace MvvmMobile.Droid.Navigation
                 return;
             }
 
-            currentActivity.RunOnUiThread(() => 
+            currentActivity.RunOnUiThread(() =>
             {
                 if (CanUseActivityTransitions)
                 {
@@ -193,6 +199,33 @@ namespace MvvmMobile.Droid.Navigation
                     currentActivity.StartActivity(intent);
                 }
             });
+        }
+
+        public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            NavigateToSubView(typeof(T), parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            if (viewModelType == null)
+            {
+                return;
+            }
+
+            if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
+            {
+                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            if (concreteType.IsSubclassOf(typeof(FragmentBase)) == false)
+            {
+                throw new ArgumentException($"The viewmodel '{viewModelType.ToString()}' does not inherit from FragmentBase!");
+            }
+
+
+            LoadFragment(concreteType, parameter, callback);
+            return;
         }
 
         public void NavigateBack(Action done = null)

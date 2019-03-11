@@ -169,6 +169,16 @@ namespace MvvmMobile.iOS.Navigation
             GetNavigationController()?.PushViewController(vc, true);
         }
 
+        public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            NavigateToSubView(typeof(T), parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            NavigateTo(viewModelType, parameter, callback, clearHistory);
+        }
+
         public void NavigateBack(Action done = null)
         {
             // Check the navigation controller
