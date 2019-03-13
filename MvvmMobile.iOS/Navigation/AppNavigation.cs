@@ -17,8 +17,7 @@ namespace MvvmMobile.iOS.Navigation
     {
         // Private Members
         private UIViewController _lastChildController;
-        private UIViewController _subViewController;
-        private UIView _subViewContainer;
+        private ISubViewContainerController _subViewContainerController;
 
         // -----------------------------------------------------------------------------
 
@@ -97,10 +96,9 @@ namespace MvvmMobile.iOS.Navigation
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
-        public void SetSubViewContainer(UIViewController subViewController, UIView subViewContainer)
+        public void SetSubViewContainer(ISubViewContainerController subViewContainer)
         {
-            _subViewController = subViewController;
-            _subViewContainer = subViewContainer;
+            _subViewContainerController = subViewContainer;
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
@@ -190,7 +188,7 @@ namespace MvvmMobile.iOS.Navigation
 
         public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
-            if (_subViewController == null || _subViewContainer == null)
+            if (_subViewContainerController?.SubViewContainerView == null)
             {
                 throw new Exception("SubViewController and SubViewContainer must be set!");
             }
@@ -200,12 +198,15 @@ namespace MvvmMobile.iOS.Navigation
                 throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
-            // Remove
-            _subViewContainer.RemoveConstraints(_subViewContainer.Constraints);
+            var subViewController = _subViewContainerController.AsViewController();
+            var subViewContainer = _subViewContainerController.SubViewContainerView;
 
-            for (int i = 0; i < _subViewContainer.Subviews.Length; i++)
+            // Remove
+            subViewContainer.RemoveConstraints(_subViewContainerController.SubViewContainerView.Constraints);
+
+            for (int i = 0; i < subViewContainer.Subviews.Length; i++)
             {
-                var view = _subViewContainer.Subviews[0];
+                var view = subViewContainer.Subviews[0];
                 view.RemoveFromSuperview();
                 view = null;
             }
@@ -215,17 +216,17 @@ namespace MvvmMobile.iOS.Navigation
 
             // Add
             _lastChildController = Activator.CreateInstance(viewControllerType) as UIViewController;
-            _subViewController.AddChildViewController(_lastChildController);
+            subViewController.AddChildViewController(_lastChildController);
             _lastChildController.View.TranslatesAutoresizingMaskIntoConstraints = false;
-            _subViewContainer.AddSubview(_lastChildController.View);
+            subViewContainer.AddSubview(_lastChildController.View);
 
-            _subViewContainer.AddConstraints(
-                _lastChildController.View.AtTopOf(_subViewContainer),
-                _lastChildController.View.AtLeftOf(_subViewContainer),
-                _lastChildController.View.WithSameWidth(_subViewContainer),
-                _lastChildController.View.WithSameHeight(_subViewContainer));
+            subViewContainer.AddConstraints(
+                _lastChildController.View.AtTopOf(subViewContainer),
+                _lastChildController.View.AtLeftOf(subViewContainer),
+                _lastChildController.View.WithSameWidth(subViewContainer),
+                _lastChildController.View.WithSameHeight(subViewContainer));
 
-            _lastChildController.DidMoveToParentViewController(_subViewController);
+            _lastChildController.DidMoveToParentViewController(subViewController);
         }
 
         public void NavigateBack(Action done = null)

@@ -7,7 +7,7 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 {
-    public class NavBaseSubViewController<T> : ViewControllerBase<T> 
+    public class NavSubViewControllerBase<T> : ViewControllerBase<T> 
         where T : class, INavBaseViewModel
     {
         // Private Members
@@ -25,7 +25,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public NavBaseSubViewController()
+        public NavSubViewControllerBase()
         {
         }
 

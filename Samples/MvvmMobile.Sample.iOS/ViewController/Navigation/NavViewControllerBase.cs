@@ -1,4 +1,5 @@
-﻿using Cirrious.FluentLayouts.Touch;
+﻿using System.Collections.Generic;
+using Cirrious.FluentLayouts.Touch;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
@@ -7,14 +8,15 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 {
-    public class NavBaseViewController<T> : ViewControllerBase<T> 
+    public class NavBaseViewController<T> : ViewControllerBase<T>, ISubViewContainerController 
         where T : class, INavBaseViewModel
     {
         // Private Members
-        private UIView _containerView;
         private UILabel _titleLabel;
 
         protected UIColor BackgroundColor { private get; set; }
+        public UIView SubViewContainerView { get; protected set; }
+        public Stack<UIViewController> SubViewNavigationStack { get; }
 
         // -----------------------------------------------------------------------------
 
@@ -22,6 +24,8 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         public NavBaseViewController()
         {
             AsModal = true;
+
+            SubViewNavigationStack = new Stack<UIViewController>();
         }
 
         // -----------------------------------------------------------------------------
@@ -48,24 +52,24 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 
             //NavigationItem.TitleView = _titleLabel;
 
-            _containerView = new UIView { BackgroundColor = UIColor.Magenta, ClipsToBounds = true };
+            var containerView = new UIView { BackgroundColor = UIColor.Magenta, ClipsToBounds = true };
 
-            View.AddSubviews(_containerView);
+            View.AddSubviews(containerView);
 
             // Add Constraints
             View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
-            _containerView.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
+            containerView.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
             View.AddConstraints(
                 //_titleLabel.AtTopOf(View, 96f),
                 //_titleLabel.AtLeftOf(View, 8f),
                 //_titleLabel.WithSameWidth(View).Minus(16f),
-                _containerView.AtTopOf(View, 108f),
-                _containerView.AtLeftOf(View, 16f),
-                _containerView.WithSameWidth(View).Minus(32f),
-                _containerView.WithSameHeight(View).Minus(130f));
+                containerView.AtTopOf(View, 108f),
+                containerView.AtLeftOf(View, 16f),
+                containerView.WithSameWidth(View).Minus(32f),
+                containerView.WithSameHeight(View).Minus(130f));
 
-            ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SetSubViewContainer(this, _containerView);
+            SubViewContainerView = containerView;
 
             ViewModel?.NextSubViewCommand?.Execute();
         }
@@ -73,9 +77,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-
-            ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SetSubViewContainer(this, _containerView);
-
         }
     }
 

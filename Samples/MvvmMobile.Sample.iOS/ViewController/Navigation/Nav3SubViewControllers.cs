@@ -3,7 +3,7 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 {
-    public class Nav3ASubViewController : NavBaseSubViewController<INav3AViewModel>
+    public class Nav3ASubViewController : NavSubViewControllerBase<INav3AViewModel>
     {
         public Nav3ASubViewController()
         {
@@ -12,7 +12,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         }
     }
 
-    public class Nav3BSubViewController : NavBaseSubViewController<INav3BViewModel>
+    public class Nav3BSubViewController : NavSubViewControllerBase<INav3BViewModel>
     {
         public Nav3BSubViewController()
         {
@@ -21,7 +21,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         }
     }
 
-    public class Nav3CSubViewController : NavBaseSubViewController<INav3CViewModel>
+    public class Nav3CSubViewController : NavSubViewControllerBase<INav3CViewModel>
     {
         public Nav3CSubViewController()
         {
