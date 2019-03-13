@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
+using Cirrious.FluentLayouts.Touch;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
@@ -14,6 +15,13 @@ namespace MvvmMobile.iOS.Navigation
 {
     public class AppNavigation : INavigation
     {
+        // Private Members
+        private UIViewController _lastChildController;
+        private UIViewController _subViewController;
+        private UIView _subViewContainer;
+
+        // -----------------------------------------------------------------------------
+
         // Properties
         //public TabBarControllerBase TabBarController { get; set; }
         public UINavigationController NavigationController { private get; set; }
@@ -87,6 +95,12 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
+        }
+
+        public void SetSubViewContainer(UIViewController subViewController, UIView subViewContainer)
+        {
+            _subViewController = subViewController;
+            _subViewContainer = subViewContainer;
         }
 
         public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
@@ -176,7 +190,42 @@ namespace MvvmMobile.iOS.Navigation
 
         public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
         {
-            NavigateTo(viewModelType, parameter, callback, clearHistory);
+            if (_subViewController == null || _subViewContainer == null)
+            {
+                throw new Exception("SubViewController and SubViewContainer must be set!");
+            }
+
+            if (ViewMapperDictionary.TryGetValue(viewModelType, out Type viewControllerType) == false)
+            {
+                throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            // Remove
+            _subViewContainer.RemoveConstraints(_subViewContainer.Constraints);
+
+            for (int i = 0; i < _subViewContainer.Subviews.Length; i++)
+            {
+                var view = _subViewContainer.Subviews[0];
+                view.RemoveFromSuperview();
+                view = null;
+            }
+
+            _lastChildController?.RemoveFromParentViewController();
+            _lastChildController = null;
+
+            // Add
+            _lastChildController = Activator.CreateInstance(viewControllerType) as UIViewController;
+            _subViewController.AddChildViewController(_lastChildController);
+            _lastChildController.View.TranslatesAutoresizingMaskIntoConstraints = false;
+            _subViewContainer.AddSubview(_lastChildController.View);
+
+            _subViewContainer.AddConstraints(
+                _lastChildController.View.AtTopOf(_subViewContainer),
+                _lastChildController.View.AtLeftOf(_subViewContainer),
+                _lastChildController.View.WithSameWidth(_subViewContainer),
+                _lastChildController.View.WithSameHeight(_subViewContainer));
+
+            _lastChildController.DidMoveToParentViewController(_subViewController);
         }
 
         public void NavigateBack(Action done = null)

@@ -125,10 +125,12 @@
       <DependentUpon>EditMotorcycleViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Navigation\CustomNavigation.cs" />
-    <Compile Include="ViewController\Navigation\Nav1ViewController.cs" />
-    <Compile Include="ViewController\Navigation\Nav2ViewController.cs" />
-    <Compile Include="ViewController\Navigation\Nav3ViewController.cs" />
-    <Compile Include="ViewController\Navigation\NavStartViewController.cs" />
+    <Compile Include="ViewController\Navigation\Nav1SubViewControllers.cs" />
+    <Compile Include="ViewController\Navigation\Nav2SubViewControllers.cs" />
+    <Compile Include="ViewController\Navigation\Nav3SubViewControllers.cs" />
+    <Compile Include="ViewController\Navigation\NavViewControllerBase.cs" />
+    <Compile Include="ViewController\Navigation\NavSubViewControllerBase.cs" />
+    <Compile Include="ViewController\Navigation\NavViewControllers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">

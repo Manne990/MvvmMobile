@@ -115,8 +115,8 @@
     <Compile Include="Common\PreDrawListener.cs" />
     <Compile Include="Navigation\CustomNavigation.cs" />
     <Compile Include="Fragments\Navigation\NavFragmentBase.cs" />
-    <Compile Include="Fragments\Navigation\Nav2Fragment.cs" />
-    <Compile Include="Fragments\Navigation\Nav3Fragment.cs" />
+    <Compile Include="Fragments\Navigation\Nav2Fragments.cs" />
+    <Compile Include="Fragments\Navigation\Nav3Fragments.cs" />
     <Compile Include="Activities\Navigation\NavStartActivity.cs" />
     <Compile Include="Activities\Navigation\Nav1Activity.cs" />
     <Compile Include="Activities\Navigation\Nav2Activity.cs" />
