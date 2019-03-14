@@ -8,7 +8,7 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 {
-    public class NavBaseViewController<T> : ViewControllerBase<T>, ISubViewContainerController 
+    public class NavViewControllerBase<T> : ViewControllerBase<T>, ISubViewContainerController 
         where T : class, INavBaseViewModel
     {
         // Private Members
@@ -21,7 +21,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public NavBaseViewController()
+        public NavViewControllerBase()
         {
             AsModal = true;
 

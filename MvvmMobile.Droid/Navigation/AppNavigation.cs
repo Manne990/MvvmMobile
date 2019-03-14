@@ -374,7 +374,7 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
         {
 			await NavigateBack<T>();
 

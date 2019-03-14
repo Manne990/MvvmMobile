@@ -36,7 +36,7 @@ namespace MvvmMobile.iOS.View
 
             if (this is ISubViewContainerController subViewContainer)
             {
-                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SetSubViewContainer(subViewContainer);
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = subViewContainer;
             }
         }
 
@@ -66,7 +66,7 @@ namespace MvvmMobile.iOS.View
 
             if (this is ISubViewContainerController subViewContainer)
             {
-                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SetSubViewContainer(subViewContainer);
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = subViewContainer;
             }
 
             if (NavigationItem != null)
@@ -92,6 +92,11 @@ namespace MvvmMobile.iOS.View
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+            }
+
+            if (this is ISubViewContainerController subViewContainer)
+            {
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = null;
             }
         }
 
