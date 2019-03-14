@@ -57,7 +57,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
 
             _prevViewButton = UIButton.FromType(UIButtonType.System);
             _prevViewButton.SetTitle("Prev View", UIControlState.Normal);
-            _prevViewButton.TouchUpInside += (s, e) => ViewModel?.BackCommand?.Execute();
+            _prevViewButton.TouchUpInside += (s, e) => ViewModel?.PrevViewCommand?.Execute();
 
             _backButton = UIButton.FromType(UIButtonType.System);
             _backButton.SetTitle("Back", UIControlState.Normal);

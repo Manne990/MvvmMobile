@@ -11,7 +11,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
             NextViewCommand = new RelayCommand(() => navigation.NavigateTo<INav3ViewModel>());
             NextSubViewCommand = new RelayCommand(() => navigation.NavigateToSubView<INav2AViewModel>());
             BackCommand = new RelayCommand(() => navigation.NavigateBack());
-            //PrevViewCommand = new RelayCommand(() => navigation.NavigateBackToLastFullView());
+            PrevViewCommand = new RelayCommand(() => navigation.NavigateBack(includeSubViews: false));
             HomeCommand = new RelayCommand(() => navigation.NavigateBack<INav1ViewModel>());
         }
     }
@@ -22,7 +22,6 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
             : base(navigation)
         {
             NextSubViewCommand = new RelayCommand(() => navigation.NavigateToSubView<INav2BViewModel>());
-            //PrevViewCommand = new RelayCommand(() => navigation.NavigateBackToLastFullView());
         }
     }
 
@@ -32,7 +31,6 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
             : base(navigation)
         {
             NextSubViewCommand = new RelayCommand(() => navigation.NavigateToSubView<INav2CViewModel>());
-            //PrevViewCommand = new RelayCommand(() => navigation.NavigateBackToLastFullView());
         }
     }
 
@@ -42,7 +40,6 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
             : base(navigation)
         {
             NextSubViewCommand = new RelayCommand(() => navigation.NavigateTo<INav3ViewModel>());
-            //PrevViewCommand = new RelayCommand(() => navigation.NavigateBackToLastFullView());
         }
     }
 }
