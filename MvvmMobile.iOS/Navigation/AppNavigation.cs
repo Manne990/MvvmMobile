@@ -30,14 +30,17 @@ namespace MvvmMobile.iOS.Navigation
         {
             set
             {
-                PushCurrentSubViewToNavigationStack();
-
-                _subViewContainerController = value;
-
-                if (_subViewContainerController != null && SubViewNavigationStack.Count > 0)
+                if (value != _subViewContainerController)
                 {
-                    var subView = SubViewNavigationStack.Pop();
-                    InflateSubView(subView);
+                    PushCurrentSubViewToNavigationStack();
+
+                    _subViewContainerController = value;
+
+                    if (_subViewContainerController != null && SubViewNavigationStack.Count > 0)
+                    {
+                        var subView = SubViewNavigationStack.Pop();
+                        InflateSubView(subView);
+                    }
                 }
             }
         }

@@ -59,15 +59,16 @@ namespace MvvmMobile.iOS.View
             // Handle Payload
             _viewModel?.InitWithPayload(PayloadId);
 
+            var appNavigation = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();           
             if (NavigationController != null)
             {
-                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
+                appNavigation.NavigationController = NavigationController;
             }
-
             if (this is ISubViewContainerController subViewContainer)
             {
-                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = subViewContainer;
+                appNavigation.SubViewContainerController = subViewContainer;
             }
+
 
             if (NavigationItem != null)
             {
