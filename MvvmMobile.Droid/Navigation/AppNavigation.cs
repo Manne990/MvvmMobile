@@ -228,11 +228,11 @@ namespace MvvmMobile.Droid.Navigation
             return;
         }
 
-        public void NavigateBack(Action done = null)
+        public void NavigateBack(Action done = null, bool includeSubViews = true)
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1 || includeSubViews == false)
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -263,7 +263,7 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, bool includeSubViews = true)
         {
             if (GetContext() is AppCompatActivity activity)
             {
@@ -271,7 +271,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     callbackAction.Invoke(payloadId);
                 }
-                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1)
+                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1 || includeSubViews == false)
                 {
                     callbackAction.Invoke(payloadId);
 

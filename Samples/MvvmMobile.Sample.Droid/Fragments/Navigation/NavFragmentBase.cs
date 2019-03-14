@@ -64,8 +64,13 @@ namespace MvvmMobile.Sample.Droid.Fragments.Navigation
                 ViewModel?.BackCommand?.Execute();
             };
 
+            _backButton = view.FindViewById<Button>(Resource.Id.prevViewButton);
+            _backButton.Click += (sender, e) =>
+            {
+                ViewModel?.PrevViewCommand?.Execute();
+            };
+
             _homeButton = view.FindViewById<Button>(Resource.Id.homeButton);
-            _homeButton.Enabled = ViewModel?.NextViewCommand != null;
             _homeButton.Click += (sender, e) =>
             {
                 ViewModel?.HomeCommand?.Execute();
