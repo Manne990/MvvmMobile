@@ -64,8 +64,8 @@ namespace MvvmMobile.Sample.Droid.Fragments.Navigation
                 ViewModel?.BackCommand?.Execute();
             };
 
-            _backButton = view.FindViewById<Button>(Resource.Id.prevViewButton);
-            _backButton.Click += (sender, e) =>
+            _prevViewButton = view.FindViewById<Button>(Resource.Id.prevViewButton);
+            _prevViewButton.Click += (sender, e) =>
             {
                 ViewModel?.PrevViewCommand?.Execute();
             };

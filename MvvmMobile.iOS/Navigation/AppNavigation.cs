@@ -318,6 +318,30 @@ namespace MvvmMobile.iOS.Navigation
                     throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
                 }
 
+                // If the current VC has subviews then go through them first...
+                if (currentVC is ISubViewContainerController subViewContainer)
+                {
+                    UIViewController subView = null;
+                    SubViewContainerController = subViewContainer;
+                    while (subViewContainer.SubViewNavigationStack.Count > 0)
+                    {
+                        subView = subViewContainer.SubViewNavigationStack.Pop();
+                        if (subView.GetType() == viewControllerType)
+                        {
+                            InflateSubView(subView);
+                            return;
+                        }
+                    }
+                    if (subView != null)
+                    {
+                        InflateSubView(subView);
+                    }
+                }
+                else
+                {
+                    SubViewContainerController = null;
+                }
+
                 // Check if the current VC is the target VC
                 if (currentVC.GetType() == viewControllerType)
                 {

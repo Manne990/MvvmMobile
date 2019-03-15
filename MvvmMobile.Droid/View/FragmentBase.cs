@@ -29,8 +29,12 @@ namespace MvvmMobile.Droid.View
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {}
 
-        protected virtual void OnBackPressed()
-        {}
+        public virtual bool OnBackPressed()
+        {
+            bool isBackPressedConsumed = false;
+
+            return isBackPressedConsumed;
+        }
 
 
         // -----------------------------------------------------------------------------

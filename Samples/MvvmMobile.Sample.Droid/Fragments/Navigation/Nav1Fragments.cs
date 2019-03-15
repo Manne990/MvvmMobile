@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.Graphics;
+using Android.Support.V7.App;
 using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
 namespace MvvmMobile.Sample.Droid.Fragments.Navigation
@@ -10,6 +12,20 @@ namespace MvvmMobile.Sample.Droid.Fragments.Navigation
         {
             BackgroundColor = Color.AliceBlue;
             TitleText = "Sub View 1A";
+        }
+
+        public override bool OnBackPressed()
+        {
+            var isDone = new TaskCompletionSource<bool>();
+
+            var alert = new AlertDialog.Builder(Context, Resource.Style.Theme_AppCompat_Light_Dialog);
+            alert.SetTitle("Really Go Back?");
+            alert.SetMessage("Are you sure you want to go back?");
+            alert.SetPositiveButton("Yes", (s, a) => ViewModel?.BackCommand?.Execute());
+            alert.SetNegativeButton("No", (s, a) => { });
+            alert.Create().Show();
+
+            return true;
         }
     }
 

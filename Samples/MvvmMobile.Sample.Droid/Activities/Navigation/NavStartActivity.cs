@@ -28,7 +28,6 @@ namespace MvvmMobile.Sample.Droid.Activities.Navigation
 
             EnableBackButton(true);
 
-            ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).FragmentContainerId = Resource.Id.fragmentContainer;
             ViewModel?.StartCommand?.Execute();
         }
 

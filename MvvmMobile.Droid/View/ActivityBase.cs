@@ -3,12 +3,14 @@ using System.ComponentModel;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.Navigation;
+using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MvvmMobile.Droid.View
 {
@@ -23,13 +25,31 @@ namespace MvvmMobile.Droid.View
         // Properties
         protected bool BackButtonEnabled { get; set; }
 
+        private int _fragmentContainerId = Resource.Id.fragmentContainer;
+        protected int FragmentContainerId
+        {
+            get { return _fragmentContainerId; }
+            set
+            {
+                _fragmentContainerId = value;
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).FragmentContainerId = _fragmentContainerId;
+            }
+        }
+
 
         // -----------------------------------------------------------------------------
 
         // Overrides
         public override void OnBackPressed()
         {
-            if (BackButtonEnabled)
+            bool isBackPressConsumed = !BackButtonEnabled;
+
+            if (/*isBackPressConsumed == false &&*/ GetCurrentFragment() is FragmentBase currentFragment)
+            {
+                isBackPressConsumed = currentFragment.OnBackPressed();
+            }
+
+            if (isBackPressConsumed == false)
             {
                 BackButtonPressed?.Invoke(this, EventArgs.Empty);
 
@@ -47,6 +67,13 @@ namespace MvvmMobile.Droid.View
 
             ActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
             SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
+        }
+
+        protected Fragment GetCurrentFragment()
+        {
+            var fragment = SupportFragmentManager?.FindFragmentById(FragmentContainerId);
+
+            return fragment;
         }
     }
 
@@ -123,7 +150,9 @@ namespace MvvmMobile.Droid.View
         {
             base.OnResume();
 
-            ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Context = this;
+            var appNavigation = ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>());
+            appNavigation.Context = this;
+            appNavigation.FragmentContainerId = FragmentContainerId;
 
             if (_viewModel != null)
             {

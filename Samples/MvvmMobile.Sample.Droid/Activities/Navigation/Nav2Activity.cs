@@ -26,7 +26,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Navigation
             // Toolbar
             SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
 
-            ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).FragmentContainerId = Resource.Id.fragmentContainer;
+            FragmentContainerId = Resource.Id.fragmentContainer;
             ViewModel?.NextSubViewCommand?.Execute();
         }
 
@@ -35,23 +35,6 @@ namespace MvvmMobile.Sample.Droid.Activities.Navigation
             base.OnResume();
 
             EnableBackButton(true);
-
-            ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).FragmentContainerId = Resource.Id.fragmentContainer;
-        }
-
-        public override void OnBackPressed()
-        {
-            if (BackButtonEnabled == false)
-            {
-                return;
-            }
-
-            if (SupportFragmentManager != null && SupportFragmentManager.BackStackEntryCount <= 1)
-            {
-                Finish();
-            }
-
-            base.OnBackPressed();
         }
     }
 }
