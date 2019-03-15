@@ -1,5 +1,9 @@
 # Release Notes #
 
+## Version 1.0.4 ##
+Oct 25, 2018
+Added the ability to request a UIViewController for a ViewModel on iOS and a Fragment for a ViewModel on Android, directly from the navigation instead of doing a navigation.
+
 ## Version 1.0.2 ##
 Sep 18, 2018
 
