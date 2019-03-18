@@ -125,8 +125,9 @@ namespace MvvmMobile.Sample.Tests
             _subject.CancelCommand.Execute();
 
             // ASSERT
-            _navigation.Received(1).NavigateToRoot();
+            //_navigation.Received(1).NavigateToRoot();
             //_navigation.Received(1).NavigateBack(Arg.Any<Action>());
+            _navigation.Received(1).NavigateBack();
         }
 
         //TODO: Fix the test below!
