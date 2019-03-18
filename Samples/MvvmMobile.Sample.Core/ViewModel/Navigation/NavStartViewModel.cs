@@ -8,12 +8,18 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
     {
         public NavStartViewModel(INavigation navigation)
         {
-            StartCommand = new RelayCommand(() => 
+            StartCommand = new RelayCommand(() =>
             {
-                navigation.NavigateTo<INav1ViewModel>();
+                navigation.NavigateToSubView<INav1AViewModel>();
+            });
+
+            DoneCommand = new RelayCommand(() => 
+            {
+                navigation.NavigateBack();
             });
         }
 
         public RelayCommand StartCommand { get; }
+        public RelayCommand DoneCommand { get; }
     }
 }

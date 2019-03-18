@@ -14,14 +14,27 @@ namespace MvvmMobile.Droid.View
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
 
+        protected ActivityBase ParentActivity
+        {
+            get
+            {
+                return Activity as ActivityBase;
+            }
+        }
+
+
         // -----------------------------------------------------------------------------
 
         // Lifecycle
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {}
 
-        protected virtual void OnBackPressed()
-        {}
+        public virtual bool OnBackPressed()
+        {
+            bool isBackPressedConsumed = false;
+
+            return isBackPressedConsumed;
+        }
 
 
         // -----------------------------------------------------------------------------
@@ -57,14 +70,6 @@ namespace MvvmMobile.Droid.View
     public class FragmentBase<T> : FragmentBase, IPlatformView where T : class, IBaseViewModel
     {
         // Properties
-        protected ActivityBase<IBaseViewModel> ParentActivity
-        {
-            get
-            {
-                return Activity as ActivityBase<IBaseViewModel>;
-            }
-        }
-
         private T _viewModel;
         protected T ViewModel
         {

@@ -6,5 +6,6 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
     public interface INavStartViewModel : IBaseViewModel
     {
         RelayCommand StartCommand { get; }
+        RelayCommand DoneCommand { get; }
     }
 }

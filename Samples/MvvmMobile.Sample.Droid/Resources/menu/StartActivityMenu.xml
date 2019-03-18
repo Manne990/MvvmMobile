@@ -1,6 +1,6 @@
-﻿<menu xmlns:android="http://schemas.android.com/apk/res/android">
+﻿<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuAdd"
-		android:title="@string/add"
-        android:showAsAction="always" />
+        android:id="@+id/menuNav"
+		android:title="Nav"
+        app:showAsAction="always" />
 </menu>

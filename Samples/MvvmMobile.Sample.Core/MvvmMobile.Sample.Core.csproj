@@ -18,4 +18,10 @@
     <Folder Include="ViewModel\Home\" />
     <Folder Include="ViewModel\Navigation\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ViewModel\Navigation\INav3ViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ViewModel\Navigation\Nav1ViewModel.config" />
+  </ItemGroup>
 </Project>

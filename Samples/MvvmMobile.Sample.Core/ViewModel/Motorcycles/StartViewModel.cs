@@ -6,6 +6,7 @@ using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.Navigation;
+using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
 namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 {
@@ -45,25 +46,29 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
                 NotifyPropertyChanged(nameof(Motorcycles));
             });
 
+            StartNavigationDemoCommand = new RelayCommand(() => 
+            {
+                navigation.NavigateTo<INav1ViewModel>();
+            });
+
             // Create Mock Data
-            var motorcycles = new ObservableCollection<IMotorcycle>();
-
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 1999 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2002 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2005 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "625 SuperComp", Year = 2002 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "690", Year = 2009 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "990 SuperDuke", Year = 2005 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 1999 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2003 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2015 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2000 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2005 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2010 });
-            motorcycles.Add(new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2011 });
-
-            Motorcycles = motorcycles;
+            Motorcycles = new ObservableCollection<IMotorcycle>
+            {
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 1999 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2002 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Honda", Model = "VFR 800", Year = 2005 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "625 SuperComp", Year = 2002 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "690", Year = 2009 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "KTM", Model = "990 SuperDuke", Year = 2005 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 1999 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2003 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2007 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R1", Year = 2015 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2000 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2005 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2010 },
+                new Motorcycle { Id = Guid.NewGuid(), Brand = "Yamaha", Model = "R6", Year = 2011 }
+            };
         }
 
 
@@ -88,6 +93,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         public RelayCommand AddMotorcycleCommand { get; }
         public RelayCommand<IMotorcycle> EditMotorcycleCommand { get; }
         public RelayCommand<IMotorcycle> DeleteMotorcycleCommand { get; }
+        public RelayCommand StartNavigationDemoCommand { get; }
 
 
         // -----------------------------------------------------------------------------

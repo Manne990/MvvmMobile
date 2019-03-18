@@ -19,7 +19,13 @@ namespace MvvmMobile.Droid.View
             // Init
             SetContentView(Resource.Layout.FragmentContainerActivityLayout);
 
-            SupportFragmentManager?.PopBackStackImmediate();
+            FragmentContainerId = Resource.Id.fragmentContainer;
+
+            // Pop off all fragments
+            while (SupportFragmentManager?.BackStackEntryCount > 0)
+            {
+                SupportFragmentManager?.PopBackStackImmediate();
+            }
         }
 
         protected override void OnResume()
@@ -35,23 +41,11 @@ namespace MvvmMobile.Droid.View
 
             // Load Fragment
             var app = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
-
-            app.FragmentContainerId = Resource.Id.fragmentContainer;
             app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);
         }
 
         public override void OnBackPressed()
         {
-            if (BackButtonEnabled == false)
-            {
-                return;
-            }
-
-            if (SupportFragmentManager != null && SupportFragmentManager.BackStackEntryCount <= 1)
-            {
-                Finish();
-            }
-
             base.OnBackPressed();
         }
 

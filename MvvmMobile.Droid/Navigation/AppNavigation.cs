@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
@@ -120,8 +121,14 @@ namespace MvvmMobile.Droid.Navigation
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
             {
+#if BACKWARD_COMPATIBLE_MODE
+                Console.WriteLine("Navigating to Fragments through NavigateTo() is deprecated.");
                 LoadFragment(concreteType, parameter, callback);
                 return;
+
+#else
+                throw new NotSupportedException("Navigating to Fragments through NavigateTo() is deprecated.");
+#endif
             }
 
             var concreteTypeJava = Class.FromType(concreteType);
@@ -148,7 +155,7 @@ namespace MvvmMobile.Droid.Navigation
             {
                 intent.SetCallback(callback);
 
-                currentActivity.RunOnUiThread(() => 
+                currentActivity.RunOnUiThread(() =>
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -172,7 +179,7 @@ namespace MvvmMobile.Droid.Navigation
                 return;
             }
 
-            currentActivity.RunOnUiThread(() => 
+            currentActivity.RunOnUiThread(() =>
             {
                 if (CanUseActivityTransitions)
                 {
@@ -194,11 +201,38 @@ namespace MvvmMobile.Droid.Navigation
             });
         }
 
-        public void NavigateBack(Action done = null)
+        public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            NavigateToSubView(typeof(T), parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            if (viewModelType == null)
+            {
+                return;
+            }
+
+            if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
+            {
+                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            if (concreteType.IsSubclassOf(typeof(FragmentBase)) == false)
+            {
+                throw new ArgumentException($"The viewmodel '{viewModelType.ToString()}' does not inherit from FragmentBase!");
+            }
+
+
+            LoadFragment(concreteType, parameter, callback);
+            return;
+        }
+
+        public void NavigateBack(Action done = null, bool includeSubViews = true)
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1 || includeSubViews == false)
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -229,7 +263,7 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, bool includeSubViews = true)
         {
             if (GetContext() is AppCompatActivity activity)
             {
@@ -237,7 +271,7 @@ namespace MvvmMobile.Droid.Navigation
                 {
                     callbackAction.Invoke(payloadId);
                 }
-                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1)
+                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1 || includeSubViews == false)
                 {
                     callbackAction.Invoke(payloadId);
 
@@ -272,21 +306,60 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-		public async Task NavigateBack<T>() where T : IBaseViewModel
+        public async Task NavigateBack<T>() where T : IBaseViewModel
         {
-			await Task.Delay(1);
+            await Task.Delay(1);
 
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
                 {
-                    if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
+                    throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                }
+
+                var targetIsFragment = concreteType.IsSubclassOf(typeof(FragmentBase));
+                if (targetIsFragment)
+                {
+                    // Target = Fragment
+                    while (activity.SupportFragmentManager?.BackStackEntryCount > 0)
                     {
-                        throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                        var fragment = activity.SupportFragmentManager?.Fragments.LastOrDefault();
+                        if (fragment.GetType() == concreteType)
+                        {
+                            // The target fragment was found!
+                            return;
+                        }
+
+                        activity.SupportFragmentManager?.PopBackStackImmediate();
                     }
 
-                    //TODO: Implement scenario for when the target view is a fragment!
+                    // If we reach this point then the target fragment was not found in the current activitys fragment back stack...
+                    // ...or the fragment back stack was empty.
+                    // What to do now?
+                }
+                else
+                {
+                    // Target = Activity
+                    var targetEqualsSourceActivity = activity.GetType() == concreteType;
+                    if (targetEqualsSourceActivity)
+                    {
+                        // Back to same activity
+                        if (activity.SupportFragmentManager?.BackStackEntryCount <= 1)
+                        {
+                            // Back to same activity and no fragment back stack -> Do nothing
+                            return;
+                        }
 
+                        // Empty the fragment back stack
+                        while (activity.SupportFragmentManager?.BackStackEntryCount > 1)
+                        {
+                            activity.SupportFragmentManager?.PopBackStackImmediate();
+                        }
+
+                        return;
+                    }
+
+                    // Back to another activity
                     var concreteTypeJava = Class.FromType(concreteType);
                     var intent = new Intent(GetContext(), concreteTypeJava);
 
@@ -294,19 +367,14 @@ namespace MvvmMobile.Droid.Navigation
 
                     GetContext().StartActivity(intent);
                 }
-                else
-                {
-                    //TODO: Implement for fragments!
-                    System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Not implemented for fragments!");
-                }
             }
             else
             {
-				System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
+                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
             }
         }
 
-		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
         {
 			await NavigateBack<T>();
 

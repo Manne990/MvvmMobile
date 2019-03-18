@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
+using Cirrious.FluentLayouts.Touch;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
@@ -14,11 +15,50 @@ namespace MvvmMobile.iOS.Navigation
 {
     public class AppNavigation : INavigation
     {
+        // Private Members
+        private UIViewController _lastChildController;
+        private ISubViewContainerController _subViewContainerController;
+
+        // -----------------------------------------------------------------------------
+
         // Properties
         //public TabBarControllerBase TabBarController { get; set; }
         public UINavigationController NavigationController { private get; set; }
         public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
+        public ISubViewContainerController SubViewContainerController
+        {
+            set
+            {
+                if (value != _subViewContainerController)
+                {
+                    PushCurrentSubViewToNavigationStack();
+
+                    _subViewContainerController = value;
+
+                    if (_subViewContainerController != null && SubViewNavigationStack.Count > 0)
+                    {
+                        var subView = SubViewNavigationStack.Pop();
+                        InflateSubView(subView);
+                    }
+                }
+            }
+        }
+
+        private UIViewController SubViewController
+        {
+            get { return _subViewContainerController?.AsViewController(); }
+        }
+
+        private UIView SubViewContainer
+        {
+            get { return _subViewContainerController?.SubViewContainerView; }
+        }
+
+        private Stack<UIViewController> SubViewNavigationStack
+        {
+            get { return _subViewContainerController?.SubViewNavigationStack; }
+        }
 
         // -----------------------------------------------------------------------------
 
@@ -157,7 +197,7 @@ namespace MvvmMobile.iOS.Navigation
                 // Handle modal
                 if (frameworkVc.AsModal || clearHistory)
                 {
-					frameworkVc.AsModal = true;
+                    frameworkVc.AsModal = true;
 
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                     GetNavigationController()?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
@@ -169,7 +209,41 @@ namespace MvvmMobile.iOS.Navigation
             GetNavigationController()?.PushViewController(vc, true);
         }
 
-        public void NavigateBack(Action done = null)
+        public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            NavigateToSubView(typeof(T), parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            if (SubViewContainer == null)
+            {
+                throw new Exception("SubViewController and SubViewContainer must be set!");
+            }
+
+            if (ViewMapperDictionary.TryGetValue(viewModelType, out Type viewControllerType) == false)
+            {
+                throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+            }
+
+            // Remove
+            SubViewContainer.RemoveConstraints(SubViewContainer.Constraints);
+
+            for (int i = 0; i < SubViewContainer.Subviews.Length; i++)
+            {
+                var view = SubViewContainer.Subviews[0];
+                view.RemoveFromSuperview();
+                view = null;
+            }
+
+            PushCurrentSubViewToNavigationStack();
+
+            // Add
+            var subView = Activator.CreateInstance(viewControllerType) as UIViewController;
+            InflateSubView(subView);
+        }
+
+        public void NavigateBack(Action done = null, bool includeSubViews = true)
         {
             // Check the navigation controller
             if (GetNavigationController()?.VisibleViewController == null)
@@ -185,10 +259,20 @@ namespace MvvmMobile.iOS.Navigation
                 throw new Exception("The current VC does not implement IViewControllerBase!");
             }
 
+            // Check if we have SubViews
+            if (SubViewNavigationStack?.Count > 0 && includeSubViews == true)
+            {
+                _lastChildController?.RemoveFromParentViewController();
+                _lastChildController = SubViewNavigationStack.Pop();
+                InflateSubView(_lastChildController);
+
+                return;
+            }
+
             // Dismiss the VC
             if (currentVC.AsModal)
             {
-                GetNavigationController()?.DismissViewController(true, () => 
+                GetNavigationController()?.DismissViewController(true, () =>
                 {
                     done?.Invoke();
                 });
@@ -200,38 +284,62 @@ namespace MvvmMobile.iOS.Navigation
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, bool includeSubViews = true)
         {
-            NavigateBack(() => 
+            NavigateBack(() =>
             {
                 callbackAction.Invoke(payloadId);
 
                 done?.Invoke();
-            });
+            }, includeSubViews);
         }
 
-		public async Task NavigateBack<T>() where T : IBaseViewModel
+        public async Task NavigateBack<T>() where T : IBaseViewModel
         {
-			// Check the navigation controller
+            // Check the navigation controller
             if (GetNavigationController()?.VisibleViewController == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Could not find a navigation controller or a visible VC!");
                 return;
             }
 
-			while (true)
-			{
-				// Get the current VC
+            while (true)
+            {
+                // Get the current VC
                 var currentVC = GetNavigationController().VisibleViewController as IViewControllerBase;
                 if (currentVC == null)
                 {
                     throw new Exception("The current VC does not implement IViewControllerBase!");
                 }
 
-				// Get the target vc type
+                // Get the target vc type
                 if (GetViewMapper().TryGetValue(typeof(T), out Type viewControllerType) == false)
                 {
-					throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                }
+
+                // If the current VC has subviews then go through them first...
+                if (currentVC is ISubViewContainerController subViewContainer)
+                {
+                    UIViewController subView = null;
+                    SubViewContainerController = subViewContainer;
+                    while (subViewContainer.SubViewNavigationStack.Count > 0)
+                    {
+                        subView = subViewContainer.SubViewNavigationStack.Pop();
+                        if (subView.GetType() == viewControllerType)
+                        {
+                            InflateSubView(subView);
+                            return;
+                        }
+                    }
+                    if (subView != null)
+                    {
+                        InflateSubView(subView);
+                    }
+                }
+                else
+                {
+                    SubViewContainerController = null;
                 }
 
                 // Check if the current VC is the target VC
@@ -255,14 +363,42 @@ namespace MvvmMobile.iOS.Navigation
                 {
                     GetNavigationController()?.PopViewController(false);
                 }
-			}
-		}
+            }
+        }
 
-		public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
         {
-			await NavigateBack<T>();
+            await NavigateBack<T>();
 
-			callbackAction.Invoke(payloadId);
+            callbackAction.Invoke(payloadId);
+        }
+
+        private void PushCurrentSubViewToNavigationStack()
+        {
+            if (SubViewNavigationStack != null && _lastChildController != null)
+            {
+                _lastChildController.RemoveFromParentViewController();
+                SubViewNavigationStack.Push(_lastChildController);
+                _lastChildController = null;
+            }
+        }
+
+        private void InflateSubView(UIViewController subView)
+        {
+
+            SubViewController.AddChildViewController(subView);
+            subView.View.TranslatesAutoresizingMaskIntoConstraints = false;
+            SubViewContainer.AddSubview(subView.View);
+
+            SubViewContainer.AddConstraints(
+                subView.View.AtTopOf(SubViewContainer),
+                subView.View.AtLeftOf(SubViewContainer),
+                subView.View.WithSameWidth(SubViewContainer),
+                subView.View.WithSameHeight(SubViewContainer));
+
+            subView.DidMoveToParentViewController(SubViewController);
+
+            _lastChildController = subView;
         }
     }
 }

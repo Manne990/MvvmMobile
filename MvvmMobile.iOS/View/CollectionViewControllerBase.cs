@@ -33,6 +33,11 @@ namespace MvvmMobile.iOS.View
             base.ViewDidLoad();
 
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
+
+            if (this is ISubViewContainerController subViewContainer)
+            {
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = subViewContainer;
+            }
         }
 
         public override void ViewWillLayoutSubviews()
@@ -54,11 +59,16 @@ namespace MvvmMobile.iOS.View
             // Handle Payload
             _viewModel?.InitWithPayload(PayloadId);
 
+            var appNavigation = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
+            appNavigation.SubViewContainerController = this as ISubViewContainerController;
             if (NavigationController != null)
             {
-                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
+                appNavigation.NavigationController = NavigationController;
             }
-
+            if (this is ISubViewContainerController subViewContainer)
+            {
+                appNavigation.SubViewContainerController = subViewContainer;
+            }
             if (NavigationItem != null)
             {
                 NavigationItem.Title = Title;
@@ -82,6 +92,11 @@ namespace MvvmMobile.iOS.View
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+            }
+
+            if (this is ISubViewContainerController)
+            {
+                ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = null;
             }
         }
 
