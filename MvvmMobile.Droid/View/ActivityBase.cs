@@ -160,8 +160,8 @@ namespace MvvmMobile.Droid.View
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
 
-            _viewModel?.OnActivated();
             _viewModel?.InitWithPayload(PayloadId);
+            _viewModel?.OnActivated();
         }
 
         protected override void OnPause()
