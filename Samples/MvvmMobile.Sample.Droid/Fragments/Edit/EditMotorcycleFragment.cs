@@ -22,11 +22,12 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             base.OnCreate(savedInstanceState);
 
             Title = GetString(Resource.String.motorcycle);
-            HasOptionsMenu = true;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
+            HasOptionsMenu = true;
+
             return inflater.Inflate(Resource.Layout.EditMotorcycleLayout, container, false);
         }
 
@@ -38,7 +39,7 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
             _modelEditText = view.FindViewById<TextView>(Resource.Id.modelEditText);
             _yearEditText = view.FindViewById<TextView>(Resource.Id.yearEditText);
 
-            ParentActivity.SetSupportActionBar(view.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
+            //ParentActivity.SetSupportActionBar(view.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
         }
 
         public override void OnResume()
@@ -79,7 +80,7 @@ namespace MvvmMobile.Sample.Droid.Fragments.Edit
         public override bool OnBackPressed()
         {
             ViewModel?.CancelCommand.Execute();
-            return false;
+            return true;
         }
 
         public override void OnDestroyView()

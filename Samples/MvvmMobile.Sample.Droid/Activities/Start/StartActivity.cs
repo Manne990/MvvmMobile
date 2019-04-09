@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
@@ -13,6 +14,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
     public class StartActivity : ActivityBase<IStartViewModel>
     {
         // Private Members
+        private FrameLayout _editMotorcycleFrame;
         private RecyclerView _listView;
         private StartAdapter _adapter;
         private FloatingActionButton _addButton;
@@ -29,7 +31,11 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             SetContentView(Resource.Layout.StartActivityLayout);
 
             // Toolbar
-            SetSupportActionBar(FindViewById<Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
+
+            // SubView Container
+            FragmentContainerId = Resource.Id.editMotorcycleFrame;
+            _editMotorcycleFrame = FindViewById<FrameLayout>(FragmentContainerId);
 
             // Controls
             _listView = FindViewById<RecyclerView>(Resource.Id.listView);
@@ -50,12 +56,22 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
             EnableBackButton(false);
 
+            ShowSubViewContainer(false);
+            
             _adapter?.LoadData(ViewModel.Motorcycles);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
+            if (ViewModel.IsShowingEditMotorcycleSubView == false)
+            {
+                MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
+            }
 
             return true;
         }
@@ -68,6 +84,11 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
                 return true;
             }
 
+            if (ViewModel.IsShowingEditMotorcycleSubView == true)
+            {
+                return false;
+            }
+                
             return base.OnOptionsItemSelected(item);
         }
 
@@ -96,6 +117,12 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
                 _adapter?.LoadData(ViewModel.Motorcycles);
                 return;
             }
+            if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
+            {
+                ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
+            }
+
+            base.ViewModel_PropertyChanged(sender, e);
         }
 
 
@@ -115,6 +142,12 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
         private void DeleteMotorcycle(IMotorcycle motorcycle)
         {
             ViewModel?.DeleteMotorcycleCommand.Execute(motorcycle);
+        }
+
+        private void ShowSubViewContainer(bool isShowing)
+        {
+            _editMotorcycleFrame.Visibility = isShowing ? ViewStates.Visible : ViewStates.Gone;
+            _addButton.Visibility = isShowing ? ViewStates.Gone : ViewStates.Visible;
         }
     }
 }

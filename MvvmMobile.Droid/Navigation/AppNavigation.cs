@@ -62,6 +62,7 @@ namespace MvvmMobile.Droid.Navigation
         // Public Properties
         public Context Context { private get; set; }
         public int FragmentContainerId { get; set; }
+
         public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
 
@@ -223,16 +224,29 @@ namespace MvvmMobile.Droid.Navigation
                 throw new ArgumentException($"The viewmodel '{viewModelType.ToString()}' does not inherit from FragmentBase!");
             }
 
-
             LoadFragment(concreteType, parameter, callback);
             return;
         }
 
-        public void NavigateBack(Action done = null, bool includeSubViews = true)
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= 1 || includeSubViews == false)
+                int subViewCountThreshold = 0;
+                switch (behaviour)
+                {
+                    case BackBehaviour.CloseLastSubView:
+                        subViewCountThreshold = 0;
+                        break;
+                    case BackBehaviour.SkipFromLastSubView:
+                        subViewCountThreshold = 1;
+                        break;
+                    case BackBehaviour.FullViewsOnly:
+                        subViewCountThreshold = int.MaxValue;
+                        break;
+                }
+
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= subViewCountThreshold)
                 {
                     if (CanUseActivityTransitions)
                     {
@@ -263,15 +277,25 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, bool includeSubViews = true)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             if (GetContext() is AppCompatActivity activity)
             {
-                if (activity.SupportFragmentManager?.BackStackEntryCount == 0)
+                int subViewCountThreshold = 0;
+                switch (behaviour)
                 {
-                    callbackAction.Invoke(payloadId);
+                    case BackBehaviour.CloseLastSubView:
+                        subViewCountThreshold = 0;
+                        break;
+                    case BackBehaviour.SkipFromLastSubView:
+                        subViewCountThreshold = 1;
+                        break;
+                    case BackBehaviour.FullViewsOnly:
+                        subViewCountThreshold = int.MaxValue;
+                        break;
                 }
-                else if (activity.SupportFragmentManager?.BackStackEntryCount == 1 || includeSubViews == false)
+
+                if (activity.SupportFragmentManager?.BackStackEntryCount <= subViewCountThreshold)
                 {
                     callbackAction.Invoke(payloadId);
 

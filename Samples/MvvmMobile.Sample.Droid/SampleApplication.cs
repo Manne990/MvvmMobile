@@ -9,6 +9,7 @@ using MvvmMobile.Sample.Droid.Activities.Edit;
 using MvvmMobile.Sample.Droid.Activities.Navigation;
 using MvvmMobile.Sample.Droid.Activities.Start;
 using MvvmMobile.Sample.Droid.Activity.Navigation;
+using MvvmMobile.Sample.Droid.Fragments.Edit;
 using MvvmMobile.Sample.Droid.Fragments.Navigation;
 using MvvmMobile.Sample.Droid.Navigation;
 
@@ -42,7 +43,7 @@ namespace MvvmMobile.Sample.Droid
             MvvmMobile.Droid.Bootstrapper.Init(true);
 
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<IStartViewModel, StartActivity>();
-            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleActivity>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleFragment>();
 
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<INavStartViewModel, NavStartActivity>();
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1Activity>();

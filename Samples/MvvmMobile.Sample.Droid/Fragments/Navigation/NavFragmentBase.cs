@@ -95,5 +95,11 @@ namespace MvvmMobile.Sample.Droid.Fragments.Navigation
             _backButton = null;
             _homeButton = null;
         }
+
+        public override bool OnBackPressed()
+        {
+            ViewModel.BackCommand?.Execute();
+            return true;
+        }
     }
 }

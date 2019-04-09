@@ -7,6 +7,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 {
     public interface IStartViewModel : IBaseViewModel
     {
+        bool IsShowingEditMotorcycleSubView { get; set; }
+
         ObservableCollection<IMotorcycle> Motorcycles { get; }
 
         RelayCommand AddMotorcycleCommand { get; }

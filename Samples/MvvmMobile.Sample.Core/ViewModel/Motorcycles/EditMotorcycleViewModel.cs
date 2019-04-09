@@ -10,11 +10,11 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
     public class EditMotorcycleViewModel : BaseViewModel, IEditMotorcycleViewModel
     {
         // Constructors
-        public EditMotorcycleViewModel(ICustomNavigation navigation)
+        public EditMotorcycleViewModel()
         {
             CancelCommand = new RelayCommand(() => 
             {
-                navigation?.NavigateBack();
+                NavigateBack(payload: null);
                 //navigation?.NavigateBack<IStartViewModel>();
                 //navigation?.NavigateToRoot();
                 //NavigateBack();

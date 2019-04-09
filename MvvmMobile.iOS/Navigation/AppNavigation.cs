@@ -243,7 +243,7 @@ namespace MvvmMobile.iOS.Navigation
             InflateSubView(subView);
         }
 
-        public void NavigateBack(Action done = null, bool includeSubViews = true)
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             // Check the navigation controller
             if (GetNavigationController()?.VisibleViewController == null)
@@ -260,7 +260,7 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             // Check if we have SubViews
-            if (SubViewNavigationStack?.Count > 0 && includeSubViews == true)
+            if (SubViewNavigationStack?.Count > 0 /*&& includeSubViews == true*/)
             {
                 _lastChildController?.RemoveFromParentViewController();
                 _lastChildController = SubViewNavigationStack.Pop();
@@ -284,14 +284,14 @@ namespace MvvmMobile.iOS.Navigation
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, bool includeSubViews = true)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             NavigateBack(() =>
             {
                 callbackAction.Invoke(payloadId);
 
                 done?.Invoke();
-            }, includeSubViews);
+            }, behaviour);
         }
 
         public async Task NavigateBack<T>() where T : IBaseViewModel

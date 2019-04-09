@@ -36,7 +36,6 @@ namespace MvvmMobile.Core.ViewModel
             }
         }
 
-
         // -----------------------------------------------------------------------------
 
         // Lifecycle
@@ -74,15 +73,16 @@ namespace MvvmMobile.Core.ViewModel
 
         public Action<Guid> CallbackAction { private get; set; }
 
-        protected void NavigateBack(Action done = null)
+        protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(() => 
-            {
-                done?.Invoke();
-            });
+                {
+                    done?.Invoke();
+                },
+                behaviour);
         }
 
-        protected void NavigateBack(IPayload payload, Action done = null)
+        protected void NavigateBack(IPayload payload, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             if (CallbackAction == null)
             {
@@ -96,10 +96,10 @@ namespace MvvmMobile.Core.ViewModel
             var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
             payloads.Add(payloadId, payload);
 
-            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId,() => 
-            {
-                done?.Invoke();
-            });
+            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, 
+                                                                  payloadId,
+                                                                  () => done?.Invoke(),
+                                                                  behaviour);
         }
 
         public virtual void InitWithPayload(Guid payloadId)

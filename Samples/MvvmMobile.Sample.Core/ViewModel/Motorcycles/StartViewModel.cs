@@ -17,7 +17,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         {
             AddMotorcycleCommand = new RelayCommand(() =>
             {
-                navigation.NavigateTo<IEditMotorcycleViewModel>(null, MotorcycleAdded);
+                navigation.NavigateToSubView<IEditMotorcycleViewModel>(null, MotorcycleAdded);
+                IsShowingEditMotorcycleSubView = true;
             });
 
             EditMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
@@ -31,7 +32,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 
                 payload.Motorcycle = mc;
 
-                navigation.NavigateTo<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
+                navigation.NavigateToSubView<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
+                IsShowingEditMotorcycleSubView = true;
             });
 
             DeleteMotorcycleCommand = new RelayCommand<IMotorcycle>(mc =>
@@ -75,6 +77,17 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         // -----------------------------------------------------------------------------
 
         // Properties
+        private bool _isShowingEditMotorcycleSubView;
+        public bool IsShowingEditMotorcycleSubView
+        {
+            get { return _isShowingEditMotorcycleSubView; }
+            set
+            {
+                _isShowingEditMotorcycleSubView = value;
+                NotifyPropertyChanged(nameof(IsShowingEditMotorcycleSubView));
+            }
+        }
+
         private ObservableCollection<IMotorcycle> _motorcycles;
         public ObservableCollection<IMotorcycle> Motorcycles
         {
@@ -101,6 +114,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         // Private Methods
         private void MotorcycleAdded(Guid payloadId)
         {
+            IsShowingEditMotorcycleSubView = false;
+
             // Get Payload
             var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
             var payload = payloads.GetAndRemove<IMotorcyclePayload>(payloadId);
@@ -116,6 +131,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 
         private void MotorcycleChanged(Guid payloadId)
         {
+            IsShowingEditMotorcycleSubView = false;
             NotifyPropertyChanged(nameof(Motorcycles));
         }
     }

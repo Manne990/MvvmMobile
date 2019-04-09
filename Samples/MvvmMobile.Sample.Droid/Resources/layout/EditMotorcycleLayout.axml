@@ -1,40 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        layout="@layout/toolbar" />
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+    <!--<include
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/margin_normal">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_normal"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33">
+
         <TextView
-            android:text="Brand"
-            style="@style/fieldLabelTextView" />
+            style="@style/fieldLabelTextView"
+            android:text="Brand" />
+
         <EditText
             android:id="@+id/brandEditText"
+            style="@style/editTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/editTextStyle" />
+            android:layout_height="wrap_content" />
+
         <TextView
+            style="@style/fieldLabelTextView"
             android:layout_marginTop="@dimen/spacing_normal"
-            android:text="Model"
-            style="@style/fieldLabelTextView" />
+            android:text="Model" />
+
         <EditText
             android:id="@+id/modelEditText"
+            style="@style/editTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/editTextStyle" />
+            android:layout_height="wrap_content" />
+
         <TextView
+            style="@style/fieldLabelTextView"
             android:layout_marginTop="@dimen/spacing_normal"
-            android:text="Year"
-            style="@style/fieldLabelTextView" />
+            android:text="Year" />
+
         <EditText
             android:id="@+id/yearEditText"
+            style="@style/editTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/editTextStyle" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
