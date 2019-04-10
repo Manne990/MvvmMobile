@@ -20,7 +20,6 @@ namespace MvvmMobile.Sample.Tests
         private IMotorcyclePayload _payload;
         private IEditMotorcycleViewModel _subject;
 
-
         [SetUp]
         public void SetUp()
         {
@@ -46,8 +45,10 @@ namespace MvvmMobile.Sample.Tests
 
             var coreNav = Substitute.For<INavigation>();
 
-            coreNav.When(x => x.NavigateBack(Arg.Any<Action>())).Do(x => _navigation.NavigateBack(Arg.Any<Action>()));
-            coreNav.When(x => x.NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>())).Do(x => _navigation.NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>()));
+            coreNav.When(x => x.NavigateBack(Arg.Any<Action>(), Arg.Any<BackBehaviour>()))
+                .Do(x => _navigation.NavigateBack((Action)x[0], (BackBehaviour)x[1]));
+            coreNav.When(x => x.NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>(), Arg.Any<BackBehaviour>()))
+                .Do(x => _navigation.NavigateBack((Action<Guid>)x[0], (Guid)x[1], (Action)x[2], (BackBehaviour)x[3]));
 
             builder.Register(coreNav);
 
@@ -114,10 +115,12 @@ namespace MvvmMobile.Sample.Tests
 
             var payloadGuid = Guid.NewGuid();
 
+            Action<Guid> callbackAction = payloadId => {};
+
             _payload.Motorcycle = mc;
             _payloads.Add(payloadGuid, _payload);
 
-            _subject.CallbackAction = (payloadId) => {};
+            _subject.CallbackAction = callbackAction;
 
             // ACT
             _subject.InitWithPayload(payloadGuid);
@@ -126,38 +129,37 @@ namespace MvvmMobile.Sample.Tests
 
             // ASSERT
             //_navigation.Received(1).NavigateToRoot();
-            //_navigation.Received(1).NavigateBack(Arg.Any<Action>());
-            _navigation.Received(1).NavigateBack();
+            _navigation.Received(1).NavigateBack(callbackAction, Arg.Any<Guid>(), Arg.Any<Action>());
+            //_navigation.Received(1).NavigateBack();
         }
 
         //TODO: Fix the test below!
+        [Test]
+        public void SaveShouldCallStartViewModelWithPayload()
+        {
+            // ARRANGE
+            var mc = new Motorcycle
+            {
+                Id = Guid.NewGuid(),
+                Brand = "Honda",
+                Model = "VFR",
+                Year = 1999
+            };
 
-        //[Test]
-        //public void SaveShouldCallStartViewModelWithPayload()
-        //{
-        //    // ARRANGE
-        //    var mc = new Motorcycle
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Brand = "Honda",
-        //        Model = "VFR",
-        //        Year = 1999
-        //    };
+            var payloadGuid = Guid.NewGuid();
 
-        //    var payloadGuid = Guid.NewGuid();
+            _payload.Motorcycle = mc;
+            _payloads.Add(payloadGuid, _payload);
 
-        //    _payload.Motorcycle = mc;
-        //    _payloads.Add(payloadGuid, _payload);
+            _subject.CallbackAction = (payloadId) => {};
 
-        //    _subject.CallbackAction = (payloadId) => {};
+            // ACT
+            _subject.InitWithPayload(payloadGuid);
 
-        //    // ACT
-        //    _subject.InitWithPayload(payloadGuid);
+            _subject.SaveMotorcycleCommand.Execute();
 
-        //    _subject.SaveMotorcycleCommand.Execute();
-
-        //    // ASSERT
-        //    _navigation.Received(1).NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>());
-        //}
+            // ASSERT
+            _navigation.Received(1).NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>());
+        }
     }
 }

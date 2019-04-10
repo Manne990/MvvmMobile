@@ -52,7 +52,8 @@ namespace MvvmMobile.Sample.Tests
             _subject.AddMotorcycleCommand.Execute();
 
             // ASSERT
-            _navigation.Received(1).NavigateTo<IEditMotorcycleViewModel>(null, Arg.Any<Action<Guid>>());
+            _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(null, Arg.Any<Action<Guid>>());
+            Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
         }
 
         [Test]
@@ -71,7 +72,8 @@ namespace MvvmMobile.Sample.Tests
             _subject.EditMotorcycleCommand.Execute(mc);
 
             // ASSERT
-            _navigation.Received(1).NavigateTo<IEditMotorcycleViewModel>(Arg.Any<IMotorcyclePayload>(), Arg.Any<Action<Guid>>());
+            _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(Arg.Any<IMotorcyclePayload>(), Arg.Any<Action<Guid>>());
+            Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
         }
 
         [Test]
