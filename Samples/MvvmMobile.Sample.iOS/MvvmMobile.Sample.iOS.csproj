@@ -131,6 +131,14 @@
     <Compile Include="ViewController\Navigation\NavViewControllerBase.cs" />
     <Compile Include="ViewController\Navigation\NavSubViewControllerBase.cs" />
     <Compile Include="ViewController\Navigation\NavViewControllers.cs" />
+    <Compile Include="ViewController\Start\StartContainerViewController.cs" />
+    <Compile Include="ViewController\Start\StartContainerViewController.designer.cs">
+      <DependentUpon>StartContainerViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewController\Start\MotorcycleTableViewCell.cs" />
+    <Compile Include="ViewController\Start\MotorcycleTableViewCell.designer.cs">
+      <DependentUpon>MotorcycleTableViewCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">

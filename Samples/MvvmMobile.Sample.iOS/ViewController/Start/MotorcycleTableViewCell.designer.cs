@@ -8,20 +8,20 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 
-namespace MvvmMobile.Sample.iOS.View
+namespace MvvmMobile.Sample.iOS.ViewController.Start
 {
-    [Register ("StartViewController")]
-    partial class StartViewController
+    [Register ("MotorcycleTableViewCell")]
+    partial class MotorcycleTableViewCell
     {
-        [Action ("AddMotorcycle:")]
-        partial void AddMotorcycle (Foundation.NSObject sender);
-
-
-        [Action ("StartNavDemo:")]
-        partial void StartNavDemo (Foundation.NSObject sender);
+        [Outlet]
+        UIKit.UILabel title { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
+            if (title != null) {
+                title.Dispose ();
+                title = null;
+            }
         }
     }
 }

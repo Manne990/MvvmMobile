@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MvvmMobile.Core.Navigation;
+using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Navigation;
@@ -9,16 +10,63 @@ using UIKit;
 
 namespace MvvmMobile.Sample.iOS.Navigation
 {
-    public class CustomNavigation : AppNavigation, ICustomNavigation
+    public class CustomNavigation : ICustomNavigation
     {
-        public override UINavigationController GetNavigationController()
+        AppNavigation _appNavigation;
+
+        public CustomNavigation(INavigation navigation)
         {
-            return ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).GetNavigationController();
+            _appNavigation = navigation as AppNavigation;
         }
 
-        public override Dictionary<Type, Type> GetViewMapper()
+        public UINavigationController GetNavigationController()
         {
-            return ((AppNavigation)MvvmMobile.Core.Mvvm.Api.Resolver.Resolve<INavigation>()).GetViewMapper();
+            return _appNavigation?.GetNavigationController();
+        }
+
+        public Dictionary<Type, Type> GetViewMapper()
+        {
+            return _appNavigation?.GetViewMapper();
+        }
+
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        {
+            _appNavigation?.NavigateBack(done, behaviour);
+        }
+
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        {
+            _appNavigation?.NavigateBack(callbackAction, payloadId, done, behaviour);
+        }
+
+        public async Task NavigateBack<T>() where T : IBaseViewModel
+        {
+            await _appNavigation?.NavigateBack<T>();
+        }
+
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        {
+            await _appNavigation?.NavigateBack<T>(callbackAction, payloadId);
+        }
+
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            _appNavigation?.NavigateTo(viewModelType, parameter, callback, clearHistory);
+        }
+
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            _appNavigation?.NavigateTo<T>(parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        {
+            _appNavigation?.NavigateToSubView(viewModelType, parameter, callback, clearHistory);
+        }
+
+        public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        {
+            _appNavigation?.NavigateToSubView<T>(parameter, callback, clearHistory);
         }
 
         public async Task NavigateToRoot()

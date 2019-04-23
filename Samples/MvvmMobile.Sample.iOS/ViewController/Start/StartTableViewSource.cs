@@ -43,9 +43,9 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-            var cell = tableView.DequeueReusableCell("MotorcycleCell", indexPath);
+            var cell = tableView.DequeueReusableCell("MotorcycleCell", indexPath) as MotorcycleTableViewCell;
 
-            cell.TextLabel.Text = _motorcycles[indexPath.Row].ToString();
+            cell.Title = _motorcycles[indexPath.Row].ToString();
 
             return cell;
         }

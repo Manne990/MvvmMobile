@@ -5,6 +5,7 @@ using MvvmMobile.Sample.Core.ViewModel.Navigation;
 using MvvmMobile.Sample.iOS.Navigation;
 using MvvmMobile.Sample.iOS.View;
 using MvvmMobile.Sample.iOS.ViewController.Navigation;
+using MvvmMobile.Sample.iOS.ViewController.Start;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS
@@ -32,7 +33,7 @@ namespace MvvmMobile.Sample.iOS
             // Init MvvmMobile
             MvvmMobile.iOS.Bootstrapper.Init();
 
-            MvvmMobile.iOS.Bootstrapper.AddViewMapping<IStartViewModel, StartViewController>();
+            MvvmMobile.iOS.Bootstrapper.AddViewMapping<IStartViewModel, StartContainerViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleViewController>();
 
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1ViewController>();

@@ -10,6 +10,11 @@ namespace MvvmMobile.Sample.iOS.View
     public partial class EditMotorcycleViewController : ViewControllerBase<IEditMotorcycleViewModel>
     {
         // Constructors
+        public EditMotorcycleViewController()
+        {
+            AsModal = true;
+        }
+
         public EditMotorcycleViewController(IntPtr handle) : base(handle)
         {
             AsModal = true;
@@ -55,9 +60,9 @@ namespace MvvmMobile.Sample.iOS.View
         {
             if (e.PropertyName == nameof(ViewModel.Motorcycle))
             {
-                BrandTextField.Text = ViewModel.Motorcycle.Brand;
-                ModelTextField.Text = ViewModel.Motorcycle.Model;
-                YearTextField.Text = ViewModel.Motorcycle.Year.ToString();
+                BrandTextField.Text = ViewModel.Motorcycle?.Brand;
+                ModelTextField.Text = ViewModel.Motorcycle?.Model;
+                YearTextField.Text = ViewModel.Motorcycle?.Year.ToString();
                 return;
             }
         }

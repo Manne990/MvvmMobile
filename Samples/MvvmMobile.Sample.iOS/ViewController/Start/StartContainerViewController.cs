@@ -1,0 +1,87 @@
+using Foundation;
+using MvvmMobile.iOS.Common;
+using MvvmMobile.iOS.View;
+using MvvmMobile.Sample.Core.Model;
+using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using System;
+using System.Collections.Generic;
+using UIKit;
+
+namespace MvvmMobile.Sample.iOS.ViewController.Start
+{
+    [Storyboard(storyboardName: "Main", storyboardId: "StartContainerViewController")]
+    public partial class StartContainerViewController : ViewControllerBase<IStartViewModel>, ISubViewContainerController
+    {
+        // Private Members
+        private StartTableViewSource _source;
+
+        public Stack<UIViewController> SubViewNavigationStack { get; }
+
+        public UIView SubViewContainerView { get { return SubViewOverlayView; } }
+
+        // -----------------------------------------------------------------------------
+
+        // Constructors
+        public StartContainerViewController (IntPtr handle) : base (handle)
+        {
+            SubViewNavigationStack = new Stack<UIViewController>();
+        }
+
+        // -----------------------------------------------------------------------------
+
+        // Lifecycle
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            _source = new StartTableViewSource(MotorcycleSelected, DeleteMotorcycle);
+            MotorcyclesTableView.Source = _source;
+
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            MotorcyclesTableView?.ReloadData();
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Overrides
+        protected override void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ViewModel.Motorcycles))
+            {
+                _source?.LoadData(ViewModel.Motorcycles);
+                MotorcyclesTableView?.ReloadData();
+                return;
+            }
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Private Methods
+        private void MotorcycleSelected(IMotorcycle motorcycle)
+        {
+            ViewModel?.EditMotorcycleCommand.Execute(motorcycle);
+        }
+
+        partial void AddMotorcycle(Foundation.NSObject sender)
+        {
+            ViewModel?.AddMotorcycleCommand.Execute();
+        }
+
+        private void DeleteMotorcycle(IMotorcycle motorcycle)
+        {
+            ViewModel?.DeleteMotorcycleCommand.Execute(motorcycle);
+        }
+
+        partial void StartNavDemo(NSObject sender)
+        {
+            ViewModel?.StartNavigationDemoCommand?.Execute();
+        }
+    }
+}

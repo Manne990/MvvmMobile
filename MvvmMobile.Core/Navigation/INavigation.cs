@@ -9,8 +9,8 @@ namespace MvvmMobile.Core.Navigation
         SkipFromLastSubView,
         CloseLastSubView,
         FullViewsOnly,
-
     }
+
     public interface INavigation
     {
         void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false);

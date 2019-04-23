@@ -26,7 +26,7 @@ namespace MvvmMobile.iOS.Navigation
         public UINavigationController NavigationController { private get; set; }
         public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
-        public ISubViewContainerController SubViewContainerController
+        public virtual ISubViewContainerController SubViewContainerController
         {
             set
             {
@@ -155,23 +155,7 @@ namespace MvvmMobile.iOS.Navigation
                 throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
-            // Create the vc
-            UIViewController vc = null;
-            var attributes = viewControllerType.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(StoryboardAttribute));
-            if (attributes == null)
-            {
-                // Instantiate the VC
-                vc = Activator.CreateInstance(viewControllerType) as UIViewController;
-            }
-            else
-            {
-                // Instantiate the VC from a storyboard
-                var storyBoardName = attributes.ConstructorArguments[0].Value.ToString();
-                var storyBoardId = attributes.ConstructorArguments[1].Value.ToString();
-                var storyboard = UIStoryboard.FromName(storyBoardName, null);
-
-                vc = storyboard.InstantiateViewController(storyBoardId);
-            }
+            var vc = InstantiateViewController(viewControllerType);
 
             if (vc == null)
             {
@@ -239,7 +223,13 @@ namespace MvvmMobile.iOS.Navigation
             PushCurrentSubViewToNavigationStack();
 
             // Add
-            var subView = Activator.CreateInstance(viewControllerType) as UIViewController;
+            var subView = InstantiateViewController(viewControllerType);
+            if (subView == null)
+            {
+                System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateToSubView: The ViewController for VM '{viewModelType.ToString()}' could not be loaded!");
+                return;
+            }
+
             InflateSubView(subView);
         }
 
@@ -399,6 +389,29 @@ namespace MvvmMobile.iOS.Navigation
             subView.DidMoveToParentViewController(SubViewController);
 
             _lastChildController = subView;
+        }
+
+        private UIViewController InstantiateViewController(Type viewControllerType)
+        {
+            // Create the vc
+            UIViewController vc = null;
+            var attributes = viewControllerType.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(StoryboardAttribute));
+            if (attributes == null)
+            {
+                // Instantiate the VC
+                vc = Activator.CreateInstance(viewControllerType) as UIViewController;
+            }
+            else
+            {
+                // Instantiate the VC from a storyboard
+                var storyBoardName = attributes.ConstructorArguments[0].Value.ToString();
+                var storyBoardId = attributes.ConstructorArguments[1].Value.ToString();
+                var storyboard = UIStoryboard.FromName(storyBoardName, null);
+
+                vc = storyboard.InstantiateViewController(storyBoardId);
+            }
+
+            return vc;
         }
     }
 }
