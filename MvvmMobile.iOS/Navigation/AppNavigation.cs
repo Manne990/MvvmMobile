@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Cirrious.FluentLayouts.Touch;
@@ -293,6 +292,8 @@ namespace MvvmMobile.iOS.Navigation
                 return;
             }
 
+            SubViewNavigationStack?.Clear();
+
             // Dismiss the VC
             if (currentVC.AsModal)
             {
@@ -409,6 +410,18 @@ namespace MvvmMobile.iOS.Navigation
 
         private void InflateSubView(UIViewController subView)
         {
+            if (subView is IViewControllerBase vcBase)
+            {
+                vcBase.IsSubView = true;
+            }
+
+            if (subView is IViewControllerBase frameworkVc)
+            {
+                if (frameworkVc.SubViewHasNavBar)
+                {
+                    subView = new UINavigationController(subView);
+                }
+            }
 
             SubViewController.AddChildViewController(subView);
             subView.View.TranslatesAutoresizingMaskIntoConstraints = false;

@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using MvvmMobile.Core;
 using MvvmMobile.Core.Common;
-using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.Navigation;
@@ -31,6 +30,8 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
                 var payload = Mvvm.Api.Resolver.Resolve<IMotorcyclePayload>();
 
                 payload.Motorcycle = mc;
+
+                //navigation.NavigateTo<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
 
                 navigation.NavigateToSubView<IEditMotorcycleViewModel>(payload, MotorcycleChanged);
                 IsShowingEditMotorcycleSubView = true;

@@ -12,23 +12,20 @@ namespace MvvmMobile.Sample.iOS.View
         // Constructors
         public EditMotorcycleViewController()
         {
-            AsModal = true;
+            SubViewHasNavBar = true;
+            //AsModal = true;
         }
 
         public EditMotorcycleViewController(IntPtr handle) : base(handle)
         {
-            AsModal = true;
+            SubViewHasNavBar = true;
+            //AsModal = true;
         }
 
 
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
-        }
-
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);

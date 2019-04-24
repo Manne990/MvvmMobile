@@ -65,15 +65,16 @@ namespace MvvmMobile.iOS.View
             _viewModel?.InitWithPayload(PayloadId);
 
             var appNavigation = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();           
-            if (NavigationController != null)
+
+            if (NavigationController != null && IsSubView == false)
             {
                 appNavigation.NavigationController = NavigationController;
             }
+
             if (this is ISubViewContainerController subViewContainer)
             {
                 appNavigation.SubViewContainerController = subViewContainer;
             }
-
 
             if (NavigationItem != null)
             {
@@ -113,6 +114,8 @@ namespace MvvmMobile.iOS.View
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
 		public bool AsModal { get; set; }
+        public bool SubViewHasNavBar { get; set; }
+        public bool IsSubView { get; set; }
 
         private T _viewModel;
         protected T ViewModel

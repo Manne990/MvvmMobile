@@ -1,6 +1,4 @@
 ﻿using Cirrious.FluentLayouts.Touch;
-using MvvmMobile.Core.Navigation;
-using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.ViewModel.Navigation;
 using UIKit;
@@ -112,11 +110,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
                 _homeButton.AtLeftOf(View, 8f),
                 _homeButton.WithSameWidth(View).Minus(16f),
                 _homeButton.Height().EqualTo(40f));
-        }
-
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
         }
     }
 }

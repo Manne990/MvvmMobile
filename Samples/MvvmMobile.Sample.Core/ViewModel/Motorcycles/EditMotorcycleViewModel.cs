@@ -1,6 +1,7 @@
 ﻿using System;
 using MvvmMobile.Core;
 using MvvmMobile.Core.Common;
+using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.Navigation;
@@ -14,7 +15,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         {
             CancelCommand = new RelayCommand(() => 
             {
-                NavigateBack(payload: null);
+                NavigateBack(behaviour: BackBehaviour.SkipFromLastSubView);
                 //navigation?.NavigateBack<IStartViewModel>();
                 //navigation?.NavigateToRoot();
                 //NavigateBack();
@@ -26,7 +27,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
 
                 mcPayload.Motorcycle = _motorcycle;
 
-                NavigateBack(mcPayload);
+                NavigateBack(payload: mcPayload, behaviour: BackBehaviour.SkipFromLastSubView);
             });
         }
 

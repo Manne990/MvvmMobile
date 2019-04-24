@@ -8,6 +8,8 @@ namespace MvvmMobile.iOS.View
     public interface IViewControllerBase : IPlatformView
     {
 		bool AsModal { get; set; }
+        bool SubViewHasNavBar { get; set; }
+        bool IsSubView { get; set; }
 
         void SetPayload(IPayload payload);
         void SetCallback(Action<Guid> callbackAction);

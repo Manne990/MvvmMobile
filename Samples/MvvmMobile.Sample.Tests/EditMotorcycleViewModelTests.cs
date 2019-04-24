@@ -128,12 +128,9 @@ namespace MvvmMobile.Sample.Tests
             _subject.CancelCommand.Execute();
 
             // ASSERT
-            //_navigation.Received(1).NavigateToRoot();
-            _navigation.Received(1).NavigateBack(callbackAction, Arg.Any<Guid>(), Arg.Any<Action>());
-            //_navigation.Received(1).NavigateBack();
+            _navigation.Received(1).NavigateBack(Arg.Any<Action>(), Arg.Any<BackBehaviour>());
         }
 
-        //TODO: Fix the test below!
         [Test]
         public void SaveShouldCallStartViewModelWithPayload()
         {
@@ -159,7 +156,7 @@ namespace MvvmMobile.Sample.Tests
             _subject.SaveMotorcycleCommand.Execute();
 
             // ASSERT
-            _navigation.Received(1).NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>());
+            _navigation.Received(1).NavigateBack(Arg.Any<Action<Guid>>(), Arg.Any<Guid>(), Arg.Any<Action>(), Arg.Any<BackBehaviour>());
         }
     }
 }

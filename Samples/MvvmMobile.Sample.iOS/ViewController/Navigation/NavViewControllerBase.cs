@@ -73,12 +73,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
             ViewModel?.NextSubViewCommand?.Execute();
         }
 
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
-        }
-
-
         // -----------------------------------------------------------------------------
 
         // ISubViewContainerController Implementation

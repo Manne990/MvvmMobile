@@ -73,7 +73,7 @@ namespace MvvmMobile.iOS.View
             // Handle Payload
             _viewModel?.InitWithPayload(PayloadId);
 
-            if (NavigationController != null)
+            if (NavigationController != null && IsSubView == false)
             {
                 _parentNavController = NavigationController;
                 ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
@@ -129,6 +129,8 @@ namespace MvvmMobile.iOS.View
         protected Guid PayloadId { get; set; }
         protected Action<Guid> CallbackAction { get; set; }
         public bool AsModal { get; set; }
+        public bool SubViewHasNavBar { get; set; }
+        public bool IsSubView { get; set; }
 
         private T _viewModel;
         protected T ViewModel
