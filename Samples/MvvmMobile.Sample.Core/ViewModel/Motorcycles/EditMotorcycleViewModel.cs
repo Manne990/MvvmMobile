@@ -15,7 +15,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
         {
             CancelCommand = new RelayCommand(() => 
             {
-                NavigateBack(behaviour: BackBehaviour.SkipFromLastSubView);
+                NavigateBack(payload: null, behaviour: BackBehaviour.SkipFromLastSubView);
                 //navigation?.NavigateBack<IStartViewModel>();
                 //navigation?.NavigateToRoot();
                 //NavigateBack();

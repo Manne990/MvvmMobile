@@ -220,7 +220,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DbZ-bj-XfN" userLabel="SubViewContainerView">
-                                <rect key="frame" x="0.0" y="228" width="414" height="280"/>
+                                <rect key="frame" x="10" y="228" width="394" height="280"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="280" id="974-cq-GqY"/>
@@ -231,11 +231,11 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cZT-0R-VOi" secondAttribute="trailing" id="16i-bn-BWM"/>
                             <constraint firstItem="475" firstAttribute="top" secondItem="cZT-0R-VOi" secondAttribute="bottom" id="6eX-Jg-rvq"/>
-                            <constraint firstAttribute="trailing" secondItem="DbZ-bj-XfN" secondAttribute="trailing" id="Fjg-je-fhX"/>
+                            <constraint firstAttribute="trailing" secondItem="DbZ-bj-XfN" secondAttribute="trailing" constant="10" id="Fjg-je-fhX"/>
                             <constraint firstItem="cZT-0R-VOi" firstAttribute="leading" secondItem="478" secondAttribute="leading" id="Rhh-Jg-9SH"/>
                             <constraint firstItem="DbZ-bj-XfN" firstAttribute="centerY" secondItem="478" secondAttribute="centerY" id="aPI-ZR-fhN"/>
                             <constraint firstItem="cZT-0R-VOi" firstAttribute="top" secondItem="474" secondAttribute="bottom" id="d9z-bd-pp7"/>
-                            <constraint firstItem="DbZ-bj-XfN" firstAttribute="leading" secondItem="478" secondAttribute="leading" id="dW5-ez-Kn2"/>
+                            <constraint firstItem="DbZ-bj-XfN" firstAttribute="leading" secondItem="478" secondAttribute="leading" constant="10" id="dW5-ez-Kn2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Motorcycles" id="XRE-yH-tHB">

@@ -208,20 +208,8 @@ namespace MvvmMobile.iOS.Navigation
                 throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
-            // Remove
-            SubViewContainer.RemoveConstraints(SubViewContainer.Constraints);
-
-            if (_subViewContainerController?.SubViewOriginalConstraints != null)
-            {
-                SubViewContainer.AddConstraints(_subViewContainerController.SubViewOriginalConstraints);
-            }
-
-            for (int i = 0; i < SubViewContainer.Subviews.Length; i++)
-            {
-                var view = SubViewContainer.Subviews[0];
-                view.RemoveFromSuperview();
-                view = null;
-            }
+            // Remove all subviews
+            RemoveAllSubViews();
 
             PushCurrentSubViewToNavigationStack();
 
@@ -292,6 +280,8 @@ namespace MvvmMobile.iOS.Navigation
                 return;
             }
 
+            // Remove all subviews
+            RemoveAllSubViews();
             SubViewNavigationStack?.Clear();
 
             // Dismiss the VC
@@ -459,6 +449,23 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             return vc;
+        }
+
+        private void RemoveAllSubViews()
+        {
+            SubViewContainer.RemoveConstraints(SubViewContainer.Constraints);
+
+            if (_subViewContainerController?.SubViewOriginalConstraints != null)
+            {
+                SubViewContainer.AddConstraints(_subViewContainerController.SubViewOriginalConstraints);
+            }
+
+            for (int i = 0; i < SubViewContainer.Subviews.Length; i++)
+            {
+                var view = SubViewContainer.Subviews[0];
+                view.RemoveFromSuperview();
+                view = null;
+            }
         }
     }
 }
