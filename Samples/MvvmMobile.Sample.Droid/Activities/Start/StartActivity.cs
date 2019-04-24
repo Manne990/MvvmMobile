@@ -117,6 +117,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
                 _adapter?.LoadData(ViewModel.Motorcycles);
                 return;
             }
+
             if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
             {
                 ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);

@@ -15,8 +15,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         private UILabel _titleLabel;
 
         protected UIColor BackgroundColor { private get; set; }
-        public UIView SubViewContainerView { get; protected set; }
-        public Stack<UIViewController> SubViewNavigationStack { get; }
+
 
         // -----------------------------------------------------------------------------
 
@@ -78,6 +77,13 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
         {
             base.ViewWillAppear(animated);
         }
-    }
 
+
+        // -----------------------------------------------------------------------------
+
+        // ISubViewContainerController Implementation
+        public UIView SubViewContainerView { get; protected set; }
+        public Stack<UIViewController> SubViewNavigationStack { get; }
+        public NSLayoutConstraint[] SubViewOriginalConstraints { get; set; }
+    }
 }

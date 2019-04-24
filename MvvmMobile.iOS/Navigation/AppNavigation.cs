@@ -156,7 +156,6 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             var vc = InstantiateViewController(viewControllerType);
-
             if (vc == null)
             {
                 System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateTo: The ViewController for VM '{viewModelType.ToString()}' could not be loaded!");
@@ -213,6 +212,11 @@ namespace MvvmMobile.iOS.Navigation
             // Remove
             SubViewContainer.RemoveConstraints(SubViewContainer.Constraints);
 
+            if (_subViewContainerController?.SubViewOriginalConstraints != null)
+            {
+                SubViewContainer.AddConstraints(_subViewContainerController.SubViewOriginalConstraints);
+            }
+
             for (int i = 0; i < SubViewContainer.Subviews.Length; i++)
             {
                 var view = SubViewContainer.Subviews[0];
@@ -228,6 +232,22 @@ namespace MvvmMobile.iOS.Navigation
             {
                 System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateToSubView: The ViewController for VM '{viewModelType.ToString()}' could not be loaded!");
                 return;
+            }
+
+            if (subView is IViewControllerBase frameworkVc)
+            {
+                // Handle payload parameter
+                if (parameter != null)
+                {
+                    // Set payload id
+                    frameworkVc.SetPayload(parameter);
+                }
+
+                // Handle callback
+                if (callback != null)
+                {
+                    frameworkVc.SetCallback(callback);
+                }
             }
 
             InflateSubView(subView);
@@ -250,7 +270,21 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             // Check if we have SubViews
-            if (SubViewNavigationStack?.Count > 0 /*&& includeSubViews == true*/)
+            int subViewCountThreshold = 0;
+            switch (behaviour)
+            {
+                case BackBehaviour.CloseLastSubView:
+                    subViewCountThreshold = 0;
+                    break;
+                case BackBehaviour.SkipFromLastSubView:
+                    subViewCountThreshold = 1;
+                    break;
+                case BackBehaviour.FullViewsOnly:
+                    subViewCountThreshold = int.MaxValue;
+                    break;
+            }
+
+            if (SubViewNavigationStack?.Count > subViewCountThreshold)
             {
                 _lastChildController?.RemoveFromParentViewController();
                 _lastChildController = SubViewNavigationStack.Pop();

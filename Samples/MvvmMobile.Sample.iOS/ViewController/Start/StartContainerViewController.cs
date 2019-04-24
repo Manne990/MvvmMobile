@@ -15,9 +15,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         // Private Members
         private StartTableViewSource _source;
 
-        public Stack<UIViewController> SubViewNavigationStack { get; }
-
-        public UIView SubViewContainerView { get { return SubViewOverlayView; } }
 
         // -----------------------------------------------------------------------------
 
@@ -36,13 +33,13 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
 
             _source = new StartTableViewSource(MotorcycleSelected, DeleteMotorcycle);
             MotorcyclesTableView.Source = _source;
-
         }
 
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
+            ShowSubViewContainer(false);
             MotorcyclesTableView?.ReloadData();
         }
 
@@ -58,7 +55,20 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
                 MotorcyclesTableView?.ReloadData();
                 return;
             }
+
+            if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
+            {
+                ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
+            }
         }
+
+
+        // -----------------------------------------------------------------------------
+
+        // ISubViewContainerController Implementation
+        public Stack<UIViewController> SubViewNavigationStack { get; }
+        public UIView SubViewContainerView { get { return SubViewOverlayView; } }
+        public NSLayoutConstraint[] SubViewOriginalConstraints { get; set; }
 
 
         // -----------------------------------------------------------------------------
@@ -82,6 +92,15 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         partial void StartNavDemo(NSObject sender)
         {
             ViewModel?.StartNavigationDemoCommand?.Execute();
+        }
+
+        private void ShowSubViewContainer(bool isShowing)
+        {
+            SubViewContainerView.Hidden = !isShowing;
+            SubViewBlockerView.Hidden = !isShowing;
+
+            AddButton.Enabled = !isShowing;
+            AddButton.TintColor = isShowing ? UIColor.Clear : null;
         }
     }
 }

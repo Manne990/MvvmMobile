@@ -37,6 +37,11 @@ namespace MvvmMobile.iOS.View
             if (this is ISubViewContainerController subViewContainer)
             {
                 ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = subViewContainer;
+
+                if (subViewContainer.SubViewContainerView != null)
+                {
+                    subViewContainer.SubViewOriginalConstraints = subViewContainer.SubViewContainerView.Constraints;
+                }
             }
         }
 
