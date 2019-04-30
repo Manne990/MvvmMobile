@@ -10,9 +10,9 @@ namespace MvvmMobile.Sample.Core.ViewModel.Navigation
         {
             NextViewCommand = new RelayCommand(() => navigation.NavigateTo<INav1ViewModel>());
             NextSubViewCommand = new RelayCommand(() => navigation.NavigateToSubView<INav3AViewModel>());
-            BackCommand = new RelayCommand(() => navigation.NavigateBack(behaviour: BackBehaviour.CloseLastSubView));
+            BackCommand = new RelayCommand(() => navigation.NavigateBack(behaviour: BackBehaviour.SkipFromLastSubView));
             PrevViewCommand = new RelayCommand(() => navigation.NavigateBack(behaviour: BackBehaviour.FullViewsOnly));
-            HomeCommand = new RelayCommand(() => navigation.NavigateBack<INav1ViewModel>());
+            HomeCommand = new RelayCommand(() => navigation.NavigateBack<INav1ViewModel>()); //INav1BViewModel
         }
     }
 

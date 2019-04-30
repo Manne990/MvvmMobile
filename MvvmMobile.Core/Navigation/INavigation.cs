@@ -6,9 +6,12 @@ namespace MvvmMobile.Core.Navigation
 {
     public enum BackBehaviour
     {
+        /// <summary>Dismiss the container view controller/activity when going back from the only subview in the subview navigation stack.</summary>
         SkipFromLastSubView,
+        /// <summary>Only dismiss the subview when going back, don't dismiss the container view controller/activity.</summary>
         CloseLastSubView,
-        FullViewsOnly,
+        /// <summary>Always dismiss the container view controller/activity and all of its subviews when going back.</summary>
+        FullViewsOnly
     }
 
     public interface INavigation

@@ -15,7 +15,6 @@ namespace MvvmMobile.iOS.Navigation
     public class AppNavigation : INavigation
     {
         // Private Members
-        private UIViewController _lastChildController;
         private ISubViewContainerController _subViewContainerController;
 
         // -----------------------------------------------------------------------------
@@ -25,20 +24,26 @@ namespace MvvmMobile.iOS.Navigation
         public UINavigationController NavigationController { private get; set; }
         public Dictionary<Type, Type> ViewMapperDictionary { get; private set; }
 
+        // REMARK: Sets by a subviewcontroller on appear and to null on disappear
         public virtual ISubViewContainerController SubViewContainerController
         {
             set
             {
                 if (value != _subViewContainerController)
                 {
-                    PushCurrentSubViewToNavigationStack();
-
                     _subViewContainerController = value;
 
-                    if (_subViewContainerController != null && SubViewNavigationStack.Count > 0)
+                    if (_subViewContainerController == null)
                     {
-                        var subView = SubViewNavigationStack.Pop();
-                        InflateSubView(subView);
+                        return;
+                    }
+
+                    if (SubViewNavigationStack?.Count > 0)
+                    {
+                        var lastSubView = SubViewNavigationStack.Pop();
+
+                        lastSubView.RemoveFromParentViewController();
+                        InflateSubView(lastSubView);
                     }
                 }
             }
@@ -208,11 +213,6 @@ namespace MvvmMobile.iOS.Navigation
                 throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
             }
 
-            // Remove all subviews
-            RemoveAllSubViews();
-
-            PushCurrentSubViewToNavigationStack();
-
             // Add
             var subView = InstantiateViewController(viewControllerType);
             if (subView == null)
@@ -273,10 +273,21 @@ namespace MvvmMobile.iOS.Navigation
 
             if (SubViewNavigationStack?.Count > subViewCountThreshold)
             {
-                _lastChildController?.RemoveFromParentViewController();
-                _lastChildController = SubViewNavigationStack.Pop();
-                InflateSubView(_lastChildController);
+                // Remove the current subview from the stack
+                var subView = SubViewNavigationStack.Pop();
+                subView?.RemoveFromParentViewController();
+                subView = null;
 
+                if (SubViewNavigationStack.Count > 0)
+                {
+                    // Subviews left -> Inflate the next one
+                    InflateSubView(SubViewNavigationStack.Pop());
+                    done?.Invoke();
+                    return;
+                }
+
+                RemoveAllSubViews();
+                done?.Invoke();
                 return;
             }
 
@@ -304,7 +315,6 @@ namespace MvvmMobile.iOS.Navigation
             NavigateBack(() =>
             {
                 callbackAction.Invoke(payloadId);
-
                 done?.Invoke();
             }, behaviour);
         }
@@ -347,6 +357,7 @@ namespace MvvmMobile.iOS.Navigation
                             return;
                         }
                     }
+
                     if (subView != null)
                     {
                         InflateSubView(subView);
@@ -388,16 +399,6 @@ namespace MvvmMobile.iOS.Navigation
             callbackAction.Invoke(payloadId);
         }
 
-        private void PushCurrentSubViewToNavigationStack()
-        {
-            if (SubViewNavigationStack != null && _lastChildController != null)
-            {
-                _lastChildController.RemoveFromParentViewController();
-                SubViewNavigationStack.Push(_lastChildController);
-                _lastChildController = null;
-            }
-        }
-
         private void InflateSubView(UIViewController subView)
         {
             if (subView is IViewControllerBase vcBase)
@@ -413,6 +414,8 @@ namespace MvvmMobile.iOS.Navigation
                 }
             }
 
+            RemoveAllSubViews();
+
             SubViewController.AddChildViewController(subView);
             subView.View.TranslatesAutoresizingMaskIntoConstraints = false;
             SubViewContainer.AddSubview(subView.View);
@@ -425,7 +428,7 @@ namespace MvvmMobile.iOS.Navigation
 
             subView.DidMoveToParentViewController(SubViewController);
 
-            _lastChildController = subView;
+            SubViewNavigationStack.Push(subView);
         }
 
         private UIViewController InstantiateViewController(Type viewControllerType)

@@ -230,54 +230,18 @@ namespace MvvmMobile.Droid.Navigation
 
         public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
-            if (GetContext() is AppCompatActivity activity)
-            {
-                int subViewCountThreshold = 0;
-                switch (behaviour)
-                {
-                    case BackBehaviour.CloseLastSubView:
-                        subViewCountThreshold = 0;
-                        break;
-                    case BackBehaviour.SkipFromLastSubView:
-                        subViewCountThreshold = 1;
-                        break;
-                    case BackBehaviour.FullViewsOnly:
-                        subViewCountThreshold = int.MaxValue;
-                        break;
-                }
-
-                if (activity.SupportFragmentManager?.BackStackEntryCount <= subViewCountThreshold)
-                {
-                    if (CanUseActivityTransitions)
-                    {
-                        activity.FinishAfterTransition();
-                    }
-                    else
-                    {
-                        activity.Finish();
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        activity.SupportFragmentManager?.PopBackStackImmediate();
-                    }
-                    catch
-                    {
-                        // swallow exceptions, there's a bug in FragmentManager.java
-                    }
-                }
-
-                done?.Invoke();
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Context is null or not an activity!");
-            }
+            NavigateBackInternal(null, done, behaviour);
         }
 
         public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        {
+            NavigateBackInternal(() => 
+            {
+                callbackAction.Invoke(payloadId);
+            }, done, behaviour);
+        }
+
+        private void NavigateBackInternal(Action callbackListener, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             if (GetContext() is AppCompatActivity activity)
             {
@@ -297,7 +261,7 @@ namespace MvvmMobile.Droid.Navigation
 
                 if (activity.SupportFragmentManager?.BackStackEntryCount <= subViewCountThreshold)
                 {
-                    callbackAction.Invoke(payloadId);
+                    callbackListener?.Invoke();
 
                     if (CanUseActivityTransitions)
                     {
@@ -319,7 +283,7 @@ namespace MvvmMobile.Droid.Navigation
                         // swallow exceptions, there's a bug in FragmentManager.java
                     }
 
-                    callbackAction.Invoke(payloadId);
+                    callbackListener?.Invoke();
                 }
 
                 done?.Invoke();
@@ -360,6 +324,8 @@ namespace MvvmMobile.Droid.Navigation
                     // If we reach this point then the target fragment was not found in the current activitys fragment back stack...
                     // ...or the fragment back stack was empty.
                     // What to do now?
+
+                    //TODO: Implement!
                 }
                 else
                 {

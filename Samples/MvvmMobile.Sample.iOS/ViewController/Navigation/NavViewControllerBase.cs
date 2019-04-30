@@ -73,6 +73,7 @@ namespace MvvmMobile.Sample.iOS.ViewController.Navigation
             ViewModel?.NextSubViewCommand?.Execute();
         }
 
+
         // -----------------------------------------------------------------------------
 
         // ISubViewContainerController Implementation
