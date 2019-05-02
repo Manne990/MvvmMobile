@@ -1,5 +1,20 @@
 # Release Notes #
 
+## Version 1.0.7 ##
+Apr 30, 2019
+
+Bug fix release.
+
+## Version 1.0.6 ##
+Apr 26, 2019
+
+Introduced navigation to sub views for iOS.
+
+## Version 1.0.5 ##
+Mar 19, 2019
+
+Introduced navigation to sub views for Android. Sub views for iOS is in beta.
+
 ## Version 1.0.4 ##
 Oct 25, 2018
 
