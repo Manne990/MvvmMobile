@@ -139,6 +139,7 @@
     <Compile Include="ViewController\Start\MotorcycleTableViewCell.designer.cs">
       <DependentUpon>MotorcycleTableViewCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewController\TabBarViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">
@@ -153,6 +154,9 @@
       <Project>{55109E7C-3DAB-48AE-BCBC-EE3142F82A6C}</Project>
       <Name>MvvmMobile.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\chevron_left%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

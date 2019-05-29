@@ -49,6 +49,15 @@ namespace MvvmMobile.Sample.iOS
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav3BViewModel, Nav3BSubViewController>();
             MvvmMobile.iOS.Bootstrapper.AddViewMapping<INav3CViewModel, Nav3CSubViewController>();
 
+            //var rootViewController = new ViewController.TabBarViewController();
+
+            //Window = new UIWindow(UIScreen.MainScreen.Bounds)
+            //{
+            //    RootViewController = rootViewController
+            //};
+
+            //Window?.MakeKeyAndVisible();
+
             return true;
         }
 
