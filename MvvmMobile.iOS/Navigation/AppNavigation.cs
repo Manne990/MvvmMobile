@@ -187,6 +187,13 @@ namespace MvvmMobile.iOS.Navigation
                     frameworkVc.AsModal = true;
 
                     frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+
+                    if (vc.GetType().IsSubclassOf(typeof(UITabBarController)))
+                    {
+                        GetNavigationController()?.PresentViewController(frameworkVc.AsViewController(), !clearHistory, null);
+                        return;
+                    }
+
                     GetNavigationController()?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
                     return;
                 }

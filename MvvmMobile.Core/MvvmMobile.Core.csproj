@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.0.7</PackageVersion>
+    <PackageVersion>1.0.8</PackageVersion>
     <Authors>Jonas Frid, Mikael Stalvik</Authors>
     <PackageLicenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</PackageLicenseUrl>
     <Owners>Jonas Frid, Mikael Stalvik</Owners>
