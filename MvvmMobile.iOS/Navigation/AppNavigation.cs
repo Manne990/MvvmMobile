@@ -463,6 +463,11 @@ namespace MvvmMobile.iOS.Navigation
 
         private void RemoveAllSubViews()
         {
+            if (SubViewContainer == null)
+            {
+                return;
+            }
+
             SubViewContainer.RemoveConstraints(SubViewContainer.Constraints);
 
             if (_subViewContainerController?.SubViewOriginalConstraints != null)
