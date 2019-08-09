@@ -78,9 +78,9 @@ namespace MvvmMobile.iOS.View
                 _parentNavController = NavigationController;
                 ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).NavigationController = NavigationController;
             }
-            else if (ViewControllers != null && ViewControllers.Length > 0 && ViewControllers[0] is UINavigationController firstVc)
+            else if (ViewControllers != null && ViewControllers.Length > 0 && ViewControllers[SelectedIndex] is UINavigationController vc)
             {
-                SetCurrentNavigationController(firstVc);
+                SetCurrentNavigationController(vc);
             }
 
             if (_viewModel != null)
