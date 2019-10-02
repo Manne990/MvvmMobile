@@ -328,6 +328,19 @@ namespace MvvmMobile.iOS.Navigation
 
         public async Task NavigateBack<T>() where T : IBaseViewModel
         {
+            await NavigateBack(typeof(T));
+        }
+
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        {
+            await NavigateBack<T>();
+
+            callbackAction.Invoke(payloadId);
+        }
+
+
+        public async Task NavigateBack(Type viewModelInterfaceType)
+        {
             // Check the navigation controller
             if (GetNavigationController()?.VisibleViewController == null)
             {
@@ -345,9 +358,9 @@ namespace MvvmMobile.iOS.Navigation
                 }
 
                 // Get the target vc type
-                if (GetViewMapper().TryGetValue(typeof(T), out Type viewControllerType) == false)
+                if (GetViewMapper().TryGetValue(viewModelInterfaceType, out Type viewControllerType) == false)
                 {
-                    throw new Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    throw new Exception($"The viewmodel '{viewModelInterfaceType.ToString()}' does not exist in view mapper!");
                 }
 
                 // If the current VC has subviews then go through them first...
@@ -399,9 +412,9 @@ namespace MvvmMobile.iOS.Navigation
             }
         }
 
-        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        public async Task NavigateBack(Type viewModelInterfaceType, Action<Guid> callbackAction, Guid payloadId)
         {
-            await NavigateBack<T>();
+            await NavigateBack(viewModelInterfaceType);
 
             callbackAction.Invoke(payloadId);
         }

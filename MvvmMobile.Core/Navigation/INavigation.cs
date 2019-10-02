@@ -27,5 +27,8 @@ namespace MvvmMobile.Core.Navigation
 
         Task NavigateBack<T>() where T : IBaseViewModel;
         Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel;
+
+        Task NavigateBack(Type viewModelInterfaceType);
+        Task NavigateBack(Type viewModelInterfaceType, Action<Guid> callbackAction, Guid payloadId);
     }
 }

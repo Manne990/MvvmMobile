@@ -296,13 +296,25 @@ namespace MvvmMobile.Droid.Navigation
 
         public async Task NavigateBack<T>() where T : IBaseViewModel
         {
+            await NavigateBack(typeof(T));
+        }
+
+        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        {
+			await NavigateBack<T>();
+
+            callbackAction.Invoke(payloadId);
+        }
+
+        public async Task NavigateBack(Type viewModelInterfaceType)
+        {
             await Task.Delay(1);
 
             if (GetContext() is AppCompatActivity activity)
             {
-                if (GetViewMapper().TryGetValue(typeof(T), out Type concreteType) == false)
+                if (GetViewMapper().TryGetValue(viewModelInterfaceType, out Type concreteType) == false)
                 {
-                    throw new System.Exception($"The viewmodel '{typeof(T).ToString()}' does not exist in view mapper!");
+                    throw new System.Exception($"The viewmodel '{viewModelInterfaceType.ToString()}' does not exist in view mapper!");
                 }
 
                 var targetIsFragment = concreteType.IsSubclassOf(typeof(FragmentBase));
@@ -364,9 +376,9 @@ namespace MvvmMobile.Droid.Navigation
             }
         }
 
-        public async Task NavigateBack<T>(Action<Guid> callbackAction, Guid payloadId) where T : IBaseViewModel
+        public async Task NavigateBack(Type viewModelInterfaceType, Action<Guid> callbackAction, Guid payloadId)
         {
-			await NavigateBack<T>();
+            await NavigateBack(viewModelInterfaceType);
 
             callbackAction.Invoke(payloadId);
         }

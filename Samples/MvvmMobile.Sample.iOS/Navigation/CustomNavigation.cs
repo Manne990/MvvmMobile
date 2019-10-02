@@ -113,5 +113,15 @@ namespace MvvmMobile.Sample.iOS.Navigation
                 first = false;
             }
         }
+
+        public async Task NavigateBack(Type viewModelInterfaceType)
+        {
+            await _appNavigation?.NavigateBack(viewModelInterfaceType);
+        }
+
+        public async Task NavigateBack(Type viewModelInterfaceType, Action<Guid> callbackAction, Guid payloadId)
+        {
+            await _appNavigation?.NavigateBack(viewModelInterfaceType, callbackAction, payloadId);
+        }
     }
 }

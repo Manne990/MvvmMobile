@@ -86,5 +86,15 @@ namespace MvvmMobile.Sample.Droid.Navigation
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack<T>: Context is null or not an AppCompatActivity!");
             }
         }
+
+        public async Task NavigateBack(Type viewModelInterfaceType)
+        {
+            await _appNavigation?.NavigateBack(viewModelInterfaceType);
+        }
+
+        public async Task NavigateBack(Type viewModelInterfaceType, Action<Guid> callbackAction, Guid payloadId)
+        {
+            await _appNavigation?.NavigateBack(viewModelInterfaceType, callbackAction, payloadId);
+        }
     }
 }
