@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Foundation;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Navigation;
@@ -13,6 +14,7 @@ namespace MvvmMobile.iOS.View
         private AppNavigation _app;
         private UINavigationController _parentNavController;
         private bool _isFramesReady;
+        private NSObject _didBecomeActiveNotificationObserver;
 
 
         // -----------------------------------------------------------------------------
@@ -108,6 +110,8 @@ namespace MvvmMobile.iOS.View
                     NavigationItem.Title = firstVc.Title;
                 }
             }
+
+            _didBecomeActiveNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidBecomeActiveNotification, DidBecomeActive);
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -119,6 +123,16 @@ namespace MvvmMobile.iOS.View
             if (_viewModel != null)
             {
                 _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+            }
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            base.ViewDidDisappear(animated);
+
+            if (_didBecomeActiveNotificationObserver != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(_didBecomeActiveNotificationObserver);
             }
         }
 
@@ -237,6 +251,11 @@ namespace MvvmMobile.iOS.View
             {
                 _parentNavController.NavigationItem.Title = navController.VisibleViewController.Title;
             }
+        }
+
+        private void DidBecomeActive(NSNotification obj)
+        {
+            _viewModel?.OnActivated();
         }
     }
 }

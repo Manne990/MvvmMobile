@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Foundation;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Navigation;
@@ -11,6 +12,7 @@ namespace MvvmMobile.iOS.View
     {
         // Private Members
         private bool _isFramesReady;
+        private NSObject _didBecomeActiveNotificationObserver;
 
 
         // -----------------------------------------------------------------------------
@@ -89,6 +91,13 @@ namespace MvvmMobile.iOS.View
             _viewModel?.OnActivated();
         }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            _didBecomeActiveNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidBecomeActiveNotification, DidBecomeActive);
+        }
+
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
@@ -103,6 +112,16 @@ namespace MvvmMobile.iOS.View
             if (this is ISubViewContainerController)
             {
                 ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).SubViewContainerController = null;
+            }
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            base.ViewDidDisappear(animated);
+
+            if (_didBecomeActiveNotificationObserver != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(_didBecomeActiveNotificationObserver);
             }
         }
 
@@ -181,6 +200,15 @@ namespace MvvmMobile.iOS.View
             }
 
             CallbackAction = callbackAction;
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Private Methods
+        private void DidBecomeActive(NSNotification obj)
+        {
+            _viewModel?.OnActivated();
         }
     }
 }
