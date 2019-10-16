@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata minClientVersion="">
     <id>MvvmMobile.Core</id>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <title>MvvmMobile.Core</title>
     <authors>Jonas Frid, Mikael Stalvik</authors>
     <owners>Jonas Frid, Mikael Stalvik</owners>

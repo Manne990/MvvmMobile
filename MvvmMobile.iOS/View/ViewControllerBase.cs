@@ -85,8 +85,8 @@ namespace MvvmMobile.iOS.View
 
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
             _viewModel?.OnActivated();
@@ -107,7 +107,7 @@ namespace MvvmMobile.iOS.View
 
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
             }
 
             if (this is ISubViewContainerController subViewContainer)
@@ -150,8 +150,8 @@ namespace MvvmMobile.iOS.View
                     return;
                 }
 
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
 
                 _viewModel.OnLoaded();
                 _viewModel.CallbackAction = CallbackAction;
@@ -210,6 +210,11 @@ namespace MvvmMobile.iOS.View
         private void DidBecomeActive(NSNotification obj)
         {
             _viewModel?.OnActivated();
+        }
+
+        private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
+        {
+            InvokeOnMainThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }
 }

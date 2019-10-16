@@ -26,8 +26,7 @@ namespace MvvmMobile.Droid.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {}
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         public virtual bool OnBackPressed()
         {
@@ -85,8 +84,8 @@ namespace MvvmMobile.Droid.View
                     return;
                 }
 
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
 
                 if (runEvents == false)
                 {
@@ -121,8 +120,8 @@ namespace MvvmMobile.Droid.View
 
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
             _viewModel?.OnActivated();
@@ -142,7 +141,7 @@ namespace MvvmMobile.Droid.View
 
             if (_viewModel != null)
             { 
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
             }
         }
 
@@ -156,6 +155,17 @@ namespace MvvmMobile.Droid.View
         private void ActivityBackButtonPressed(object sender, EventArgs e)
         {
             OnBackPressed();
+        }
+
+        private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
+        {
+            if (ParentActivity == null)
+            {
+                ViewModel_PropertyChanged(sender, e);
+                return;
+            }
+
+            ParentActivity.RunOnUiThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }
 }

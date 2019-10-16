@@ -3,8 +3,8 @@
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props')" />
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
-  <ReleaseVersion>1.0.13</ReleaseVersion>
   <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+  <ReleaseVersion>1.0.14</ReleaseVersion>
 </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,7 +21,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <PackageId>MvvmMobile.Droid</PackageId>
-    <PackageVersion>1.0.13</PackageVersion>
+    <PackageVersion>1.0.14</PackageVersion>
     <Authors>Jonas Frid, Mikael Stalvik</Authors>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</PackageLicenseUrl>

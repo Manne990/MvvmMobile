@@ -99,8 +99,8 @@ namespace MvvmMobile.Droid.View
                     return;
                 }
 
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
 
                 _viewModel.OnLoaded();
                 _viewModel.CallbackAction = HandleCallback;
@@ -156,8 +156,8 @@ namespace MvvmMobile.Droid.View
 
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
             _viewModel?.InitWithPayload(PayloadId);
@@ -172,7 +172,7 @@ namespace MvvmMobile.Droid.View
 
             if (_viewModel != null)
             { 
-                _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
             }
         }
 
@@ -183,9 +183,7 @@ namespace MvvmMobile.Droid.View
             return base.OnOptionsItemSelected(item);
         }
 
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
 
         // -----------------------------------------------------------------------------
@@ -247,6 +245,11 @@ namespace MvvmMobile.Droid.View
             SetResult(Result.Ok, resultIntent);
 
             Finish();
+        }
+
+        private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
+        {
+            RunOnUiThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }
 }
