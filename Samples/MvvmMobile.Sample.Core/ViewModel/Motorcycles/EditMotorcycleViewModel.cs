@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MvvmMobile.Core;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
@@ -64,11 +65,19 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
             var payload = LoadPayload<IMotorcyclePayload>(payloadId);
             if (payload == null)
             {
-                Motorcycle = new Motorcycle { Id = Guid.NewGuid() };
+                Task.Factory.StartNew(async () =>
+                {
+                    await Task.Delay(1);
+                    Motorcycle = new Motorcycle { Id = Guid.NewGuid() };
+                });
                 return;
             }
 
-            Motorcycle = payload.Motorcycle;
+            Task.Factory.StartNew(async () =>
+            {
+                await Task.Delay(1);
+                Motorcycle = payload.Motorcycle;
+            });
         }
     }
 }

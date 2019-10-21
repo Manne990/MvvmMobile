@@ -12,14 +12,14 @@ namespace MvvmMobile.Sample.iOS.View
         // Constructors
         public EditMotorcycleViewController()
         {
-            SubViewHasNavBar = true;
-            //AsModal = true;
+            //SubViewHasNavBar = true;
+            AsModal = true;
         }
 
         public EditMotorcycleViewController(IntPtr handle) : base(handle)
         {
-            SubViewHasNavBar = true;
-            //AsModal = true;
+            //SubViewHasNavBar = true;
+            AsModal = true;
         }
 
 

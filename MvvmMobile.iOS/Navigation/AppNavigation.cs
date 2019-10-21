@@ -186,15 +186,19 @@ namespace MvvmMobile.iOS.Navigation
                 {
                     frameworkVc.AsModal = true;
 
-                    frameworkVc.AsViewController().ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+                    var nativeVc = frameworkVc.AsViewController();
+                    nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+
+                    var navVc = new UINavigationController(nativeVc);
+                    navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
 
                     if (vc.GetType().IsSubclassOf(typeof(UITabBarController)))
                     {
-                        GetNavigationController()?.PresentViewController(frameworkVc.AsViewController(), !clearHistory, null);
+                        GetNavigationController()?.PresentViewController(nativeVc, !clearHistory, null);
                         return;
                     }
 
-                    GetNavigationController()?.PresentViewController(new UINavigationController(frameworkVc.AsViewController()), !clearHistory, null);
+                    GetNavigationController()?.PresentViewController(navVc, !clearHistory, null);
                     return;
                 }
             }

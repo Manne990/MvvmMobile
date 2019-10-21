@@ -214,6 +214,7 @@ namespace MvvmMobile.iOS.View
 
         private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
         {
+            //ViewModel_PropertyChanged(sender, e);
             InvokeOnMainThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }

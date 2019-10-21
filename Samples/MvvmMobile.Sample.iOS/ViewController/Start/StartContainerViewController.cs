@@ -56,10 +56,10 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
                 return;
             }
 
-            if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
-            {
-                ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
-            }
+            //if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
+            //{
+            //    ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
+            //}
         }
 
 
