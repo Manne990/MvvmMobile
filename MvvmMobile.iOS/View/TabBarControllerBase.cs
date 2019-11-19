@@ -15,6 +15,7 @@ namespace MvvmMobile.iOS.View
         private UINavigationController _parentNavController;
         private bool _isFramesReady;
         private NSObject _didBecomeActiveNotificationObserver;
+        private NSObject _didBecomeInActiveNotificationObserver;
 
 
         // -----------------------------------------------------------------------------
@@ -112,6 +113,7 @@ namespace MvvmMobile.iOS.View
             }
 
             _didBecomeActiveNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidBecomeActiveNotification, DidBecomeActive);
+            _didBecomeInActiveNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.WillResignActiveNotification, DidBecomeInactive);
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -133,6 +135,11 @@ namespace MvvmMobile.iOS.View
             if (_didBecomeActiveNotificationObserver != null)
             {
                 NSNotificationCenter.DefaultCenter.RemoveObserver(_didBecomeActiveNotificationObserver);
+            }
+
+            if (_didBecomeInActiveNotificationObserver != null)
+            {
+                NSNotificationCenter.DefaultCenter.RemoveObserver(_didBecomeInActiveNotificationObserver);
             }
         }
 
@@ -256,6 +263,11 @@ namespace MvvmMobile.iOS.View
         private void DidBecomeActive(NSNotification obj)
         {
             _viewModel?.OnActivated();
+        }
+
+        private void DidBecomeInactive(NSNotification obj)
+        {
+            _viewModel?.OnPaused();
         }
 
         private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)

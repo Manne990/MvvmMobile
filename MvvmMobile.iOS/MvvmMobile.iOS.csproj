@@ -11,7 +11,7 @@
     <AssemblyName>MvvmMobile.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <PackageId>MvvmMobile.iOS</PackageId>
-    <PackageVersion>1.0.14</PackageVersion>
+    <PackageVersion>1.0.15</PackageVersion>
     <Authors>Jonas Frid, Mikael Stalvik</Authors>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</PackageLicenseUrl>
@@ -22,6 +22,7 @@
     <Title>MvvmMobile</Title>
     <Description>MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android with a focus on abstracted navigation. This ensures high testability of the viewmodel classes.</Description>
     <PackOnBuild>true</PackOnBuild>
+    <ReleaseVersion>1.0.15</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

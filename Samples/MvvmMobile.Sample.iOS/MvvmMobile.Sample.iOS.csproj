@@ -9,7 +9,7 @@
     <RootNamespace>MvvmMobile.Sample.iOS</RootNamespace>
     <AssemblyName>MvvmMobile.Sample.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <ReleaseVersion>1.0.14</ReleaseVersion>
+    <ReleaseVersion>1.0.15</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
