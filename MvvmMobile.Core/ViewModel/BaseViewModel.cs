@@ -28,19 +28,21 @@ namespace MvvmMobile.Core.ViewModel
 
         protected void NotifyPropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            if (_isActive == false)
+            if (_isActive)
             {
-                _delayedPropertyChanged?.Add(propertyName);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return;
             }
+
+            _delayedPropertyChanged?.Add(propertyName);
         }
 
         // -----------------------------------------------------------------------------
 
         // Lifecycle
         public virtual void OnLoaded()
-        {}
+        {
+        }
 
         public virtual void OnActivated()
         {
