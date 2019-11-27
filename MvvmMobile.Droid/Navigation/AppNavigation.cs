@@ -137,7 +137,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (clearHistory)
             {
-                intent.AddFlags(ActivityFlags.ClearTop);
+                intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTask);
             }
 
             if (parameter != null)
