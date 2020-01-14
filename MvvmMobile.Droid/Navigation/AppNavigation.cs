@@ -122,14 +122,8 @@ namespace MvvmMobile.Droid.Navigation
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
             {
-#if BACKWARD_COMPATIBLE_MODE
-                Console.WriteLine("Navigating to Fragments through NavigateTo() is deprecated.");
                 LoadFragment(concreteType, parameter, callback);
                 return;
-
-#else
-                throw new NotSupportedException("Navigating to Fragments through NavigateTo() is deprecated.");
-#endif
             }
 
             var concreteTypeJava = Class.FromType(concreteType);
@@ -365,7 +359,7 @@ namespace MvvmMobile.Droid.Navigation
                     var concreteTypeJava = Class.FromType(concreteType);
                     var intent = new Intent(GetContext(), concreteTypeJava);
 
-                    intent.AddFlags(ActivityFlags.ClearTop);
+                    intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTask);
 
                     GetContext().StartActivity(intent);
                 }
