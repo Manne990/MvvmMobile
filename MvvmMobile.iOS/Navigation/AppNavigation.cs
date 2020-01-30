@@ -16,6 +16,7 @@ namespace MvvmMobile.iOS.Navigation
     {
         // Private Members
         private ISubViewContainerController _subViewContainerController;
+        private Type _navigationControllerType;
 
         // -----------------------------------------------------------------------------
 
@@ -88,6 +89,12 @@ namespace MvvmMobile.iOS.Navigation
         public void Init()
         {
             ViewMapperDictionary = new Dictionary<Type, Type>();
+        }
+
+        public void Init(Type navigationControllerType)
+        {
+            _navigationControllerType = navigationControllerType ?? typeof(UINavigationController);
+            Init();
         }
 
         public UIViewController RequestView<TViewModel>() where TViewModel : IBaseViewModel
@@ -195,7 +202,8 @@ namespace MvvmMobile.iOS.Navigation
                         return;
                     }
 
-                    var navVc = new UINavigationController(frameworkVc.AsViewController());
+                    var navVc = Activator.CreateInstance(_navigationControllerType, frameworkVc.AsViewController()) as UINavigationController;
+
                     navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
 
                     GetNavigationController()?.PresentViewController(navVc, !clearHistory, null);

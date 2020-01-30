@@ -1,4 +1,5 @@
-﻿using MvvmMobile.Core.Common;
+﻿using System;
+using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.iOS.Navigation;
@@ -27,6 +28,15 @@ namespace MvvmMobile.iOS
 
             // Init Navigation
             ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Init();
+        }
+
+        public static void Init(Type navigationControllerType)
+        {
+            // Init Core
+            Core.Mvvm.Api.Init(_container);
+
+            // Init Navigation
+            ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>()).Init(navigationControllerType);
         }
 
         public static void AddViewMapping<TViewModel, TPlatformView>() where TViewModel : IBaseViewModel where TPlatformView : IPlatformView
