@@ -4,7 +4,7 @@
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
   <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
-  <ReleaseVersion>1.0.18</ReleaseVersion>
+  <ReleaseVersion>1.0.19</ReleaseVersion>
 </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,7 +21,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <PackageId>MvvmMobile.Droid</PackageId>
-    <PackageVersion>1.0.18</PackageVersion>
+    <PackageVersion>1.0.19</PackageVersion>
     <Authors>Jonas Frid, Mikael Stalvik</Authors>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</PackageLicenseUrl>

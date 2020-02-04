@@ -46,6 +46,11 @@ namespace MvvmMobile.Droid.View
 
         public override void OnBackPressed()
         {
+            if (SupportFragmentManager != null && SupportFragmentManager.BackStackEntryCount <= 1)
+            {
+                Finish();
+            }
+
             base.OnBackPressed();
         }
 
@@ -56,7 +61,14 @@ namespace MvvmMobile.Droid.View
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            return false;
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }
