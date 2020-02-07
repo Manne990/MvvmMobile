@@ -34,6 +34,11 @@ namespace MvvmMobile.Core.ViewModel
                 return;
             }
 
+            if (_delayedPropertyChanged.Contains(propertyName))
+            {
+                return;
+            }
+
             _delayedPropertyChanged?.Add(propertyName);
         }
 
