@@ -64,6 +64,11 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewWillAppear(animated);
 
+            if (ViewModel == null)
+            {
+                ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
+            }
+
             // Handle Payload
             _viewModel?.InitWithPayload(PayloadId);
 
