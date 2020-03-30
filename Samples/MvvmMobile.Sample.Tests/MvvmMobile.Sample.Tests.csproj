@@ -8,7 +8,7 @@
     <RootNamespace>MvvmMobile.Sample.Tests</RootNamespace>
     <AssemblyName>MvvmMobile.Sample.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.22</ReleaseVersion>
+    <ReleaseVersion>1.0.23</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

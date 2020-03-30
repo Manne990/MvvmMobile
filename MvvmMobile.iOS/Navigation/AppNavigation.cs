@@ -262,17 +262,18 @@ namespace MvvmMobile.iOS.Navigation
         public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             // Check the navigation controller
-            if (GetNavigationController()?.VisibleViewController == null)
+            var vc = GetNavigationController()?.VisibleViewController;
+            if (vc == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateBack: Could not find a navigation controller or a visible VC!");
                 return;
             }
 
             // Get the current VC
-            var currentVC = GetNavigationController().VisibleViewController as IViewControllerBase;
+            var currentVC = vc as IViewControllerBase;
             if (currentVC == null)
             {
-                throw new Exception("The current VC does not implement IViewControllerBase!");
+                throw new Exception($"The current VC '{vc}' does not implement IViewControllerBase!");
             }
 
             // Check if we have SubViews
@@ -363,10 +364,16 @@ namespace MvvmMobile.iOS.Navigation
             while (true)
             {
                 // Get the current VC
-                var currentVC = GetNavigationController().VisibleViewController as IViewControllerBase;
+                var vc = GetNavigationController()?.VisibleViewController;
+                if (vc == null)
+                {
+                    return;
+                }
+
+                var currentVC = vc as IViewControllerBase;
                 if (currentVC == null)
                 {
-                    throw new Exception("The current VC does not implement IViewControllerBase!");
+                    throw new Exception($"The current VC '{vc}' does not implement IViewControllerBase!");
                 }
 
                 // Get the target vc type
