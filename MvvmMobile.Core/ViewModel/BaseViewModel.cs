@@ -78,7 +78,7 @@ namespace MvvmMobile.Core.ViewModel
             return payloads.GetAndRemove<T>(payloadId);
         }
 
-        public Action<Guid> CallbackAction { private get; set; }
+        public Action<Guid> CallbackAction { get; set; }
 
         protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
