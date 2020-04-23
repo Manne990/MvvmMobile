@@ -36,6 +36,8 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Animation.abc_slide_in_top = global::MvvmMobile.Sample.Droid.Resource.Animation.abc_slide_in_top;
 			global::MvvmMobile.Droid.Resource.Animation.abc_slide_out_bottom = global::MvvmMobile.Sample.Droid.Resource.Animation.abc_slide_out_bottom;
 			global::MvvmMobile.Droid.Resource.Animation.abc_slide_out_top = global::MvvmMobile.Sample.Droid.Resource.Animation.abc_slide_out_top;
+			global::MvvmMobile.Droid.Resource.Animation.tooltip_enter = global::MvvmMobile.Sample.Droid.Resource.Animation.tooltip_enter;
+			global::MvvmMobile.Droid.Resource.Animation.tooltip_exit = global::MvvmMobile.Sample.Droid.Resource.Animation.tooltip_exit;
 			global::MvvmMobile.Droid.Resource.Attribute.actionBarDivider = global::MvvmMobile.Sample.Droid.Resource.Attribute.actionBarDivider;
 			global::MvvmMobile.Droid.Resource.Attribute.actionBarItemBackground = global::MvvmMobile.Sample.Droid.Resource.Attribute.actionBarItemBackground;
 			global::MvvmMobile.Droid.Resource.Attribute.actionBarPopupTheme = global::MvvmMobile.Sample.Droid.Resource.Attribute.actionBarPopupTheme;
@@ -172,14 +174,7 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Attribute.initialActivityCount = global::MvvmMobile.Sample.Droid.Resource.Attribute.initialActivityCount;
 			global::MvvmMobile.Droid.Resource.Attribute.isLightTheme = global::MvvmMobile.Sample.Droid.Resource.Attribute.isLightTheme;
 			global::MvvmMobile.Droid.Resource.Attribute.itemPadding = global::MvvmMobile.Sample.Droid.Resource.Attribute.itemPadding;
-			global::MvvmMobile.Droid.Resource.Attribute.keylines = global::MvvmMobile.Sample.Droid.Resource.Attribute.keylines;
 			global::MvvmMobile.Droid.Resource.Attribute.layout = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_anchor = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_anchor;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_anchorGravity = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_anchorGravity;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_behavior = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_behavior;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_dodgeInsetEdges = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_dodgeInsetEdges;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_insetEdge = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_insetEdge;
-			global::MvvmMobile.Droid.Resource.Attribute.layout_keyline = global::MvvmMobile.Sample.Droid.Resource.Attribute.layout_keyline;
 			global::MvvmMobile.Droid.Resource.Attribute.listChoiceBackgroundIndicator = global::MvvmMobile.Sample.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
 			global::MvvmMobile.Droid.Resource.Attribute.listDividerAlertDialog = global::MvvmMobile.Sample.Droid.Resource.Attribute.listDividerAlertDialog;
 			global::MvvmMobile.Droid.Resource.Attribute.listItemLayout = global::MvvmMobile.Sample.Droid.Resource.Attribute.listItemLayout;
@@ -237,7 +232,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Attribute.splitTrack = global::MvvmMobile.Sample.Droid.Resource.Attribute.splitTrack;
 			global::MvvmMobile.Droid.Resource.Attribute.srcCompat = global::MvvmMobile.Sample.Droid.Resource.Attribute.srcCompat;
 			global::MvvmMobile.Droid.Resource.Attribute.state_above_anchor = global::MvvmMobile.Sample.Droid.Resource.Attribute.state_above_anchor;
-			global::MvvmMobile.Droid.Resource.Attribute.statusBarBackground = global::MvvmMobile.Sample.Droid.Resource.Attribute.statusBarBackground;
 			global::MvvmMobile.Droid.Resource.Attribute.subMenuArrow = global::MvvmMobile.Sample.Droid.Resource.Attribute.subMenuArrow;
 			global::MvvmMobile.Droid.Resource.Attribute.submitBackground = global::MvvmMobile.Sample.Droid.Resource.Attribute.submitBackground;
 			global::MvvmMobile.Droid.Resource.Attribute.subtitle = global::MvvmMobile.Sample.Droid.Resource.Attribute.subtitle;
@@ -302,6 +296,8 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Boolean.abc_action_bar_embed_tabs = global::MvvmMobile.Sample.Droid.Resource.Boolean.abc_action_bar_embed_tabs;
 			global::MvvmMobile.Droid.Resource.Boolean.abc_allow_stacked_button_bar = global::MvvmMobile.Sample.Droid.Resource.Boolean.abc_allow_stacked_button_bar;
 			global::MvvmMobile.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps = global::MvvmMobile.Sample.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps;
+			global::MvvmMobile.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside = global::MvvmMobile.Sample.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside;
+			global::MvvmMobile.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent = global::MvvmMobile.Sample.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent;
 			global::MvvmMobile.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark = global::MvvmMobile.Sample.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark;
 			global::MvvmMobile.Droid.Resource.Color.abc_background_cache_hint_selector_material_light = global::MvvmMobile.Sample.Droid.Resource.Color.abc_background_cache_hint_selector_material_light;
 			global::MvvmMobile.Droid.Resource.Color.abc_btn_colored_borderless_text_material = global::MvvmMobile.Sample.Droid.Resource.Color.abc_btn_colored_borderless_text_material;
@@ -344,6 +340,7 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Color.dim_foreground_disabled_material_light = global::MvvmMobile.Sample.Droid.Resource.Color.dim_foreground_disabled_material_light;
 			global::MvvmMobile.Droid.Resource.Color.dim_foreground_material_dark = global::MvvmMobile.Sample.Droid.Resource.Color.dim_foreground_material_dark;
 			global::MvvmMobile.Droid.Resource.Color.dim_foreground_material_light = global::MvvmMobile.Sample.Droid.Resource.Color.dim_foreground_material_light;
+			global::MvvmMobile.Droid.Resource.Color.error_color_material = global::MvvmMobile.Sample.Droid.Resource.Color.error_color_material;
 			global::MvvmMobile.Droid.Resource.Color.foreground_material_dark = global::MvvmMobile.Sample.Droid.Resource.Color.foreground_material_dark;
 			global::MvvmMobile.Droid.Resource.Color.foreground_material_light = global::MvvmMobile.Sample.Droid.Resource.Color.foreground_material_light;
 			global::MvvmMobile.Droid.Resource.Color.highlighted_text_material_dark = global::MvvmMobile.Sample.Droid.Resource.Color.highlighted_text_material_dark;
@@ -394,6 +391,7 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material;
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material;
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material;
+			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_progress_bar_size = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_progress_bar_size;
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_stacked_max_height = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_stacked_max_height;
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width;
 			global::MvvmMobile.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material = global::MvvmMobile.Sample.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material;
@@ -614,7 +612,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.activity_chooser_view_content = global::MvvmMobile.Sample.Droid.Resource.Id.activity_chooser_view_content;
 			global::MvvmMobile.Droid.Resource.Id.add = global::MvvmMobile.Sample.Droid.Resource.Id.add;
 			global::MvvmMobile.Droid.Resource.Id.alertTitle = global::MvvmMobile.Sample.Droid.Resource.Id.alertTitle;
-			global::MvvmMobile.Droid.Resource.Id.all = global::MvvmMobile.Sample.Droid.Resource.Id.all;
 			global::MvvmMobile.Droid.Resource.Id.ALT = global::MvvmMobile.Sample.Droid.Resource.Id.ALT;
 			global::MvvmMobile.Droid.Resource.Id.always = global::MvvmMobile.Sample.Droid.Resource.Id.always;
 			global::MvvmMobile.Droid.Resource.Id.async = global::MvvmMobile.Sample.Droid.Resource.Id.async;
@@ -623,13 +620,8 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.bottom = global::MvvmMobile.Sample.Droid.Resource.Id.bottom;
 			global::MvvmMobile.Droid.Resource.Id.buttonPanel = global::MvvmMobile.Sample.Droid.Resource.Id.buttonPanel;
 			global::MvvmMobile.Droid.Resource.Id.cancel_action = global::MvvmMobile.Sample.Droid.Resource.Id.cancel_action;
-			global::MvvmMobile.Droid.Resource.Id.center = global::MvvmMobile.Sample.Droid.Resource.Id.center;
-			global::MvvmMobile.Droid.Resource.Id.center_horizontal = global::MvvmMobile.Sample.Droid.Resource.Id.center_horizontal;
-			global::MvvmMobile.Droid.Resource.Id.center_vertical = global::MvvmMobile.Sample.Droid.Resource.Id.center_vertical;
 			global::MvvmMobile.Droid.Resource.Id.checkbox = global::MvvmMobile.Sample.Droid.Resource.Id.checkbox;
 			global::MvvmMobile.Droid.Resource.Id.chronometer = global::MvvmMobile.Sample.Droid.Resource.Id.chronometer;
-			global::MvvmMobile.Droid.Resource.Id.clip_horizontal = global::MvvmMobile.Sample.Droid.Resource.Id.clip_horizontal;
-			global::MvvmMobile.Droid.Resource.Id.clip_vertical = global::MvvmMobile.Sample.Droid.Resource.Id.clip_vertical;
 			global::MvvmMobile.Droid.Resource.Id.collapseActionView = global::MvvmMobile.Sample.Droid.Resource.Id.collapseActionView;
 			global::MvvmMobile.Droid.Resource.Id.contentPanel = global::MvvmMobile.Sample.Droid.Resource.Id.contentPanel;
 			global::MvvmMobile.Droid.Resource.Id.CTRL = global::MvvmMobile.Sample.Droid.Resource.Id.CTRL;
@@ -643,9 +635,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.end_padder = global::MvvmMobile.Sample.Droid.Resource.Id.end_padder;
 			global::MvvmMobile.Droid.Resource.Id.expanded_menu = global::MvvmMobile.Sample.Droid.Resource.Id.expanded_menu;
 			global::MvvmMobile.Droid.Resource.Id.expand_activities_button = global::MvvmMobile.Sample.Droid.Resource.Id.expand_activities_button;
-			global::MvvmMobile.Droid.Resource.Id.fill = global::MvvmMobile.Sample.Droid.Resource.Id.fill;
-			global::MvvmMobile.Droid.Resource.Id.fill_horizontal = global::MvvmMobile.Sample.Droid.Resource.Id.fill_horizontal;
-			global::MvvmMobile.Droid.Resource.Id.fill_vertical = global::MvvmMobile.Sample.Droid.Resource.Id.fill_vertical;
 			global::MvvmMobile.Droid.Resource.Id.forever = global::MvvmMobile.Sample.Droid.Resource.Id.forever;
 			global::MvvmMobile.Droid.Resource.Id.fragmentContainer = global::MvvmMobile.Sample.Droid.Resource.Id.fragmentContainer;
 			global::MvvmMobile.Droid.Resource.Id.FUNCTION = global::MvvmMobile.Sample.Droid.Resource.Id.FUNCTION;
@@ -657,7 +646,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.image = global::MvvmMobile.Sample.Droid.Resource.Id.image;
 			global::MvvmMobile.Droid.Resource.Id.info = global::MvvmMobile.Sample.Droid.Resource.Id.info;
 			global::MvvmMobile.Droid.Resource.Id.italic = global::MvvmMobile.Sample.Droid.Resource.Id.italic;
-			global::MvvmMobile.Droid.Resource.Id.left = global::MvvmMobile.Sample.Droid.Resource.Id.left;
 			global::MvvmMobile.Droid.Resource.Id.line1 = global::MvvmMobile.Sample.Droid.Resource.Id.line1;
 			global::MvvmMobile.Droid.Resource.Id.line3 = global::MvvmMobile.Sample.Droid.Resource.Id.line3;
 			global::MvvmMobile.Droid.Resource.Id.listMode = global::MvvmMobile.Sample.Droid.Resource.Id.listMode;
@@ -677,7 +665,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.progress_circular = global::MvvmMobile.Sample.Droid.Resource.Id.progress_circular;
 			global::MvvmMobile.Droid.Resource.Id.progress_horizontal = global::MvvmMobile.Sample.Droid.Resource.Id.progress_horizontal;
 			global::MvvmMobile.Droid.Resource.Id.radio = global::MvvmMobile.Sample.Droid.Resource.Id.radio;
-			global::MvvmMobile.Droid.Resource.Id.right = global::MvvmMobile.Sample.Droid.Resource.Id.right;
 			global::MvvmMobile.Droid.Resource.Id.right_icon = global::MvvmMobile.Sample.Droid.Resource.Id.right_icon;
 			global::MvvmMobile.Droid.Resource.Id.right_side = global::MvvmMobile.Sample.Droid.Resource.Id.right_side;
 			global::MvvmMobile.Droid.Resource.Id.screen = global::MvvmMobile.Sample.Droid.Resource.Id.screen;
@@ -705,7 +692,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Id.src_atop = global::MvvmMobile.Sample.Droid.Resource.Id.src_atop;
 			global::MvvmMobile.Droid.Resource.Id.src_in = global::MvvmMobile.Sample.Droid.Resource.Id.src_in;
 			global::MvvmMobile.Droid.Resource.Id.src_over = global::MvvmMobile.Sample.Droid.Resource.Id.src_over;
-			global::MvvmMobile.Droid.Resource.Id.start = global::MvvmMobile.Sample.Droid.Resource.Id.start;
 			global::MvvmMobile.Droid.Resource.Id.status_bar_latest_event_content = global::MvvmMobile.Sample.Droid.Resource.Id.status_bar_latest_event_content;
 			global::MvvmMobile.Droid.Resource.Id.submenuarrow = global::MvvmMobile.Sample.Droid.Resource.Id.submenuarrow;
 			global::MvvmMobile.Droid.Resource.Id.submit_area = global::MvvmMobile.Sample.Droid.Resource.Id.submit_area;
@@ -778,6 +764,7 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Layout.select_dialog_multichoice_material = global::MvvmMobile.Sample.Droid.Resource.Layout.select_dialog_multichoice_material;
 			global::MvvmMobile.Droid.Resource.Layout.select_dialog_singlechoice_material = global::MvvmMobile.Sample.Droid.Resource.Layout.select_dialog_singlechoice_material;
 			global::MvvmMobile.Droid.Resource.Layout.support_simple_spinner_dropdown_item = global::MvvmMobile.Sample.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::MvvmMobile.Droid.Resource.Layout.tooltip = global::MvvmMobile.Sample.Droid.Resource.Layout.tooltip;
 			global::MvvmMobile.Droid.Resource.String.abc_action_bar_home_description = global::MvvmMobile.Sample.Droid.Resource.String.abc_action_bar_home_description;
 			global::MvvmMobile.Droid.Resource.String.abc_action_bar_up_description = global::MvvmMobile.Sample.Droid.Resource.String.abc_action_bar_up_description;
 			global::MvvmMobile.Droid.Resource.String.abc_action_menu_overflow_description = global::MvvmMobile.Sample.Droid.Resource.String.abc_action_menu_overflow_description;
@@ -890,6 +877,11 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert = global::MvvmMobile.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert;
 			global::MvvmMobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize = global::MvvmMobile.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize;
 			global::MvvmMobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth = global::MvvmMobile.Sample.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth;
+			global::MvvmMobile.Droid.Resource.Style.Base_V11_ThemeOverlay_AppCompat_Dialog = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V11_ThemeOverlay_AppCompat_Dialog;
+			global::MvvmMobile.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog;
+			global::MvvmMobile.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog;
+			global::MvvmMobile.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView;
+			global::MvvmMobile.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText;
 			global::MvvmMobile.Droid.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V21_ThemeOverlay_AppCompat_Dialog;
 			global::MvvmMobile.Droid.Resource.Style.Base_V21_Theme_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat;
 			global::MvvmMobile.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog = global::MvvmMobile.Sample.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog;
@@ -972,6 +964,10 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
 			global::MvvmMobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark;
 			global::MvvmMobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light;
+			global::MvvmMobile.Droid.Resource.Style.Platform_V11_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V11_AppCompat;
+			global::MvvmMobile.Droid.Resource.Style.Platform_V11_AppCompat_Light = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V11_AppCompat_Light;
+			global::MvvmMobile.Droid.Resource.Style.Platform_V14_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V14_AppCompat;
+			global::MvvmMobile.Droid.Resource.Style.Platform_V14_AppCompat_Light = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V14_AppCompat_Light;
 			global::MvvmMobile.Droid.Resource.Style.Platform_V21_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V21_AppCompat;
 			global::MvvmMobile.Droid.Resource.Style.Platform_V21_AppCompat_Light = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V21_AppCompat_Light;
 			global::MvvmMobile.Droid.Resource.Style.Platform_V25_AppCompat = global::MvvmMobile.Sample.Droid.Resource.Style.Platform_V25_AppCompat;
@@ -1364,17 +1360,6 @@ namespace MvvmMobile.Sample.Droid
 			global::MvvmMobile.Droid.Resource.Styleable.CompoundButton_android_button = global::MvvmMobile.Sample.Droid.Resource.Styleable.CompoundButton_android_button;
 			global::MvvmMobile.Droid.Resource.Styleable.CompoundButton_buttonTint = global::MvvmMobile.Sample.Droid.Resource.Styleable.CompoundButton_buttonTint;
 			global::MvvmMobile.Droid.Resource.Styleable.CompoundButton_buttonTintMode = global::MvvmMobile.Sample.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_keylines = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_keylines;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
-			global::MvvmMobile.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::MvvmMobile.Sample.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
 			global::MvvmMobile.Droid.Resource.Styleable.DrawerArrowToggle = global::MvvmMobile.Sample.Droid.Resource.Styleable.DrawerArrowToggle;
 			global::MvvmMobile.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength = global::MvvmMobile.Sample.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength;
 			global::MvvmMobile.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength = global::MvvmMobile.Sample.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength;
