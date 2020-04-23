@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Android.Graphics;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
 using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
 namespace MvvmMobile.Sample.Droid.Fragments.Navigation

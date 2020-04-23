@@ -43,7 +43,7 @@ namespace MvvmMobile.Sample.Droid
             MvvmMobile.Droid.Bootstrapper.Init(true);
 
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<IStartViewModel, StartActivity>();
-            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleFragment>();
+            MvvmMobile.Droid.Bootstrapper.AddViewMapping<IEditMotorcycleViewModel, EditMotorcycleActivity>();
 
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<INavStartViewModel, NavStartActivity>();
             MvvmMobile.Droid.Bootstrapper.AddViewMapping<INav1ViewModel, Nav1Activity>();

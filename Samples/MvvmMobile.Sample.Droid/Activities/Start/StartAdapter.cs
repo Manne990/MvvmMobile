@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using MvvmMobile.Sample.Core.Common;
 using MvvmMobile.Sample.Core.Model;
 

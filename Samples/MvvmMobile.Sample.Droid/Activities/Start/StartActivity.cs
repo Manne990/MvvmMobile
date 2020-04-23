@@ -1,9 +1,9 @@
 ﻿using Android.App;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
+using Google.Android.Material.FloatingActionButton;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
@@ -31,7 +31,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
             SetContentView(Resource.Layout.StartActivityLayout);
 
             // Toolbar
-            SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar));
 
             // SubView Container
             FragmentContainerId = Resource.Id.editMotorcycleFrame;
@@ -68,10 +68,10 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            if (ViewModel.IsShowingEditMotorcycleSubView == false)
-            {
-                MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
-            }
+            //if (ViewModel.IsShowingEditMotorcycleSubView == false)
+            //{
+            //    MenuInflater.Inflate(Resource.Menu.StartActivityMenu, menu);
+            //}
 
             return true;
         }
@@ -84,10 +84,10 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
                 return true;
             }
 
-            if (ViewModel.IsShowingEditMotorcycleSubView == true)
-            {
-                return false;
-            }
+            //if (ViewModel.IsShowingEditMotorcycleSubView == true)
+            //{
+            //    return false;
+            //}
                 
             return base.OnOptionsItemSelected(item);
         }
@@ -118,10 +118,10 @@ namespace MvvmMobile.Sample.Droid.Activities.Start
                 return;
             }
 
-            if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
-            {
-                ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
-            }
+            //if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
+            //{
+            //    ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
+            //}
 
             base.ViewModel_PropertyChanged(sender, e);
         }

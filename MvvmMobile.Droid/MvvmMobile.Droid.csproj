@@ -4,7 +4,7 @@
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props')" />
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
-  <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+  <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
   <ReleaseVersion>1.1.0</ReleaseVersion>
 </PropertyGroup>
   <PropertyGroup>
@@ -15,7 +15,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MvvmMobile.Droid</RootNamespace>
     <AssemblyName>MvvmMobile.Droid</AssemblyName>
-    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Java.Interop" />
     <Reference Include="Xamarin.AndroidX.MultiDex">
       <HintPath>..\packages\Xamarin.AndroidX.MultiDex.2.0.1\lib\monoandroid90\Xamarin.AndroidX.MultiDex.dll</HintPath>
     </Reference>

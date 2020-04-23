@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Navigation;

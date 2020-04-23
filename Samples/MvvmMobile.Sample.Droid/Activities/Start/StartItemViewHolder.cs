@@ -1,7 +1,7 @@
 ﻿using System;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Droid.Common;
 

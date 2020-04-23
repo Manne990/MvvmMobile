@@ -1,7 +1,5 @@
 ﻿using Android.App;
 using Android.OS;
-using MvvmMobile.Core.Navigation;
-using MvvmMobile.Droid.Navigation;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
@@ -19,7 +17,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Navigation
             SetContentView(Resource.Layout.NavStartActivityLayout);
 
             // Toolbar
-            SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar));
         }
 
         protected override void OnResume()

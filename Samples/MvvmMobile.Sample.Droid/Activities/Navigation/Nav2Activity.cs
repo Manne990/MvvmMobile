@@ -1,10 +1,7 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Graphics;
 using Android.OS;
 using Android.Widget;
-using MvvmMobile.Core.Navigation;
-using MvvmMobile.Droid.Navigation;
 using MvvmMobile.Droid.View;
 using MvvmMobile.Sample.Core.ViewModel.Navigation;
 
@@ -24,7 +21,7 @@ namespace MvvmMobile.Sample.Droid.Activities.Navigation
             FindViewById<TextView>(Resource.Id.title).Text = "Nav View 2";
 
             // Toolbar
-            SetSupportActionBar(FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar));
+            SetSupportActionBar(FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar));
 
             FragmentContainerId = Resource.Id.fragmentContainer;
             ViewModel?.NextSubViewCommand?.Execute();
