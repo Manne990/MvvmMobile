@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using Java.Lang;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
@@ -16,7 +16,7 @@ using MvvmMobile.Droid.View;
 
 namespace MvvmMobile.Droid.Navigation
 {
-	public class AppNavigation : INavigation
+    public class AppNavigation : INavigation
     {
         // Constants
         internal const int CallbackActivityRequestCode = 9999;

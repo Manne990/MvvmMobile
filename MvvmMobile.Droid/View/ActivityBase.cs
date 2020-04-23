@@ -3,14 +3,12 @@ using System.ComponentModel;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
 using MvvmMobile.Droid.Model;
 using MvvmMobile.Droid.Navigation;
-using Fragment = Android.Support.V4.App.Fragment;
 
 namespace MvvmMobile.Droid.View
 {
@@ -69,7 +67,7 @@ namespace MvvmMobile.Droid.View
             SupportActionBar?.SetDisplayHomeAsUpEnabled(enable);  //TODO: Refactor to work without action bar
         }
 
-        protected Fragment GetCurrentFragment()
+        protected AndroidX.Fragment.App.Fragment GetCurrentFragment()
         {
             var fragment = SupportFragmentManager?.FindFragmentById(FragmentContainerId);
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using Android.Support.V4.App;
 using Android.Views;
+using AndroidX.Fragment.App;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.ViewModel;
 
