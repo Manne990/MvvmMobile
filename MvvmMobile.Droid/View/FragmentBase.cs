@@ -105,14 +105,6 @@ namespace MvvmMobile.Droid.View
             base.OnCreate(savedInstanceState);
 
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
-        }
-
-        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            ViewModelDidLoad();
-
             ViewModel?.InitWithPayload(PayloadId);
         }
 
@@ -170,7 +162,6 @@ namespace MvvmMobile.Droid.View
             return base.OnOptionsItemSelected(item);
         }
 
-        protected virtual void ViewModelDidLoad() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         private void ActivityBackButtonPressed(object sender, EventArgs e)

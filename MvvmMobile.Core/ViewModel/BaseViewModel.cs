@@ -78,14 +78,14 @@ namespace MvvmMobile.Core.ViewModel
 
         protected T LoadPayload<T>(Guid payloadId) where T : class
         {
-            return Mvvm.Api.Resolver.Resolve<IPayloads>()?.Get<T>(payloadId);
+            return Mvvm.Api.Resolver?.Resolve<IPayloads>()?.Get<T>(payloadId);
         }
 
         public Action<Guid> CallbackAction { get; set; }
 
         protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
-            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(() => done?.Invoke(), behaviour);
+            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(() => done?.Invoke(), behaviour);
         }
 
         protected void NavigateBack(IPayload payload, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
@@ -96,14 +96,11 @@ namespace MvvmMobile.Core.ViewModel
                 return;
             }
 
-            // Set payload id
+            // Add payload
             var payloadId = Guid.NewGuid();
 
-            // Add payload
-            var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
-            payloads.Add(payloadId, payload);
-
-            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId, () => done?.Invoke(), behaviour);
+            Mvvm.Api.Resolver?.Resolve<IPayloads>()?.Add(payloadId, payload);
+            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(CallbackAction, payloadId, () => done?.Invoke(), behaviour);
         }
     }
 }

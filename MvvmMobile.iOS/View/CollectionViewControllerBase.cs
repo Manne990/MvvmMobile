@@ -47,8 +47,6 @@ namespace MvvmMobile.iOS.View
                 }
             }
 
-            ViewModelDidLoad();
-
             ViewModel?.InitWithPayload(PayloadId);
         }
 
@@ -180,7 +178,6 @@ namespace MvvmMobile.iOS.View
 
         // Virtual Methods
         public virtual void Init(IPayload payload) { }
-        protected virtual void ViewModelDidLoad() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 

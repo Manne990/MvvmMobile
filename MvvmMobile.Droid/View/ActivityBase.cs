@@ -135,8 +135,6 @@ namespace MvvmMobile.Droid.View
                 CallbackId = new Guid(extras.GetString(AppNavigation.CallbackAppParameter));
             }
 
-            ViewModelDidLoad();
-
             ViewModel?.InitWithPayload(PayloadId);
         }
 
@@ -196,7 +194,6 @@ namespace MvvmMobile.Droid.View
             return base.OnOptionsItemSelected(item);
         }
 
-        protected virtual void ViewModelDidLoad() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
 
