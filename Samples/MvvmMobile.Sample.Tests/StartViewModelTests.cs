@@ -43,38 +43,38 @@ namespace MvvmMobile.Sample.Tests
             _subject = builder.Resolver.Resolve<IStartViewModel>();
         }
 
-        [Test]
-        public void AddMotorcycleShouldOpenEditMotorcycleViewModel()
-        {
-            // ARRANGE
+        //[Test]
+        //public void AddMotorcycleShouldOpenEditMotorcycleViewModel()
+        //{
+        //    // ARRANGE
 
-            // ACT
-            _subject.AddMotorcycleCommand.Execute();
+        //    // ACT
+        //    _subject.AddMotorcycleCommand.Execute();
 
-            // ASSERT
-            _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(null, Arg.Any<Action<Guid>>());
-            Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
-        }
+        //    // ASSERT
+        //    _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(null, Arg.Any<Action<Guid>>());
+        //    Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
+        //}
 
-        [Test]
-        public void EditMotorcycleShouldOpenEditMotorcycleViewModel()
-        {
-            // ARRANGE
-            var mc = new Motorcycle 
-            {
-                Id = Guid.NewGuid(),
-                Brand = "Honda",
-                Model = "VFR800",
-                Year = 2000
-            };
+        //[Test]
+        //public void EditMotorcycleShouldOpenEditMotorcycleViewModel()
+        //{
+        //    // ARRANGE
+        //    var mc = new Motorcycle 
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        Brand = "Honda",
+        //        Model = "VFR800",
+        //        Year = 2000
+        //    };
 
-            // ACT
-            _subject.EditMotorcycleCommand.Execute(mc);
+        //    // ACT
+        //    _subject.EditMotorcycleCommand.Execute(mc);
 
-            // ASSERT
-            _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(Arg.Any<IMotorcyclePayload>(), Arg.Any<Action<Guid>>());
-            Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
-        }
+        //    // ASSERT
+        //    _navigation.Received(1).NavigateToSubView<IEditMotorcycleViewModel>(Arg.Any<IMotorcyclePayload>(), Arg.Any<Action<Guid>>());
+        //    Assert.IsTrue(_subject.IsShowingEditMotorcycleSubView);
+        //}
 
         [Test]
         public void EditMotorcycleWithNullParameterShouldNotOpenEditMotorcycleViewModel()

@@ -119,8 +119,7 @@ namespace MvvmMobile.Sample.Core.ViewModel.Motorcycles
             //IsShowingEditMotorcycleSubView = false;
 
             // Get Payload
-            var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
-            var payload = payloads.GetAndRemove<IMotorcyclePayload>(payloadId);
+            var payload = LoadPayload<IMotorcyclePayload>(payloadId);
             if (payload?.Motorcycle == null)
             {
                 return;

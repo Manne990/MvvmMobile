@@ -34,7 +34,20 @@ namespace MvvmMobile.Core.ViewModel
             }
         }
 
-        public T GetAndRemove<T>(Guid id)
+        public void Remove(Guid id)
+        {
+            lock (_payloads)
+            {
+                if (_payloads.ContainsKey(id) == false)
+                {
+                    return;
+                }
+
+                _payloads.Remove(id);
+            }
+        }
+
+        public T Get<T>(Guid id)
         {
             lock (_payloads)
             {
@@ -49,8 +62,6 @@ namespace MvvmMobile.Core.ViewModel
                 {
                     return default(T);
                 }
-
-                _payloads.Remove(id);
 
                 return (T)payload;
             }

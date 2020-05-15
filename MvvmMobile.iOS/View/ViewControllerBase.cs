@@ -46,6 +46,10 @@ namespace MvvmMobile.iOS.View
                     subViewContainer.SubViewOriginalConstraints = subViewContainer.SubViewContainerView.Constraints;
                 }
             }
+
+            // Handle Payload
+            ViewModel?.InitWithPayload(PayloadId);
+            ViewModelIsInitialized();
         }
 
         public override void ViewWillLayoutSubviews()
@@ -64,14 +68,10 @@ namespace MvvmMobile.iOS.View
         {
             base.ViewWillAppear(animated);
 
-            if (ViewModel == null)
-            {
-                ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
-            }
+            // Recreate the VM if needed
+            ViewModel ??= ViewControllerHelper.RecreateIfNeeded(ViewModel, PayloadId);
 
-            // Handle Payload
-            _viewModel?.InitWithPayload(PayloadId);
-
+            // Navigation
             var appNavigation = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();           
 
             if (NavigationController != null && IsSubView == false)
@@ -89,13 +89,13 @@ namespace MvvmMobile.iOS.View
                 NavigationItem.Title = Title;
             }
 
-            if (_viewModel != null)
+            if (ViewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
-                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
-            _viewModel?.OnActivated();
+            ViewModel?.OnActivated();
         }
 
         public override void ViewDidAppear(bool animated)
@@ -138,6 +138,14 @@ namespace MvvmMobile.iOS.View
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
+            payloads?.Remove(PayloadId);
+
+            base.Dispose(disposing);
+        }
+
 
         // -----------------------------------------------------------------------------
 
@@ -175,6 +183,7 @@ namespace MvvmMobile.iOS.View
 
         // Virtual Methods
         public virtual void Init(IPayload payload) { }
+        protected virtual void ViewModelIsInitialized() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 
@@ -222,11 +231,8 @@ namespace MvvmMobile.iOS.View
         // Private Methods
         private void DidBecomeActive(NSNotification obj)
         {
-            //if (ViewModel == null)
-            //{
-            //    ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
-            //}
-
+            // Recreate the VM if needed
+            ViewModel ??= ViewControllerHelper.RecreateIfNeeded(ViewModel, PayloadId);
             ViewModel?.OnActivated();
         }
 

@@ -42,11 +42,14 @@ namespace MvvmMobile.Core.ViewModel
             _delayedPropertyChanged?.Add(propertyName);
         }
 
+
         // -----------------------------------------------------------------------------
 
         // Lifecycle
         public virtual void OnLoaded()
         {
+            _isActive = false;
+            _delayedPropertyChanged = new List<string>();
         }
 
         public virtual void OnActivated()
@@ -71,28 +74,25 @@ namespace MvvmMobile.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Payload and Callback Handling
+        public virtual void InitWithPayload(Guid payloadId) { }
+
         protected T LoadPayload<T>(Guid payloadId) where T : class
         {
-            // Get Payload
-            var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
-            return payloads.GetAndRemove<T>(payloadId);
+            return Mvvm.Api.Resolver.Resolve<IPayloads>()?.Get<T>(payloadId);
         }
 
         public Action<Guid> CallbackAction { get; set; }
 
         protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
-            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(() => 
-                {
-                    done?.Invoke();
-                },
-                behaviour);
+            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(() => done?.Invoke(), behaviour);
         }
 
         protected void NavigateBack(IPayload payload, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
         {
             if (CallbackAction == null)
             {
+                NavigateBack(done, behaviour);
                 return;
             }
 
@@ -103,14 +103,7 @@ namespace MvvmMobile.Core.ViewModel
             var payloads = Mvvm.Api.Resolver.Resolve<IPayloads>();
             payloads.Add(payloadId, payload);
 
-            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, 
-                                                                  payloadId,
-                                                                  () => done?.Invoke(),
-                                                                  behaviour);
-        }
-
-        public virtual void InitWithPayload(Guid payloadId)
-        {
+            Mvvm.Api.Resolver.Resolve<INavigation>().NavigateBack(CallbackAction, payloadId, () => done?.Invoke(), behaviour);
         }
     }
 }

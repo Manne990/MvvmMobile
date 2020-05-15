@@ -134,6 +134,10 @@ namespace MvvmMobile.Droid.View
             {
                 CallbackId = new Guid(extras.GetString(AppNavigation.CallbackAppParameter));
             }
+
+            // Handle Payload
+            ViewModel?.InitWithPayload(PayloadId);
+            ViewModelIsInitialized();
         }
 
         protected override void OnStart()
@@ -148,30 +152,41 @@ namespace MvvmMobile.Droid.View
         {
             base.OnResume();
 
+            // Recreate the VM if needed
+            ViewModel ??= ViewHelper.RecreateIfNeeded(ViewModel, PayloadId);
+
             var appNavigation = ((AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>());
             appNavigation.Context = this;
             appNavigation.FragmentContainerId = FragmentContainerId;
 
-            if (_viewModel != null)
+            if (ViewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
-                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
-            _viewModel?.InitWithPayload(PayloadId);
-            _viewModel?.OnActivated();
+            ViewModel?.OnActivated();
         }
 
         protected override void OnPause()
         {
             base.OnPause();
 
-            _viewModel?.OnPaused();
+            ViewModel?.OnPaused();
 
-            if (_viewModel != null)
-            { 
-                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+            if (ViewModel != null)
+            {
+                ViewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
             }
+        }
+
+        protected override void OnDestroy()
+        {
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
+            payloads?.Remove(PayloadId);
+            payloads?.Remove(CallbackId);
+
+            base.OnDestroy();
         }
 
         public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
@@ -181,6 +196,7 @@ namespace MvvmMobile.Droid.View
             return base.OnOptionsItemSelected(item);
         }
 
+        protected virtual void ViewModelIsInitialized() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
 
@@ -214,7 +230,7 @@ namespace MvvmMobile.Droid.View
 
             // Get the callback payload
             var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
-            var callbackPayload = payloads.GetAndRemove<ICallbackPayload>(callbackId);
+            var callbackPayload = payloads.Get<ICallbackPayload>(callbackId);
             if (callbackPayload == null)
             {
                 return;

@@ -33,7 +33,7 @@ namespace MvvmMobile.Droid.View
             base.OnResume();
 
             // Get Payload
-            var payload = Core.Mvvm.Api.Resolver.Resolve<IPayloads>().GetAndRemove<IFragmentContainerPayload>(PayloadId);
+            var payload = Core.Mvvm.Api.Resolver.Resolve<IPayloads>()?.Get<IFragmentContainerPayload>(PayloadId);
             if (payload == null)
             {
                 return;
@@ -69,6 +69,13 @@ namespace MvvmMobile.Droid.View
             }
 
             return base.OnOptionsItemSelected(item);
+        }
+
+        protected override void OnDestroy()
+        {
+            Core.Mvvm.Api.Resolver.Resolve<IPayloads>()?.Remove(PayloadId);
+
+            base.OnDestroy();
         }
     }
 }

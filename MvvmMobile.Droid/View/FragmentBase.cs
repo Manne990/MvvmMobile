@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Android.OS;
 using Android.Views;
 using AndroidX.Fragment.App;
 using MvvmMobile.Core.Common;
@@ -26,8 +27,6 @@ namespace MvvmMobile.Droid.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
-
         public virtual bool OnBackPressed()
         {
             bool isBackPressedConsumed = false;
@@ -101,16 +100,28 @@ namespace MvvmMobile.Droid.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        public override void OnCreate(Android.OS.Bundle savedInstanceState)
+        public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
         }
 
+        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            // Handle Payload
+            ViewModel?.InitWithPayload(PayloadId);
+            ViewModelIsInitialized();
+        }
+
         public override void OnResume()
         {
             base.OnResume();
+
+            // Recreate the VM if needed
+            ViewModel ??= ViewHelper.RecreateIfNeeded(ViewModel, PayloadId);
 
             if (ParentActivity != null)
             {
@@ -118,14 +129,13 @@ namespace MvvmMobile.Droid.View
                 ParentActivity.BackButtonPressed += ActivityBackButtonPressed;
             }
 
-            if (_viewModel != null)
+            if (ViewModel != null)
             {
-                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
-                _viewModel.PropertyChanged += ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+                ViewModel.PropertyChanged += ViewModelPropertyChangedInternal;
             }
 
-            _viewModel?.InitWithPayload(PayloadId);
-            _viewModel?.OnActivated();
+            ViewModel?.OnActivated();
         }
 
         public override void OnPause()
@@ -137,12 +147,20 @@ namespace MvvmMobile.Droid.View
                 ParentActivity.BackButtonPressed -= ActivityBackButtonPressed;
             }
 
-            _viewModel?.OnPaused();
+            ViewModel?.OnPaused();
 
-            if (_viewModel != null)
-            { 
-                _viewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
+            if (ViewModel != null)
+            {
+                ViewModel.PropertyChanged -= ViewModelPropertyChangedInternal;
             }
+        }
+
+        public override void OnDestroy()
+        {
+            var payloads = Core.Mvvm.Api.Resolver.Resolve<IPayloads>();
+            payloads?.Remove(PayloadId);
+
+            base.OnDestroy();
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -151,6 +169,9 @@ namespace MvvmMobile.Droid.View
 
             return base.OnOptionsItemSelected(item);
         }
+
+        protected virtual void ViewModelIsInitialized() { }
+        protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         private void ActivityBackButtonPressed(object sender, EventArgs e)
         {
