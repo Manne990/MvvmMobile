@@ -133,7 +133,6 @@
     <Reference Include="Xamarin.AndroidX.AppCompat">
       <HintPath>..\packages\Xamarin.AndroidX.AppCompat.1.1.0\lib\monoandroid90\Xamarin.AndroidX.AppCompat.dll</HintPath>
     </Reference>
-    <Reference Include="Java.Interop" />
     <Reference Include="Xamarin.AndroidX.Lifecycle.ViewModelSavedState">
       <HintPath>..\packages\Xamarin.AndroidX.Lifecycle.ViewModelSavedState.2.2.0\lib\monoandroid90\Xamarin.AndroidX.Lifecycle.ViewModelSavedState.dll</HintPath>
     </Reference>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Cirrious.FluentLayouts.Touch;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
@@ -462,11 +461,10 @@ namespace MvvmMobile.iOS.Navigation
             subView.View.TranslatesAutoresizingMaskIntoConstraints = false;
             SubViewContainer.AddSubview(subView.View);
 
-            SubViewContainer.AddConstraints(
-                subView.View.AtTopOf(SubViewContainer),
-                subView.View.AtLeftOf(SubViewContainer),
-                subView.View.WithSameWidth(SubViewContainer),
-                subView.View.WithSameHeight(SubViewContainer));
+            subView.View.TopAnchor.ConstraintEqualTo(SubViewContainer.TopAnchor).Active = true;
+            subView.View.LeftAnchor.ConstraintEqualTo(SubViewContainer.LeftAnchor).Active = true;
+            subView.View.WidthAnchor.ConstraintEqualTo(SubViewContainer.WidthAnchor).Active = true;
+            subView.View.HeightAnchor.ConstraintEqualTo(SubViewContainer.HeightAnchor).Active = true;
 
             subView.DidMoveToParentViewController(SubViewController);
 
