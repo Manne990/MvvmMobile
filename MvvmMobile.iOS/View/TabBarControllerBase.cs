@@ -56,9 +56,9 @@ namespace MvvmMobile.iOS.View
             // Setup ViewModel
             ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
 
-            // Handle Payload
+            ViewModelDidLoad();
+
             ViewModel?.InitWithPayload(PayloadId);
-            ViewModelIsInitialized();
         }
 
         public override void ViewWillLayoutSubviews()
@@ -193,7 +193,7 @@ namespace MvvmMobile.iOS.View
 
         // Virtual Methods
         public virtual void Init(IPayload payload) { }
-        protected virtual void ViewModelIsInitialized() { }
+        protected virtual void ViewModelDidLoad() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 

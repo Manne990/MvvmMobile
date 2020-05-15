@@ -111,9 +111,9 @@ namespace MvvmMobile.Droid.View
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // Handle Payload
+            ViewModelDidLoad();
+
             ViewModel?.InitWithPayload(PayloadId);
-            ViewModelIsInitialized();
         }
 
         public override void OnResume()
@@ -170,7 +170,7 @@ namespace MvvmMobile.Droid.View
             return base.OnOptionsItemSelected(item);
         }
 
-        protected virtual void ViewModelIsInitialized() { }
+        protected virtual void ViewModelDidLoad() { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
         private void ActivityBackButtonPressed(object sender, EventArgs e)
