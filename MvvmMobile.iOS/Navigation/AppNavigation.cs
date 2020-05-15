@@ -188,6 +188,9 @@ namespace MvvmMobile.iOS.Navigation
                     frameworkVc.SetCallback(callback);
                 }
 
+                // Init
+                frameworkVc.Init(parameter);
+
                 // Handle modal
                 if (frameworkVc.AsModal || clearHistory)
                 {

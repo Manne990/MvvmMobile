@@ -174,6 +174,7 @@ namespace MvvmMobile.iOS.View
         // -----------------------------------------------------------------------------
 
         // Virtual Methods
+        public virtual void Init(IPayload payload) { }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 
@@ -221,17 +222,21 @@ namespace MvvmMobile.iOS.View
         // Private Methods
         private void DidBecomeActive(NSNotification obj)
         {
-            _viewModel?.OnActivated();
+            //if (ViewModel == null)
+            //{
+            //    ViewModel = Core.Mvvm.Api.Resolver.Resolve<T>();
+            //}
+
+            ViewModel?.OnActivated();
         }
 
         private void DidBecomeInactive(NSNotification obj)
         {
-            _viewModel?.OnPaused();
+            ViewModel?.OnPaused();
         }
 
         private void ViewModelPropertyChangedInternal(object sender, PropertyChangedEventArgs e)
         {
-            //ViewModel_PropertyChanged(sender, e);
             InvokeOnMainThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }

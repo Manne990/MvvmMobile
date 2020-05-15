@@ -11,6 +11,7 @@ namespace MvvmMobile.iOS.View
         bool SubViewHasNavBar { get; set; }
         bool IsSubView { get; set; }
 
+        void Init(IPayload payload);
         void SetPayload(IPayload payload);
         void SetCallback(Action<Guid> callbackAction);
         UIViewController AsViewController();
