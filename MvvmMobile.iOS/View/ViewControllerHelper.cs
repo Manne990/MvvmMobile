@@ -3,9 +3,9 @@ using MvvmMobile.Core.ViewModel;
 
 namespace MvvmMobile.iOS.View
 {
-    public static class ViewControllerHelper
+    internal static class ViewControllerHelper
     {
-        public static T RecreateIfNeeded<T>(T vm, Guid payloadId) where T : class, IBaseViewModel
+        internal static T RecreateIfNeeded<T>(T vm, Guid payloadId) where T : class, IBaseViewModel
         {
             if (vm != null)
             {
