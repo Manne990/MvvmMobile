@@ -46,11 +46,7 @@ namespace MvvmMobile.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        public virtual void OnLoaded()
-        {
-            _isActive = false;
-            _delayedPropertyChanged = new List<string>();
-        }
+        public virtual void OnLoaded() {}
 
         public virtual void OnActivated()
         {
