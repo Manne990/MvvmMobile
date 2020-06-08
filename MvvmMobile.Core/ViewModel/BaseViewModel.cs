@@ -46,7 +46,10 @@ namespace MvvmMobile.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Lifecycle
-        public virtual void OnLoaded() {}
+        public virtual void OnLoaded()
+        {
+            _isActive = false;
+        }
 
         public virtual void OnActivated()
         {
@@ -70,7 +73,10 @@ namespace MvvmMobile.Core.ViewModel
         // -----------------------------------------------------------------------------
 
         // Payload and Callback Handling
-        public virtual void InitWithPayload(Guid payloadId) { }
+        public virtual void InitWithPayload(Guid payloadId)
+        {
+            _isActive = false;
+        }
 
         protected T LoadPayload<T>(Guid payloadId) where T : class
         {
