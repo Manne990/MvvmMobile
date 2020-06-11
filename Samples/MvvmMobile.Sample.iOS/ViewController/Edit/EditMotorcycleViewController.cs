@@ -1,24 +1,24 @@
 using System;
 using MvvmMobile.iOS.Common;
+using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using MvvmMobile.Sample.iOS.ViewController.Edit;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS.View
 {
     [Storyboard(storyboardName:"Main", storyboardId:"EditMotorcycleViewController")]
-    public partial class EditMotorcycleViewController : ViewControllerBase<IEditMotorcycleViewModel>
+    public partial class EditMotorcycleViewController : ViewControllerBase<IEditMotorcycleViewModel>, IViewControllerWithTransition
     {
         // Constructors
         public EditMotorcycleViewController()
         {
-            //SubViewHasNavBar = true;
             AsModal = true;
         }
 
         public EditMotorcycleViewController(IntPtr handle) : base(handle)
         {
-            //SubViewHasNavBar = true;
             AsModal = true;
         }
 
@@ -62,6 +62,25 @@ namespace MvvmMobile.Sample.iOS.View
                 YearTextField.Text = ViewModel.Motorcycle?.Year.ToString();
                 return;
             }
+        }
+
+        public override ITransitionAnimator LoadPresentTransitionAnimator(UIViewController sourceViewController)
+        {
+            return new Animator(ViewControllerTransitioningAnimatorPresentationType.Present, sourceViewController as IViewControllerWithTransition);
+        }
+
+        public override ITransitionAnimator LoadDismissTransitionAnimator(UIViewController sourceViewController)
+        {
+            return new Animator(ViewControllerTransitioningAnimatorPresentationType.Dismiss, sourceViewController as IViewControllerWithTransition);
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // IViewControllerWithTransition Implementation
+        public UIView GetViewForSnapshot()
+        {
+            return View;
         }
     }
 }

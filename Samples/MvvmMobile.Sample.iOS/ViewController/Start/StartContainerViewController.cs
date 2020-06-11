@@ -3,6 +3,7 @@ using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using MvvmMobile.Sample.iOS.ViewController.Edit;
 using System;
 using System.Collections.Generic;
 using UIKit;
@@ -10,7 +11,7 @@ using UIKit;
 namespace MvvmMobile.Sample.iOS.ViewController.Start
 {
     [Storyboard(storyboardName: "Main", storyboardId: "StartContainerViewController")]
-    public partial class StartContainerViewController : ViewControllerBase<IStartViewModel>, ISubViewContainerController
+    public partial class StartContainerViewController : ViewControllerBase<IStartViewModel>, ISubViewContainerController, IViewControllerWithTransition
     {
         // Private Members
         private StartTableViewSource _source;
@@ -69,6 +70,15 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         public Stack<UIViewController> SubViewNavigationStack { get; }
         public UIView SubViewContainerView { get { return SubViewOverlayView; } }
         public NSLayoutConstraint[] SubViewOriginalConstraints { get; set; }
+
+
+        // -----------------------------------------------------------------------------
+
+        // IViewControllerWithTransition Implementation
+        public UIView GetViewForSnapshot()
+        {
+            return View;
+        }
 
 
         // -----------------------------------------------------------------------------

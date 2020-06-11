@@ -1,15 +1,18 @@
 using System;
 using Foundation;
 using MvvmMobile.iOS.Common;
+using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
+using MvvmMobile.Sample.iOS.ViewController.Edit;
 using MvvmMobile.Sample.iOS.ViewController.Start;
+using UIKit;
 
 namespace MvvmMobile.Sample.iOS.View
 {
     [Storyboard(storyboardName:"Main", storyboardId:"StartViewController")]
-    public partial class StartViewController : TableViewControllerBase<IStartViewModel>
+    public partial class StartViewController : TableViewControllerBase<IStartViewModel>, IViewControllerWithTransition
     {
         // Private Members
         private StartTableViewSource _source;
@@ -53,6 +56,15 @@ namespace MvvmMobile.Sample.iOS.View
                 TableView?.ReloadData();
                 return;
             }
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // IViewControllerWithTransition Implementation
+        public UIView GetViewForSnapshot()
+        {
+            return View;
         }
 
 

@@ -141,6 +141,7 @@
     </Compile>
     <Compile Include="ViewController\TabBarViewController.cs" />
     <Compile Include="ViewController\CustomNavigationController.cs" />
+    <Compile Include="ViewController\Edit\Animator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MvvmMobile.iOS\MvvmMobile.iOS.csproj">

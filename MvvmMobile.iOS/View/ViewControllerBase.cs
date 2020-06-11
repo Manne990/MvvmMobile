@@ -181,6 +181,15 @@ namespace MvvmMobile.iOS.View
 
         // Virtual Methods
         public virtual void Init(IPayload payload) { }
+        public virtual ITransitionAnimator LoadPresentTransitionAnimator(UIViewController sourceViewController)
+        {
+            return null;
+        }
+
+        public virtual ITransitionAnimator LoadDismissTransitionAnimator(UIViewController sourceViewController)
+        {
+            return null;
+        }
         protected virtual void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e) { }
         protected virtual void ViewFramesReady() { }
 

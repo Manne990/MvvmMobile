@@ -87,6 +87,11 @@ namespace MvvmMobile.iOS.Navigation
         // Public Methods
         public void Init()
         {
+            if (_navigationControllerType == null)
+            {
+                _navigationControllerType = typeof(UINavigationController);
+            }
+
             ViewMapperDictionary = new Dictionary<Type, Type>();
         }
 
@@ -162,13 +167,13 @@ namespace MvvmMobile.iOS.Navigation
             // Get the vc type
             if (GetViewMapper().TryGetValue(viewModelType, out Type viewControllerType) == false)
             {
-                throw new Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+                throw new Exception($"The viewmodel '{viewModelType}' does not exist in view mapper!");
             }
 
             var vc = InstantiateViewController(viewControllerType);
             if (vc == null)
             {
-                System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateTo: The ViewController for VM '{viewModelType.ToString()}' could not be loaded!");
+                System.Diagnostics.Debug.WriteLine($"AppNavigation.NavigateTo: The ViewController for VM '{viewModelType}' could not be loaded!");
                 return;
             }
 
@@ -195,18 +200,38 @@ namespace MvvmMobile.iOS.Navigation
                 {
                     frameworkVc.AsModal = true;
 
+                    var presentAnimator = frameworkVc.LoadPresentTransitionAnimator(GetNavigationController()?.VisibleViewController);
+                    var dismissAnimator = frameworkVc.LoadDismissTransitionAnimator(GetNavigationController()?.VisibleViewController);
+
                     if (vc.GetType().IsSubclassOf(typeof(UITabBarController)))
                     {
                         var nativeVc = frameworkVc.AsViewController();
-                        nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+
+                        if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
+                        {
+                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.Custom;
+                            nativeVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
+                        }
+                        else
+                        {
+                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+                        }
 
                         GetNavigationController()?.PresentViewController(nativeVc, !clearHistory, null);
                         return;
                     }
 
                     var navVc = Activator.CreateInstance(_navigationControllerType, frameworkVc.AsViewController()) as UINavigationController;
-
-                    navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+                    
+                    if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
+                    {
+                        navVc.ModalPresentationStyle = UIModalPresentationStyle.Custom;
+                        navVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
+                    }
+                    else
+                    {
+                        navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+                    }
 
                     GetNavigationController()?.PresentViewController(navVc, !clearHistory, null);
                     return;
