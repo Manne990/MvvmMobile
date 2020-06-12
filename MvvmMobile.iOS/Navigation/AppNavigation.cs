@@ -222,7 +222,9 @@ namespace MvvmMobile.iOS.Navigation
                     }
 
                     var navVc = Activator.CreateInstance(_navigationControllerType, frameworkVc.AsViewController()) as UINavigationController;
-                    
+
+                    navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+
                     if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
                     {
                         navVc.ModalPresentationStyle = UIModalPresentationStyle.Custom;

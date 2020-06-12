@@ -30,12 +30,12 @@ namespace MvvmMobile.Sample.iOS.View
         {
             base.ViewWillAppear(animated);
 
-            NavigationItem?.SetLeftBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Cancel, (sender, e) => 
+            NavigationItem.SetLeftBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Cancel, (sender, e) => 
             {
-                ViewModel?.CancelCommand.Execute();
+                ViewModel.CancelCommand.Execute();
             }), false);
 
-            NavigationItem?.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Done, (sender, e) => 
+            NavigationItem.SetRightBarButtonItem(new UIBarButtonItem(UIBarButtonSystemItem.Done, (sender, e) => 
             {
                 ViewModel.Motorcycle.Brand = BrandTextField.Text;
                 ViewModel.Motorcycle.Model = ModelTextField.Text;
@@ -45,7 +45,7 @@ namespace MvvmMobile.Sample.iOS.View
                     ViewModel.Motorcycle.Year = year;
                 }
 
-                ViewModel?.SaveMotorcycleCommand.Execute();
+                ViewModel.SaveMotorcycleCommand.Execute();
             }), false);
         }
 

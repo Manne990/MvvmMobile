@@ -81,6 +81,9 @@ namespace MvvmMobile.Sample.iOS.ViewController.Edit
             fromViewSnapshotView.Frame = isPresenting ? fromViewSnapshotRect : toViewSnapshotRect;
             toViewSnapshotView.Frame = isPresenting ? fromViewSnapshotRect : toViewSnapshotRect;
 
+            (_sourceViewController as UIViewController).BeginAppearanceTransition(false, true);
+            (_destinationViewController as UIViewController).BeginAppearanceTransition(true, true);
+
             UIView.AnimateKeyframes(Duration, 0, UIViewKeyframeAnimationOptions.CalculationModeCubic, () =>
             {
                 UIView.AddKeyframeWithRelativeStartTime(0, 1, () =>
@@ -103,6 +106,10 @@ namespace MvvmMobile.Sample.iOS.ViewController.Edit
                 toViewSnapshotView.RemoveFromSuperview();
 
                 toView.Alpha = 1;
+
+                (_sourceViewController as UIViewController).EndAppearanceTransition();
+                (_destinationViewController as UIViewController).EndAppearanceTransition();
+
                 transitionContext.CompleteTransition(true);
             });
         }
