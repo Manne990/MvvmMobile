@@ -32,7 +32,7 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<key>CFBundleDisplayName</key>
+	<string>MvvmMobile.Sample.iOS</string>
 </dict>
 </plist>

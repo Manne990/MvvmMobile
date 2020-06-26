@@ -10,14 +10,14 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
     {
         // Private Members
         private ObservableCollection<IMotorcycle> _motorcycles;
-        private Action<IMotorcycle> _selectionListener;
-        private Action<IMotorcycle> _deleteListener;
+        private readonly Action<IMotorcycle, UITableViewCell> _selectionListener;
+        private readonly Action<IMotorcycle> _deleteListener;
 
 
         // -----------------------------------------------------------------------------
 
         // Constructors
-        public StartTableViewSource(Action<IMotorcycle> selectionListener, Action<IMotorcycle> deleteListener)
+        public StartTableViewSource(Action<IMotorcycle, UITableViewCell> selectionListener, Action<IMotorcycle> deleteListener)
         {
             _selectionListener = selectionListener;
             _deleteListener = deleteListener;
@@ -52,7 +52,8 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
-            _selectionListener?.Invoke(_motorcycles[indexPath.Row]);
+            var cell = tableView.CellAt(indexPath);
+            _selectionListener?.Invoke(_motorcycles[indexPath.Row], cell);
         }
 
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)

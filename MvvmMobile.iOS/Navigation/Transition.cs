@@ -4,6 +4,7 @@ namespace MvvmMobile.iOS.Navigation
 {
     public interface ITransitionAnimator : IUIViewControllerAnimatedTransitioning
     {
+        void InitWithTransitionType(ViewControllerTransitioningAnimatorPresentationType type);
     }
 
     public class ViewControllerTransitioningDelegate : UIViewControllerTransitioningDelegate
@@ -19,11 +20,13 @@ namespace MvvmMobile.iOS.Navigation
 
         public override IUIViewControllerAnimatedTransitioning GetAnimationControllerForPresentedController(UIViewController presented, UIViewController presenting, UIViewController source)
         {
+            _transitionPresentedAnimator?.InitWithTransitionType(ViewControllerTransitioningAnimatorPresentationType.Present);
             return _transitionPresentedAnimator;
         }
 
         public override IUIViewControllerAnimatedTransitioning GetAnimationControllerForDismissedController(UIViewController dismissed)
         {
+            _transitionDismissedAnimator?.InitWithTransitionType(ViewControllerTransitioningAnimatorPresentationType.Dismiss);
             return _transitionDismissedAnimator;
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using CoreGraphics;
 using MvvmMobile.iOS.Common;
 using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
@@ -26,6 +27,14 @@ namespace MvvmMobile.Sample.iOS.View
         // -----------------------------------------------------------------------------
 
         // Lifecycle
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            var tap = new UITapGestureRecognizer(() => DismissViewController(true, null));
+            View.AddGestureRecognizer(tap);
+        }
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -66,21 +75,26 @@ namespace MvvmMobile.Sample.iOS.View
 
         public override ITransitionAnimator LoadPresentTransitionAnimator(UIViewController sourceViewController)
         {
-            return new Animator(ViewControllerTransitioningAnimatorPresentationType.Present, sourceViewController as IViewControllerWithTransition);
+            return new PresentAnimator();
         }
 
         public override ITransitionAnimator LoadDismissTransitionAnimator(UIViewController sourceViewController)
         {
-            return new Animator(ViewControllerTransitioningAnimatorPresentationType.Dismiss, sourceViewController as IViewControllerWithTransition);
+            return new DismissAnimator();
         }
 
 
         // -----------------------------------------------------------------------------
 
         // IViewControllerWithTransition Implementation
-        public UIView GetViewForSnapshot()
+        public UIView GetViewForSnapshot(Type relatedViewControllerType, ViewControllerTransitioningAnimatorPresentationType transitionType)
         {
-            return View;
+            return NavigationController?.View ?? View;
+        }
+
+        public CGRect TransitionTargetRect()
+        {
+            return new CGRect(0, 0, View.Frame.Width, 200f);
         }
     }
 }

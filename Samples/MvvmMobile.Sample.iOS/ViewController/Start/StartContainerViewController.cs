@@ -1,20 +1,22 @@
+using System;
+using CoreGraphics;
 using Foundation;
 using MvvmMobile.iOS.Common;
+using MvvmMobile.iOS.Navigation;
 using MvvmMobile.iOS.View;
 using MvvmMobile.Sample.Core.Model;
 using MvvmMobile.Sample.Core.ViewModel.Motorcycles;
 using MvvmMobile.Sample.iOS.ViewController.Edit;
-using System;
-using System.Collections.Generic;
 using UIKit;
 
 namespace MvvmMobile.Sample.iOS.ViewController.Start
 {
     [Storyboard(storyboardName: "Main", storyboardId: "StartContainerViewController")]
-    public partial class StartContainerViewController : ViewControllerBase<IStartViewModel>, ISubViewContainerController, IViewControllerWithTransition
+    public partial class StartContainerViewController : ViewControllerBase<IStartViewModel>, IViewControllerWithTransition
     {
         // Private Members
         private StartTableViewSource _source;
+        private UITableViewCell _lastSelectedCell;
 
 
         // -----------------------------------------------------------------------------
@@ -22,8 +24,8 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         // Constructors
         public StartContainerViewController (IntPtr handle) : base (handle)
         {
-            SubViewNavigationStack = new Stack<UIViewController>();
         }
+
 
         // -----------------------------------------------------------------------------
 
@@ -40,7 +42,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         {
             base.ViewWillAppear(animated);
 
-            ShowSubViewContainer(false);
             MotorcyclesTableView?.ReloadData();
         }
 
@@ -52,44 +53,48 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         {
             if (e.PropertyName == nameof(ViewModel.Motorcycles))
             {
+                _lastSelectedCell = null;
                 _source?.LoadData(ViewModel.Motorcycles);
                 MotorcyclesTableView?.ReloadData();
                 return;
             }
-
-            //if (e.PropertyName == nameof(ViewModel.IsShowingEditMotorcycleSubView))
-            //{
-            //    ShowSubViewContainer(ViewModel.IsShowingEditMotorcycleSubView);
-            //}
         }
 
 
         // -----------------------------------------------------------------------------
 
-        // ISubViewContainerController Implementation
-        public Stack<UIViewController> SubViewNavigationStack { get; }
-        public UIView SubViewContainerView { get { return SubViewOverlayView; } }
-        public NSLayoutConstraint[] SubViewOriginalConstraints { get; set; }
-
-
-        // -----------------------------------------------------------------------------
-
         // IViewControllerWithTransition Implementation
-        public UIView GetViewForSnapshot()
+        public UIView GetViewForSnapshot(Type relatedViewControllerType, ViewControllerTransitioningAnimatorPresentationType transitionType)
         {
-            return View;
+            if (transitionType == ViewControllerTransitioningAnimatorPresentationType.Present)
+            {
+                return _lastSelectedCell ?? NavigationController.View;
+            }
+
+            return NavigationController?.View ?? View;
+        }
+
+        public CGRect TransitionTargetRect()
+        {
+            if (_lastSelectedCell == null)
+            {
+                return View.Frame;
+            }
+
+            return _lastSelectedCell.ConvertRectToView(_lastSelectedCell.Bounds, View.Window);
         }
 
 
         // -----------------------------------------------------------------------------
 
         // Private Methods
-        private void MotorcycleSelected(IMotorcycle motorcycle)
+        private void MotorcycleSelected(IMotorcycle motorcycle, UITableViewCell selectedCell)
         {
+            _lastSelectedCell = selectedCell;
             ViewModel?.EditMotorcycleCommand.Execute(motorcycle);
         }
 
-        partial void AddMotorcycle(Foundation.NSObject sender)
+        partial void AddMotorcycle(NSObject sender)
         {
             ViewModel?.AddMotorcycleCommand.Execute();
         }
@@ -102,15 +107,6 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
         partial void StartNavDemo(NSObject sender)
         {
             ViewModel?.StartNavigationDemoCommand?.Execute();
-        }
-
-        private void ShowSubViewContainer(bool isShowing)
-        {
-            SubViewContainerView.Hidden = !isShowing;
-            SubViewBlockerView.Hidden = !isShowing;
-
-            AddButton.Enabled = !isShowing;
-            AddButton.TintColor = isShowing ? UIColor.Clear : null;
         }
     }
 }

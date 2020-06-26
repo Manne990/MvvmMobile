@@ -8,6 +8,8 @@ namespace MvvmMobile.Sample.iOS.ViewController.Start
     {
         public MotorcycleTableViewCell (IntPtr handle) : base (handle)
         {
+            BackgroundColor = UIColor.Cyan;
+            Layer.CornerRadius = 10f;
         }
 
         public string Title

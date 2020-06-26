@@ -12,7 +12,7 @@ using UIKit;
 namespace MvvmMobile.Sample.iOS.View
 {
     [Storyboard(storyboardName:"Main", storyboardId:"StartViewController")]
-    public partial class StartViewController : TableViewControllerBase<IStartViewModel>, IViewControllerWithTransition
+    public partial class StartViewController : TableViewControllerBase<IStartViewModel>
     {
         // Private Members
         private StartTableViewSource _source;
@@ -58,20 +58,10 @@ namespace MvvmMobile.Sample.iOS.View
             }
         }
 
-
-        // -----------------------------------------------------------------------------
-
-        // IViewControllerWithTransition Implementation
-        public UIView GetViewForSnapshot()
-        {
-            return View;
-        }
-
-
         // -----------------------------------------------------------------------------
 
         // Private Methods
-        private void MotorcycleSelected(IMotorcycle motorcycle)
+        private void MotorcycleSelected(IMotorcycle motorcycle, UITableViewCell selectedCell)
         {
             ViewModel?.EditMotorcycleCommand.Execute(motorcycle);
         }

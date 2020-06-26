@@ -69,7 +69,14 @@ namespace MvvmMobile.iOS.Navigation
         // Virtual Methods
         public virtual UINavigationController GetNavigationController()
         {
-            return NavigationController;
+            try
+            {
+                return Convert.ChangeType(NavigationController, _navigationControllerType) as UINavigationController;
+            }
+            catch
+            {
+                return NavigationController;
+            }
         }
 
         public virtual Dictionary<Type, Type> GetViewMapper()
@@ -158,7 +165,8 @@ namespace MvvmMobile.iOS.Navigation
             }
 
             // Check the navigation controller
-            if (GetNavigationController() == null)
+            var currentNav = GetNavigationController();
+            if (currentNav == null)
             {
                 System.Diagnostics.Debug.WriteLine("AppNavigation.NavigateTo: Could not find a navigation controller!");
                 return;
@@ -200,8 +208,8 @@ namespace MvvmMobile.iOS.Navigation
                 {
                     frameworkVc.AsModal = true;
 
-                    var presentAnimator = frameworkVc.LoadPresentTransitionAnimator(GetNavigationController()?.VisibleViewController);
-                    var dismissAnimator = frameworkVc.LoadDismissTransitionAnimator(GetNavigationController()?.VisibleViewController);
+                    var presentAnimator = frameworkVc.LoadPresentTransitionAnimator(currentNav);
+                    var dismissAnimator = frameworkVc.LoadDismissTransitionAnimator(currentNav);
 
                     if (vc.GetType().IsSubclassOf(typeof(UITabBarController)))
                     {
@@ -209,7 +217,7 @@ namespace MvvmMobile.iOS.Navigation
 
                         if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
                         {
-                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.Custom;
+                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen; // Custom
                             nativeVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
                         }
                         else
@@ -227,7 +235,7 @@ namespace MvvmMobile.iOS.Navigation
 
                     if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
                     {
-                        navVc.ModalPresentationStyle = UIModalPresentationStyle.Custom;
+                        navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen; // Custom
                         navVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
                     }
                     else
