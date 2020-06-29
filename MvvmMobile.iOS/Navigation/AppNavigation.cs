@@ -217,7 +217,7 @@ namespace MvvmMobile.iOS.Navigation
 
                         if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
                         {
-                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen; // Custom
+                            nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                             nativeVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
                         }
                         else
@@ -235,7 +235,7 @@ namespace MvvmMobile.iOS.Navigation
 
                     if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
                     {
-                        navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen; // Custom
+                        navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                         navVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
                     }
                     else
