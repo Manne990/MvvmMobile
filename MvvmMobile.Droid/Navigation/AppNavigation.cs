@@ -430,7 +430,7 @@ namespace MvvmMobile.Droid.Navigation
                 ft.Replace(FragmentContainerId, fragment, concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
 
-                ft.Commit();
+                ft.CommitAllowingStateLoss();
 
                 return fragment;
             }
