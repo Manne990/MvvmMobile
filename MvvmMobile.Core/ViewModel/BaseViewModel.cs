@@ -34,12 +34,15 @@ namespace MvvmMobile.Core.ViewModel
                 return;
             }
 
-            if (_delayedPropertyChanged.Contains(propertyName))
+            lock (_delayedPropertyChanged)
             {
-                return;
-            }
+                if (_delayedPropertyChanged.Contains(propertyName))
+                {
+                    return;
+                }
 
-            _delayedPropertyChanged?.Add(propertyName);
+                _delayedPropertyChanged?.Add(propertyName);
+            }
         }
 
 
@@ -55,18 +58,25 @@ namespace MvvmMobile.Core.ViewModel
         {
             _isActive = true;
 
-            foreach (var propertyName in _delayedPropertyChanged)
+            lock (_delayedPropertyChanged)
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+                foreach (var propertyName in _delayedPropertyChanged)
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                }
 
-            _delayedPropertyChanged?.Clear();
+                _delayedPropertyChanged?.Clear();
+            }
         }
 
         public virtual void OnPaused()
         {
             _isActive = false;
-            _delayedPropertyChanged = new List<string>();
+
+            lock (_delayedPropertyChanged)
+            {
+                _delayedPropertyChanged = new List<string>();
+            }
         }
 
 
