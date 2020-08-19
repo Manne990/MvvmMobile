@@ -95,12 +95,12 @@ namespace MvvmMobile.Core.ViewModel
 
         public Action<Guid> CallbackAction { get; set; }
 
-        protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        protected void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
-            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(() => done?.Invoke(), behaviour);
+            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(() => done?.Invoke(), behaviour, animated);
         }
 
-        protected void NavigateBack(IPayload payload, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        protected void NavigateBack(IPayload payload, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
             if (CallbackAction == null)
             {
@@ -112,7 +112,7 @@ namespace MvvmMobile.Core.ViewModel
             var payloadId = Guid.NewGuid();
 
             Mvvm.Api.Resolver?.Resolve<IPayloads>()?.Add(payloadId, payload);
-            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(CallbackAction, payloadId, () => done?.Invoke(), behaviour);
+            Mvvm.Api.Resolver?.Resolve<INavigation>()?.NavigateBack(CallbackAction, payloadId, () => done?.Invoke(), behaviour, animated);
         }
     }
 }

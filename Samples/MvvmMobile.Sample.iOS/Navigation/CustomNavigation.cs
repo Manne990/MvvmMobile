@@ -29,14 +29,14 @@ namespace MvvmMobile.Sample.iOS.Navigation
             return _appNavigation?.GetViewMapper();
         }
 
-        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
-            _appNavigation?.NavigateBack(done, behaviour);
+            _appNavigation?.NavigateBack(done, behaviour, animated);
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
-            _appNavigation?.NavigateBack(callbackAction, payloadId, done, behaviour);
+            _appNavigation?.NavigateBack(callbackAction, payloadId, done, behaviour, animated);
         }
 
         public async Task NavigateBack<T>() where T : IBaseViewModel
@@ -49,14 +49,14 @@ namespace MvvmMobile.Sample.iOS.Navigation
             await _appNavigation?.NavigateBack<T>(callbackAction, payloadId);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true)
         {
-            _appNavigation?.NavigateTo(viewModelType, parameter, callback, clearHistory);
+            _appNavigation?.NavigateTo(viewModelType, parameter, callback, clearHistory, animated);
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true) where T : IBaseViewModel
         {
-            _appNavigation?.NavigateTo<T>(parameter, callback, clearHistory);
+            _appNavigation?.NavigateTo<T>(parameter, callback, clearHistory, animated);
         }
 
         public void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)

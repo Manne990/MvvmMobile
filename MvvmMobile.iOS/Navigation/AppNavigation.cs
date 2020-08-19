@@ -151,12 +151,12 @@ namespace MvvmMobile.iOS.Navigation
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback, clearHistory);
+            NavigateTo(typeof(T), parameter, callback, clearHistory, animated);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true)
         {
             if (viewModelType == null)
             {
@@ -203,6 +203,8 @@ namespace MvvmMobile.iOS.Navigation
                 // Init
                 frameworkVc.Init(parameter);
 
+                var shouldAnimate = animated && !clearHistory;
+
                 // Handle modal
                 if (frameworkVc.AsModal || clearHistory)
                 {
@@ -215,7 +217,7 @@ namespace MvvmMobile.iOS.Navigation
                     {
                         var nativeVc = frameworkVc.AsViewController();
 
-                        if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
+                        if (presentAnimator != null && dismissAnimator != null && shouldAnimate)
                         {
                             nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                             nativeVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
@@ -225,7 +227,7 @@ namespace MvvmMobile.iOS.Navigation
                             nativeVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                         }
 
-                        GetNavigationController()?.PresentViewController(nativeVc, !clearHistory, null);
+                        GetNavigationController()?.PresentViewController(nativeVc, shouldAnimate, null);
                         return;
                     }
 
@@ -233,7 +235,7 @@ namespace MvvmMobile.iOS.Navigation
 
                     navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
 
-                    if (presentAnimator != null && dismissAnimator != null && clearHistory == false)
+                    if (presentAnimator != null && dismissAnimator != null && shouldAnimate)
                     {
                         navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                         navVc.TransitioningDelegate = new ViewControllerTransitioningDelegate(presentAnimator, dismissAnimator);
@@ -243,13 +245,13 @@ namespace MvvmMobile.iOS.Navigation
                         navVc.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
                     }
 
-                    GetNavigationController()?.PresentViewController(navVc, !clearHistory, null);
+                    GetNavigationController()?.PresentViewController(navVc, shouldAnimate, null);
                     return;
                 }
             }
 
             // Push the vc
-            GetNavigationController()?.PushViewController(vc, true);
+            GetNavigationController()?.PushViewController(vc, animated);
         }
 
         public void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
@@ -296,7 +298,7 @@ namespace MvvmMobile.iOS.Navigation
             InflateSubView(subView);
         }
 
-        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
             // Check the navigation controller
             var vc = GetNavigationController()?.VisibleViewController;
@@ -355,25 +357,25 @@ namespace MvvmMobile.iOS.Navigation
             // Dismiss the VC
             if (currentVC.AsModal)
             {
-                GetNavigationController()?.DismissViewController(true, () =>
+                GetNavigationController()?.DismissViewController(animated, () =>
                 {
                     done?.Invoke();
                 });
             }
             else
             {
-                GetNavigationController()?.PopViewController(true);
+                GetNavigationController()?.PopViewController(animated);
                 done?.Invoke();
             }
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
             NavigateBack(() =>
             {
                 callbackAction.Invoke(payloadId);
                 done?.Invoke();
-            }, behaviour);
+            }, behaviour, animated);
         }
 
         public async Task NavigateBack<T>() where T : IBaseViewModel
