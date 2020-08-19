@@ -103,12 +103,12 @@ namespace MvvmMobile.Droid.Navigation
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback, clearHistory);
+            NavigateTo(typeof(T), parameter, callback, clearHistory, animated);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true)
         {
             if (viewModelType == null)
             {
@@ -222,20 +222,20 @@ namespace MvvmMobile.Droid.Navigation
             return;
         }
 
-        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
-            NavigateBackInternal(null, done, behaviour);
+            NavigateBackInternal(null, done, behaviour, animated);
         }
 
-        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        public void NavigateBack(Action<Guid> callbackAction, Guid payloadId, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
             NavigateBackInternal(() => 
             {
                 callbackAction.Invoke(payloadId);
-            }, done, behaviour);
+            }, done, behaviour, animated);
         }
 
-        private void NavigateBackInternal(Action callbackListener, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView)
+        private void NavigateBackInternal(Action callbackListener, Action done = null, BackBehaviour behaviour = BackBehaviour.CloseLastSubView, bool animated = true)
         {
             if (GetContext() is AppCompatActivity activity)
             {
