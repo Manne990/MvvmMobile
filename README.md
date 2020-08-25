@@ -211,3 +211,5 @@ MvvmMobile.Droid.Bootstrapper.AddViewMapping<IMySecondViewModel, SomeFragment>()
 ## Samples ##
 For a more detailed view of MvvmMobile, have a look at the sample project included in this repo!   
 Happy coding! :-)
+
+Copyright (c) 2017-2020 Jonas Frid
