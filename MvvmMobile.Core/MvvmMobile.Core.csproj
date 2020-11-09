@@ -14,7 +14,6 @@
     <Description>MvvmMobile is an MVVM framework developed for Xamarin iOS and Xamarin Android with a focus on abstracted navigation. This ensures high testability of the viewmodel classes.</Description>
     <PackageId>MvvmMobile.Core</PackageId>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <ReleaseVersion>1.4.4</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <LangVersion>latest</LangVersion>
