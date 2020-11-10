@@ -3,7 +3,7 @@
   <Import Project="..\..\packages\Xamarin.AndroidX.Migration.1.0.0\build\monoandroid90\Xamarin.AndroidX.Migration.props" Condition="Exists('..\..\packages\Xamarin.AndroidX.Migration.1.0.0\build\monoandroid90\Xamarin.AndroidX.Migration.props')" />
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
-  <ReleaseVersion>1.4.4</ReleaseVersion>
+  <ReleaseVersion>1.5</ReleaseVersion>
   <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
 </PropertyGroup>
   <PropertyGroup>

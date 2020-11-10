@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Android.OS;
 using Android.Views;
@@ -32,6 +33,27 @@ namespace MvvmMobile.Droid.View
             bool isBackPressedConsumed = false;
 
             return isBackPressedConsumed;
+        }
+
+
+        // -----------------------------------------------------------------------------
+
+        // Transitions
+        public Dictionary<string, Android.Views.View> SharedElements { get; private set; }
+
+        public void AddSharedElement(Android.Views.View sourceFragmentView, string destinationFragmentSharedElementName)
+        {
+            if (SharedElements == null)
+            {
+                SharedElements = new Dictionary<string, Android.Views.View>();
+            }
+
+            SharedElements.TryAdd(destinationFragmentSharedElementName, sourceFragmentView);
+        }
+
+        public void ClearSharedElements()
+        {
+            SharedElements?.Clear();
         }
 
 

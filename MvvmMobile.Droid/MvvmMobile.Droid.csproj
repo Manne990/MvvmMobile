@@ -5,7 +5,6 @@
 <PropertyGroup>
   <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
   <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
-  <ReleaseVersion>1.4.4</ReleaseVersion>
 </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -22,7 +21,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <PackageId>MvvmMobile.Droid</PackageId>
-    <PackageVersion>1.4.4</PackageVersion>
+    <PackageVersion>1.5</PackageVersion>
     <Authors>Jonas Frid, Mikael Stalvik</Authors>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://github.com/Manne990/MvvmMobile/blob/master/LICENSE</PackageLicenseUrl>
@@ -171,7 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvvmMobile.Core\MvvmMobile.Core.csproj">
-      <Project>{55109E7C-3DAB-48AE-BCBC-EE3142F82A6C}</Project>
+      <Project>{812B2D49-083D-4990-9622-4AF45C98F1BF}</Project>
       <Name>MvvmMobile.Core</Name>
     </ProjectReference>
   </ItemGroup>

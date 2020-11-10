@@ -82,7 +82,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
             {
-                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+                throw new System.Exception($"The viewmodel '{viewModelType}' does not exist in view mapper!");
             }
 
             return concreteType.IsSubclassOf(typeof(FragmentBase)) ? (FragmentBase)Activator.CreateInstance(concreteType) : null;
@@ -97,7 +97,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (ViewMapperDictionary.ContainsKey(typeof(TViewModel)))
             {
-                throw new System.Exception($"The viewmodel '{typeof(TViewModel).ToString()}' does already exist in view mapper!");
+                throw new System.Exception($"The viewmodel '{typeof(TViewModel)}' does already exist in view mapper!");
             }
 
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
@@ -117,7 +117,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
             {
-                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+                throw new System.Exception($"The viewmodel '{viewModelType}' does not exist in view mapper!");
             }
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
@@ -210,12 +210,12 @@ namespace MvvmMobile.Droid.Navigation
 
             if (GetViewMapper().TryGetValue(viewModelType, out Type concreteType) == false)
             {
-                throw new System.Exception($"The viewmodel '{viewModelType.ToString()}' does not exist in view mapper!");
+                throw new System.Exception($"The viewmodel '{viewModelType}' does not exist in view mapper!");
             }
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)) == false)
             {
-                throw new ArgumentException($"The viewmodel '{viewModelType.ToString()}' does not inherit from FragmentBase!");
+                throw new ArgumentException($"The viewmodel '{viewModelType}' does not inherit from FragmentBase!");
             }
 
             LoadFragment(concreteType, parameter, callback);
@@ -308,7 +308,7 @@ namespace MvvmMobile.Droid.Navigation
             {
                 if (GetViewMapper().TryGetValue(viewModelInterfaceType, out Type concreteType) == false)
                 {
-                    throw new System.Exception($"The viewmodel '{viewModelInterfaceType.ToString()}' does not exist in view mapper!");
+                    throw new System.Exception($"The viewmodel '{viewModelInterfaceType}' does not exist in view mapper!");
                 }
 
                 var targetIsFragment = concreteType.IsSubclassOf(typeof(FragmentBase));
@@ -409,6 +409,9 @@ namespace MvvmMobile.Droid.Navigation
                     return null;
                 }
 
+                // Get the current fragment
+                var currentFragment = activity.SupportFragmentManager?.Fragments?.LastOrDefault() as FragmentBase;
+
                 // Create the fragment
                 var fragment = (FragmentBase)Activator.CreateInstance(concreteType);
 
@@ -427,6 +430,14 @@ namespace MvvmMobile.Droid.Navigation
                 // Push the fragment
                 var ft = activity.SupportFragmentManager.BeginTransaction();
 
+                if (currentFragment?.SharedElements != null)
+                {
+                    foreach (var item in currentFragment.SharedElements)
+                    {
+                        ft.AddSharedElement(item.Value, item.Key);
+                    }
+                }
+                
                 ft.Replace(FragmentContainerId, fragment, concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
 
