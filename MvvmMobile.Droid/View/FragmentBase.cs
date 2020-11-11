@@ -41,7 +41,7 @@ namespace MvvmMobile.Droid.View
         // Transitions
         public Dictionary<string, Android.Views.View> SharedElements { get; private set; }
 
-        public void AddSharedElement(Android.Views.View sourceFragmentView, string destinationFragmentSharedElementName)
+        public void AddSharedElementForTransitions(Android.Views.View sourceFragmentView, string destinationFragmentSharedElementName)
         {
             if (SharedElements == null)
             {
@@ -51,7 +51,7 @@ namespace MvvmMobile.Droid.View
             SharedElements.TryAdd(destinationFragmentSharedElementName, sourceFragmentView);
         }
 
-        public void ClearSharedElements()
+        public void ClearSharedElementsForTransitions()
         {
             SharedElements?.Clear();
         }
