@@ -41,7 +41,7 @@ namespace MvvmMobile.Droid.View
 
             // Load Fragment
             var app = (AppNavigation)Core.Mvvm.Api.Resolver.Resolve<INavigation>();
-            app.LoadFragment(payload.FragmentType, payload.FragmentPayload, payload.FragmentCallback);
+            app.LoadFragment(payload.FragmentType, typeof(IBaseViewModel), payload.FragmentPayload, payload.FragmentCallback);
         }
 
         public override void OnBackPressed()

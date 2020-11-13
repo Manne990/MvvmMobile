@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 
 namespace MvvmMobile.Sample.Core.IoC
 {
@@ -24,6 +25,16 @@ namespace MvvmMobile.Sample.Core.IoC
             }
 
             return _container?.Resolve<T>();
+        }
+
+        public object Resolve(Type interfaceType)
+        {
+            if (_container?.IsRegistered(interfaceType) == false)
+            {
+                return null;
+            }
+
+            return _container?.Resolve(interfaceType);
         }
     }
 }

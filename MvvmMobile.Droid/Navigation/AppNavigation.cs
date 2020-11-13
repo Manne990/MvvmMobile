@@ -122,7 +122,7 @@ namespace MvvmMobile.Droid.Navigation
 
             if (concreteType.IsSubclassOf(typeof(FragmentBase)))
             {
-                LoadFragment(concreteType, parameter, callback);
+                LoadFragment(concreteType, viewModelType, parameter, callback);
                 return;
             }
 
@@ -218,7 +218,7 @@ namespace MvvmMobile.Droid.Navigation
                 throw new ArgumentException($"The viewmodel '{viewModelType}' does not inherit from FragmentBase!");
             }
 
-            LoadFragment(concreteType, parameter, callback);
+            LoadFragment(concreteType, viewModelType, parameter, callback);
             return;
         }
 
@@ -377,7 +377,7 @@ namespace MvvmMobile.Droid.Navigation
             callbackAction.Invoke(payloadId);
         }
 
-        public FragmentBase LoadFragment(Type concreteType, IPayload payload = null, Action<Guid> callback = null)
+        public FragmentBase LoadFragment(Type concreteType, Type viewModelType, IPayload payload = null, Action<Guid> callback = null)
         {
             try
             {
@@ -430,14 +430,27 @@ namespace MvvmMobile.Droid.Navigation
                 // Push the fragment
                 var ft = activity.SupportFragmentManager.BeginTransaction();
 
-                if (currentFragment?.SharedElements != null)
+                if (currentFragment is IFragmentWithSharedElementTransition sharedElementFragment)
                 {
-                    foreach (var item in currentFragment.SharedElements)
+                    var sharedElements = sharedElementFragment.GetSharedElementsForTransition(fragment, viewModelType);
+                    if (sharedElements != null)
                     {
-                        ft.AddSharedElement(item.Value, item.Key);
+                        foreach (var item in sharedElements)
+                        {
+                            ft.AddSharedElement(item.sourceFragmentView, item.destinationFragmentSharedElementName);
+                        }
                     }
                 }
-                
+
+                if (currentFragment is IFragmentWithCustomAnimationTransition animationFragment)
+                {
+                    var customAnimations = animationFragment.GetCustomAnimationsForTransition(fragment, viewModelType);
+                    if (customAnimations != null)
+                    {
+                        ft.SetCustomAnimations(customAnimations.Value.enter, customAnimations.Value.exit, customAnimations.Value.popEnter, customAnimations.Value.popExit);
+                    }
+                }
+
                 ft.Replace(FragmentContainerId, fragment, concreteType.Name);
                 ft.AddToBackStack(fragment.Title);
 

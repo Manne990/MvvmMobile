@@ -157,6 +157,7 @@
     <Compile Include="Model\ICallbackPayload.cs" />
     <Compile Include="Model\CallbackPayload.cs" />
     <Compile Include="View\ViewHelper.cs" />
+    <Compile Include="View\IFragmentWithTransition.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\FragmentContainerActivityLayout.axml" />
