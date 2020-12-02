@@ -20,9 +20,9 @@ namespace MvvmMobile.Droid
             // Init Self
             container.RegisterSingleton<INavigation, AppNavigation>();
 
-            container.Register<ILoadTabPayload>(new LoadTabPayload());
-            container.Register<ICallbackPayload>(new CallbackPayload());
-            container.Register<IFragmentContainerPayload>(new FragmentContainerPayload());
+            container.Register<ILoadTabPayload, LoadTabPayload>();
+            container.Register<ICallbackPayload, CallbackPayload>();
+            container.Register<IFragmentContainerPayload, FragmentContainerPayload>();
         }
 
         public static void Init(bool useActivityTransitions = false)
