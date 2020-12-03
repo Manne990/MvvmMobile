@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
+using CoreAnimation;
 using MvvmMobile.Core.Common;
 using MvvmMobile.Core.Navigation;
 using MvvmMobile.Core.ViewModel;
@@ -365,7 +367,34 @@ namespace MvvmMobile.iOS.Navigation
             else
             {
                 GetNavigationController()?.PopViewController(animated);
-                done?.Invoke();
+
+                // REMARK: If a completion action is missing -> We are finished!
+                if (done == null)
+                {
+                    return;
+                }
+
+                // REMARK: If the current VC and the last VC is different -> We are finished!
+                if (vc != GetNavigationController()?.VisibleViewController)
+                {
+                    done?.Invoke();
+                    return;
+                }
+
+                // REMARK: Ugly solution to wait for that the pop is done
+                var t = new Timer { Interval = 50, AutoReset = true };
+                t.Elapsed += (s, e) =>
+                {
+                    vc.InvokeOnMainThread(() =>
+                    {
+                        if (vc != GetNavigationController()?.VisibleViewController)
+                        {
+                            t.Stop();
+                            done?.Invoke();
+                        }
+                    });
+                };
+                t.Start();
             }
         }
 
@@ -389,7 +418,6 @@ namespace MvvmMobile.iOS.Navigation
 
             callbackAction.Invoke(payloadId);
         }
-
 
         public async Task NavigateBack(Type viewModelInterfaceType)
         {
