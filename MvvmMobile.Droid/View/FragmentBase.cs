@@ -177,7 +177,7 @@ namespace MvvmMobile.Droid.View
                 return;
             }
 
-            ParentActivity.RunOnUiThread(() => ViewModel_PropertyChanged(sender, e));
+            ParentActivity?.RunOnUiThread(() => ViewModel_PropertyChanged(sender, e));
         }
     }
 }
