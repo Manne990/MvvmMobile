@@ -103,12 +103,12 @@ namespace MvvmMobile.Droid.Navigation
             ViewMapperDictionary.Add(typeof(TViewModel), typeof(TPlatformView));
         }
 
-        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true) where T : IBaseViewModel
+        public void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true, bool transitions = true) where T : IBaseViewModel
         {
-            NavigateTo(typeof(T), parameter, callback, clearHistory, animated);
+            NavigateTo(typeof(T), parameter, callback, clearHistory, animated, transitions);
         }
 
-        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true)
+        public void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true, bool transitions = true)
         {
             if (viewModelType == null)
             {

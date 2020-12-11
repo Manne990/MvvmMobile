@@ -16,8 +16,8 @@ namespace MvvmMobile.Core.Navigation
 
     public interface INavigation
     {
-        void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true);
-        void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true) where T : IBaseViewModel;
+        void NavigateTo(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true, bool transitions = true);
+        void NavigateTo<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false, bool animated = true, bool transitions = true) where T : IBaseViewModel;
 
         void NavigateToSubView(Type viewModelType, IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false);
         void NavigateToSubView<T>(IPayload parameter = null, Action<Guid> callback = null, bool clearHistory = false) where T : IBaseViewModel;
